@@ -3,9 +3,13 @@ import Router from 'vue-router'
 
 // 主页
 const home = () => import(/* webpackChunkName: "home" */ "@/views/home/home/home.vue")
-
+const index = () => import(/* webpackChunkName: "home" */ "@/views/home/judge/judge.vue")
+const addpeple = () => import(/* webpackChunkName: "home" */ "@/views/home/addpeple/addpeple.vue")
+const doctorlist = () => import(/* webpackChunkName: "home" */ "@/views/home/doctorlist/doctorlist.vue")
+const departsearch = () => import(/* webpackChunkName: "home" */ "@/views/home/departsearch/departsearch.vue")
+const result = () => import(/* webpackChunkName: "home" */ "@/views/home/result/result.vue")
+ 
 //  在线问诊
-
 const online = () => import(/* webpackChunkName: "online" */ "@/views/online/online/online.vue")
 
 
@@ -29,13 +33,47 @@ Vue.use(Router)
 export default new Router({
   mode: 'hash',
   routes: [{
+    path: '/',
+    name: 'judge',
+    component: index,
+  },{
     path: '/home',
     name: 'home',
     component: home,
     meta: {
       title: '在线门诊'
     }
+  },{
+    path: 'departsearch',
+    name: 'departsearch',
+    component: index,
+    meta: {
+      title: '搜索'
+    }
+  },{
+    path: '/result',
+    name: 'result',
+    component: result,
+    meta: {
+      title: '结果'
+    }
+  },{
+    path: '/addpeple',
+    name: 'addpeple',
+    component: addpeple,
+    meta: {
+      title: '添加门特患者'
+    }
   },
+  {
+    path: '/doctorlist',
+    name: 'doctorlist',
+    component: doctorlist,
+    meta: {
+      title: '选择医生'
+    }
+  },
+   
   {
     path: '/my',
     name: 'my',

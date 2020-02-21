@@ -57,6 +57,9 @@ export default {
   max-width: 777px;
   margin: 0 auto;
 }
+.margin50 {
+  margin-top: 100px;
+}
 .margin55 {
   margin-top: 110px;
 }
@@ -69,5 +72,8 @@ body {
 .colo13 {
   font-size: 26px;
   color: var(--primary--content);
+}
+.md-field {
+  padding: 0px !important;
 }
 </style>

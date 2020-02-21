@@ -1,9 +1,9 @@
 <template>
   <div class="adressinfo">
-    <!-- <Header></Header> -->
-    <Navigation type="title" :title="post">
+    <Header post-title="编辑地址"></Header>
+    <!-- <Navigation type="title" :title="post">
       <span v-show="$route.query.id" class="mu-secondary-text-color" @click="dedete">删除</span>
-    </Navigation>
+    </Navigation> -->
     <div class="margin55 ">
       <md-field>
         <md-input-item ref="input13" v-model="receiver" title="姓名" placeholder="姓名" maxlength="10"></md-input-item>
@@ -23,7 +23,7 @@
           </div>
         </div>
         <div style="padding:0.24rem">
-          <md-button :inactive="!isTijiao"  type="primary" @click="tijiao" round style="margin-top:16px">保存</md-button>
+          <md-button :inactive="!isTijiao" type="primary" @click="tijiao" round style="margin-top:16px">保存</md-button>
         </div>
       </md-field>
       <!-- <Loading v-show="loadingtrue"></Loading> -->
@@ -34,12 +34,12 @@
 import { mapState } from 'vuex';
 import { InputItem, Field } from 'mand-mobile'
 let addressDetails = "/api/hos/shippingAddress/addressDetails";
-let addOrUpdate = "/api/hos/shippingAddress/addOrUpdate";
+let addOrUpdate = "/api/hos/bizShippingAddress/insertOrUpdate";
 let deleteAddress = "/api/hos/shippingAddress/delete";
 let appshippingAddressaddressList = "/api/hos/shippingAddress/addressList";
 export default {
   name: 'input-item-demo',
-   
+
   data() {
     return {
       isTijiao: true,
@@ -147,13 +147,14 @@ export default {
       })
     },
     adressByValue: function (childValue) {
-      console.log(childValue,"childValuechildValue")
+      console.log(childValue, "childValuechildValue")
       this.areaId = childValue
     },
     tijiao() {
       console.log(this.areaId)
       this.isTijiao = false;
-      if (!this.receiver || !this.mobile || !this.address || !this.areaId) {
+      // if (!this.receiver || !this.mobile || !this.address || !this.areaId) {
+      if (!this.receiver || !this.mobile) {
         this.$toast.info("请完善信息")
         this.isTijiao = true;
       } else {
@@ -212,15 +213,17 @@ export default {
 <style lang="scss" scoped>
 .adressinfo .md-field-item-title {
   margin-right: 40px;
-    
+}
+.adressinfo /deep/.md-field-item-content {
+  padding: 0 24px;
 }
 .adressinfo {
   .md-agree-content {
-        color: #999;
-        font-size: 24px;
-      }
+    color: #999;
+    font-size: 24px;
+  }
 }
- 
+
 .adressinfo .md-agree {
   padding: 0 16px;
 }

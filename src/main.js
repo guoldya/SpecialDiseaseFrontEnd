@@ -15,13 +15,14 @@ import Address from './components/address/address.vue';
 import Footer from './components/footer/footer.vue';
 import Loading from './components/loading/loading.vue';
 import Null from './components/null';
+import Search from './components/search/search.vue';
 
 Vue.component('Null', Null);
 Vue.component('Loading', Loading);
 Vue.component('Footer', Footer);
 Vue.component('Address', Address);
 Vue.component('Header', Header);
-
+Vue.component('Search', Search);
 
 Vue.prototype.$conf = Config;
 Vue.use(mandMobile)

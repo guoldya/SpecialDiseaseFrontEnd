@@ -40,7 +40,7 @@ module.exports = {
     proxy: {
       '/api/bas': {
         // target: 'http://192.168.0.224:8090',//吴
-        target: 'http://192.168.0.224:8080',//吴 新接口
+        target: 'http://192.168.0.61:8066',//吴 新接口
         //target: 'http://192.168.0.110:8090',//安未
         // target: 'http://192.168.0.189:8090',//冉有钱
         // target: 'http://192.168.0.198:8080',//张 bas
@@ -54,7 +54,7 @@ module.exports = {
       },
       '/api/hos': {
         // target: 'http://192.168.0.198:8082',//张 hos
-        target: 'http://192.168.0.224:8082',//吴 新接口
+        target: 'http://192.168.0.61:8066',//吴 新接口
         changeOrigin: true, // 允许跨域
         pathRewrite: {
           '^/api/hos': '/'

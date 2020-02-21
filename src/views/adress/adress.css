@@ -1,0 +1,74 @@
+.adress .card {
+   box-shadow: 0 0 17px #ededed;
+   margin-top: 20px;
+}
+
+.adress {
+   width: 100%;
+   height: 100%;
+}
+
+.order-number {
+   display: flex;
+   justify-content: space-between;
+   font-size: 30px;
+   padding: 10px 0;
+}
+
+.adress .headdesc {
+   border-bottom: 1px solid #ededed;
+   padding-bottom: 20px;
+   font-size: 28px;
+   padding-top: 5px;
+}
+
+.order-bottom {
+   padding-top: 20px;
+   display: flex;
+   justify-content: space-between;
+   font-size: 26px;
+}
+
+.adress .card {
+   padding: 20px
+}
+
+.adress .cardText {
+   padding: 0 16px;
+}
+
+.adress .bianji {
+   font-size: 26px;
+   color: #1da1f3
+}
+
+.lajitong {
+   margin-left: 34px;
+   position: relative;
+   top: 5px;
+   width: 30px;
+}
+
+.adress .card {
+   border-radius: 0;
+}
+
+.adress .md-radio {
+   line-height: 1;
+   margin-top: inherit;
+   margin-bottom: inherit;
+}
+
+.adress .add {
+   background-color: #1da1f3;
+   width: 100%;
+   text-align: center;
+   color: #ffffff;
+   position: fixed;
+   line-height: 100px;
+   bottom: 0;
+}
+
+.adress .md-radio.is-checked .md-radio-icon {
+   color: #1da1f3;
+}

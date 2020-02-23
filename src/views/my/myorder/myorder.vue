@@ -1,118 +1,145 @@
  <template>
   <div class="margin55 outCarint">
     <Header post-title="我的订单"></Header>
-    <div class="ordercard">
-      <div class="ordercard-top">
-        <span class="title">
-          <img src="@/assets/images/dill13.png" alt="">
-          SF1222222222222222222
-        </span>
-        <span class="money">
-          $125.00
-        </span>
-      </div>
-      <div class="orderlistbottom12">
-        <div class="orderlistbottom">
-          <div class="name">
-            <p>药品名药品名药品名药品名药品药品名</p>
+    <div class="mycard" v-if="waitPayData.length!=0" v-show="!loadingtrue" v-for="(item, index) in waitPayData">
+      <div class="mycardtop">
+        <div class="cardtopleft">
+          <div>
+            <img src="@/assets/images/dill13.png" alt="">
           </div>
           <div>
-            <p>136元</p>
+            <p>订单编号</p>
+            <p class="orderno">{{item.orderCode}}</p>
           </div>
         </div>
-        <div class="orderlist2">
-          <span>单价：27元/盒</span>
-          <span>12盒</span>
-        </div>
-      </div>
-      <div class="orderlistbottom12">
-        <div class="orderlistbottom">
-          <div class="name">
-            <p>药品名药品名药品名药品名药品药品名</p>
+        <div class="cardtopright" @click="updown(index)">
+          <div>
+            <p>订单总额</p>
+            <p class="money">￥{{item.totalMoney|keepTwoNum}}</p>
           </div>
           <div>
-            <p>136元</p>
+            <img v-if="isSHOW==index" src="@/assets/images/icon_down.png" alt="">
+            <img v-if="isSHOW!=index" src="@/assets/images/icon_up@2x.png" alt="">
           </div>
         </div>
-        <div class="orderlist2">
-          <span>单价：27元/盒</span>
-          <span>12盒</span>
+      </div>
+      <div v-show="isSHOW==index">
+        <div class="mycardlist" v-for="(item2, index2) in item.orderDetailsList" :key="index2">
+          <div class="mycardlistleft">
+            <div class="img">
+              <img src="@/assets/images/1.jpg" alt="">
+            </div>
+            <div>
+              <p>{{item2.drugName}}</p>
+              <p class="price">单价：￥{{item2.price|keepTwoNum}}</p>
+            </div>
+          </div>
+          <div class="mycardlistright">
+            <p>订单金额：￥{{item2.total|keepTwoNum}}</p>
+            <p class="num">数量：{{item2.num}}</p>
+          </div>
         </div>
+
+      </div>
+      <div class="lookmore" @click="orderinfo(item)">
+        <span>查看详情</span>
+        <span><img src="@/assets/images/icon_right.png" alt=""></span>
       </div>
     </div>
-    <div style="height:50px"></div>
-    <p class="outbTN">
-      <span class="outbTN-left">
-        <span><img src="@/assets/images/isall.png" alt=""> </span>
-        <span>全选</span>
-        <span>合计：￥{{123|keepTwoNum}}</span>
+    <Null :loading-true="!loadingtrue&&waitPayData.length==0"></Null>
+    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="30" class="textCenter">
+      <span v-if="waitPayData.length!=0&&!nomore">
+        <span class="mu-light-text-color">加载中</span>
+        <md-icon name="spinner" size="lg" style="-webkit-filter:invert(1)"></md-icon>
       </span>
-      <span class="outbTN-right" @click="totalPay()">立即缴费</span>
-    </p>
+    </div>
+    <Loading v-show="loadingtrue"></Loading>
+
   </div>
 </template>
  <script>
+let pay_list_url = '/api/hos/bizOrder/selectPage'
 export default {
   data() {
     return {
+      isSHOW: 0,
+      waitPayData: [],
+      page: 1,
+      pageSize: 10,
+      busy: true,
+      nomore: false,
+      loadingtrue: true,
+
     };
   },
   mounted() {
+    this.WaitPay(false);
   },
   methods: {
-    totalPay() {
-      let argu = {};
+    updown(data) {
+      console.log(data)
+      
+      if(this.isSHOW == data){
+        this.isSHOW='ssssss'
+      }else{
+         this.isSHOW = data;
+      }
+    },
+    WaitPay(flag) {
+      const params = {};
+      params.pageNumber = this.page;
+      params.pageSize = this.pageSize;
+      this.$axios.put(pay_list_url, params).then((res) => {
+        this.loadingtrue = false;
+        if (res.data.code == 200) {
+          if (res.data.rows) {
+            if (flag) {
+              this.waitPayData = this.waitPayData.concat(res.data.rows);  //concat数组串联进行合并
+              if (this.page < Math.ceil(res.data.total / 10)) {  //如果数据加载完 那么禁用滚动时间 this.busy设置为true
+                this.busy = false;
+                this.nomore = false;
+              } else {
+                this.busy = true;
+                this.nomore = true;
+              }
+            } else {
+              this.waitPayData = res.data.rows;
+              this.busy = true;
+              if (res.data.total < 10) {
+                this.busy = true;
+                this.nomore = true;
+              } else {
+                this.busy = false;
+                this.nomore = false;
+              }
+            }
+          }
+          //2、
+        } else {
+          this.waitPayData = []
+        }
+      })
+    },
+    loadMore() {
+      this.busy = true;  //将无限滚动给禁用
+      setTimeout(() => {  //发送请求有时间间隔第一个滚动时间结束后才发送第二个请求
+        this.page++;  //滚动之后加载第二页
+        this.WaitPay(true);
+      }, 500);
+    },
+    orderinfo(data) {
+      let argu = { id: data.id };
       this.$router.push({
-        name: "payment",
+        name: "myorderinfo",
         query: argu
       });
-    }
+    },
+
   }
 
 }
  </script>
  <style lang='scss' scoped>
-.ordercard {
-  box-shadow: 0 0 18px rgba(20, 19, 51, 0.1);
-  background: #fff;
-  padding: 20px;
-  border-radius: 20px;
-  margin-top: 20px;
-  .ordercard-top {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 15px;
-    border-bottom: 1px solid var(--primary--line);
-    img {
-      width: 30px;
-      position: relative;
-      top: 2px;
-    }
-    .money {
-      color: #ee3a3a;
-    }
-  }
-  .orderlistbottom12 {
-    margin: 40px 0;
-  }
-  .orderlistbottom {
-    margin-top: 15px;
-    display: flex;
-    justify-content: space-between;
-    .name {
-      flex: 0 0 400px;
-      .price {
-        color: #979797;
-        font-size: 24px;
-      }
-    }
-  }
-  .orderlist2 {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-  }
-}
 .outbTN {
   width: 100%;
   line-height: 70px;
@@ -154,6 +181,91 @@ export default {
     height: 60px;
     line-height: 60px;
     border-radius: 60px;
+  }
+}
+
+.mycard {
+  box-shadow: 0 0 18px rgba(20, 19, 51, 0.1);
+  background: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  margin-top: 20px;
+  .mycardtop {
+    display: flex;
+    justify-content: space-between;
+    p {
+      line-height: 50px;
+    }
+    .cardtopright,
+    .cardtopleft {
+      display: flex;
+      justify-content: space-between;
+    }
+    .cardtopleft {
+      img {
+        width: 30px;
+        margin-top: 10px;
+        margin-right: 10px;
+      }
+      .orderno {
+        color: #979797;
+        font-size: 24px;
+      }
+    }
+    .cardtopright {
+      text-align: right;
+      img {
+        width: 20px;
+        margin-left: 20px;
+      }
+      .money {
+        color: #ee3a3a;
+      }
+    }
+  }
+
+  .mycardlist {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    line-height: 50px;
+    .mycardlistright {
+      text-align: right;
+      font-size: 26px;
+      .num {
+        font-size: 24px;
+        color: #979797;
+      }
+    }
+    .mycardlistleft {
+      display: flex;
+      justify-content: space-between;
+      .img {
+        width: 100px;
+        height: 100px;
+        margin-right: 20px;
+        img {
+          width: 100%;
+        }
+      }
+      .price {
+        font-size: 24px;
+        color: #979797;
+      }
+    }
+  }
+}
+.lookmore {
+  padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 26px;
+  color: var(--primary--content);
+  border-top: 1px solid #e5e5e5;
+
+  img {
+    width: 12px;
   }
 }
 </style>

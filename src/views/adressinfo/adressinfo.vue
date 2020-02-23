@@ -1,6 +1,7 @@
 <template>
   <div class="adressinfo">
-    <Header post-title="编辑地址"></Header>
+    <Header  :post-title="this.post"></Header>
+    
     <!-- <Navigation type="title" :title="post">
       <span v-show="$route.query.id" class="mu-secondary-text-color" @click="dedete">删除</span>
     </Navigation> -->
@@ -33,10 +34,10 @@
 <script>
 import { mapState } from 'vuex';
 import { InputItem, Field } from 'mand-mobile'
-let addressDetails = "/api/hos/shippingAddress/addressDetails";
+let addressDetails = "/api/hos/bizShippingAddress/addressDetails";
 let addOrUpdate = "/api/hos/bizShippingAddress/insertOrUpdate";
-let deleteAddress = "/api/hos/shippingAddress/delete";
-let appshippingAddressaddressList = "/api/hos/shippingAddress/addressList";
+let deleteAddress = "/api/hos/bizShippingAddress/delete";
+let appshippingAddressaddressList = "/api/hos/bizShippingAddress/addressList";
 export default {
   name: 'input-item-demo',
 
@@ -147,14 +148,13 @@ export default {
       })
     },
     adressByValue: function (childValue) {
-      console.log(childValue, "childValuechildValue")
+      // console.log(childValue, "childValuechildValue")
       this.areaId = childValue
     },
     tijiao() {
-      console.log(this.areaId)
       this.isTijiao = false;
-      // if (!this.receiver || !this.mobile || !this.address || !this.areaId) {
-      if (!this.receiver || !this.mobile) {
+     if (!this.receiver || !this.mobile || !this.address || !this.areaId) {
+       // if (!this.receiver || !this.mobile) {
         this.$toast.info("请完善信息")
         this.isTijiao = true;
       } else {
@@ -170,7 +170,7 @@ export default {
         aa.address = this.address;
         aa.areaId = this.areaId;
         aa.zipCode = this.zipCode;
-        aa.isDefault = this.isDefault ? 1 : undefined;
+        aa.isDefault = this.isDefault ? 1 : 0;
         this.$axios.post(addOrUpdate, aa).then(res => {
           if (res.data.code == '200') {
             if (this.$route.query.checked) {
@@ -213,6 +213,9 @@ export default {
 <style lang="scss" scoped>
 .adressinfo .md-field-item-title {
   margin-right: 40px;
+}
+.adressinfo .md-field {
+  padding: 0px !important;
 }
 .adressinfo /deep/.md-field-item-content {
   padding: 0 24px;

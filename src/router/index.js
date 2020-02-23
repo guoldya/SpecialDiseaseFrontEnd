@@ -8,6 +8,9 @@ const addpeple = () => import(/* webpackChunkName: "home" */ "@/views/home/addpe
 const doctorlist = () => import(/* webpackChunkName: "home" */ "@/views/home/doctorlist/doctorlist.vue")
 const departsearch = () => import(/* webpackChunkName: "home" */ "@/views/home/departsearch/departsearch.vue")
 const result = () => import(/* webpackChunkName: "home" */ "@/views/home/result/result.vue")
+const consultDetail = () => import(/* webpackChunkName: "home" */ "@/views/home/consultDetail/consultDetail.vue")
+const buyService = () => import(/* webpackChunkName: "home" */ "@/views/home/buyService/buyService.vue")
+const pictureConsult = () => import(/* webpackChunkName: "home" */ "@/views/home/pictureConsult/pictureConsult.vue")
  
 //  在线问诊
 const online = () => import(/* webpackChunkName: "online" */ "@/views/online/online/online.vue")
@@ -22,11 +25,17 @@ const acctestinfo = () => import(/* webpackChunkName: "my" */ "@/views/my/acctes
 const idcardlist = () => import(/* webpackChunkName: "my" */ "@/views/my/idcardlist/idcardlist.vue")
 const consultation = () => import(/* webpackChunkName: "my" */ "@/views/my/consultation/consultation.vue")
 const myorder = () => import(/* webpackChunkName: "my" */ "@/views/my/myorder/myorder.vue")
+const myorderinfo = () => import(/* webpackChunkName: "my" */ "@/views/my/myorderinfo/myorderinfo.vue")
 const payment = () => import(/* webpackChunkName: "my" */ "@/views/my/payment/payment.vue")
 const outpation = () => import(/* webpackChunkName: "my" */ "@/views/my/outpation/outpation.vue")
+const outpationinfo = () => import(/* webpackChunkName: "my" */ "@/views/my/outpationinfo/outpationinfo.vue")
 const payorder = () => import(/* webpackChunkName: "my" */ "@/views/my/payorder/payorder.vue")
 const mydoctor = () => import(/* webpackChunkName: "my" */ "@/views/my/mydoctor/mydoctor.vue")
  
+ 
+ 
+
+
  
 Vue.use(Router)
 
@@ -36,17 +45,19 @@ export default new Router({
     path: '/',
     name: 'judge',
     component: index,
-  },{
+  },
+  {
     path: '/home',
     name: 'home',
     component: home,
     meta: {
-      title: '在线门诊'
+      title: '主页'
     }
-  },{
+  },
+  {
     path: 'departsearch',
     name: 'departsearch',
-    component: index,
+    component: departsearch,
     meta: {
       title: '搜索'
     }
@@ -58,6 +69,16 @@ export default new Router({
       title: '结果'
     }
   },{
+    path: '/consultDetail',
+    name: 'consultDetail',
+    component: consultDetail,
+    meta: {
+      title: '医生详情'
+    }
+  },
+  
+   
+  {
     path: '/addpeple',
     name: 'addpeple',
     component: addpeple,
@@ -73,13 +94,28 @@ export default new Router({
       title: '选择医生'
     }
   },
-   
   {
     path: '/my',
     name: 'my',
     component: my,
     meta: {
       title: '个人中心'
+    }
+  },
+  {
+    path: '/buyService',
+    name: 'buyService',
+    component: buyService,
+    meta: {
+      title: '购买服务'
+    }
+  },
+  {
+    path: '/pictureConsult',
+    name: 'pictureConsult',
+    component: pictureConsult,
+    meta: {
+      title: '图文确认'
     }
   },
   {
@@ -149,6 +185,15 @@ export default new Router({
     }
   },
   {
+    path: '/myorderinfo',
+    name: 'myorderinfo',
+    component: myorderinfo,
+    meta: {
+      title: '订单详情'
+    }
+  },
+   
+  {
     path: '/payment',
     name: 'payment',
     component: payment,
@@ -162,6 +207,14 @@ export default new Router({
     component: outpation,
     meta: {
       title: '我的处方'
+    }
+  },
+  {
+    path: '/outpationinfo',
+    name: 'outpationinfo',
+    component: outpationinfo,
+    meta: {
+      title: '处方详情'
     }
   },
   {
@@ -181,14 +234,7 @@ export default new Router({
       title: '在线问诊'
     }
   },
-  {
-    path: '/home',
-    name: 'home',
-    component: home,
-    meta: {
-      title: '主页'
-    }
-  },
+   
   ],
   scrollBehavior(to, from, savedPosition) {
     return new Promise((resolve, reject) => {

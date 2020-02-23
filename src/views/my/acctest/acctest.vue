@@ -6,41 +6,43 @@
       <li class="link avatar">
         <label>头像</label>
         <a href="javascript:;" class="upload-btn" style="overflow: hidden;">
-          <img :src="helpAppUrl">
+          <!-- <img :src="helpAppUrl"> -->
+          <img v-if="$store.state.userInfo.headPic" :src="$store.state.userInfo.headPic">
+          <img v-else src="@/assets/images/user.jpg">
           <input v-if="!$route.query.realname" class="file-input" @change="changeIMG($event)" type="file" name="positive" id="positive" accept="image/*" />
         </a>
       </li>
-      <li class="link" v-if="!$route.query.realname">
+      <!-- <li class="link" v-if="!$route.query.realname">
         <label>昵称</label>
-        <span class="right" @click="intoacctsetinfo"> fo.nickname}}
+        <span class="right" @click="intoacctsetinfo">
           <img src="@/assets/images/icon_more2@2x.png" alt="">
         </span>
-      </li>
+      </li> -->
       <li>
-        <label>用户名</label>
-        <span class="right"> fo.name}}</span>
+        <label>姓名</label>
+        <span class="right">{{ _accountinfo.nickname}}</span>
       </li>
     </ul>
     <ul>
       <li class="link">
 
         <label>性别</label>
-        <span class="right"> fo.sex|examSex}}</span>
+        <span class="right">{{ _accountinfo.sex|examSex}}</span>
 
       </li>
       <li class="link">
 
         <label>出生日期</label>
-        <span class="right"> fo.birthday|time}}</span>
+        <span class="right">{{ _accountinfo.birthday|time}}</span>
 
       </li>
       <li class="link" v-if="$route.query.realname">
         <label>身份证号</label>
-        <span class="right"> fo.idCard}}</span>
+        <span class="right">{{ _accountinfo.idCard}}</span>
       </li>
       <li class="link" v-if="$route.query.realname">
         <label>家庭住址</label>
-        <span class="right"> fo.address}}</span>
+        <span class="right">{{_accountinfo.address}}</span>
       </li>
     </ul>
   </div>
@@ -65,14 +67,15 @@ export default {
   },
   computed: {
     ...mapState({
-      _accountinfo: state => state.my.accountinfo,
+      _accountinfo: state => state.userInfo,
     }),
 
   },
   mounted() {
 
     if (this._accountinfo.headUrl) {
-      this.helpAppUrl = this.$conf.constant.img_base_url + this._accountinfo.headUrl
+      // this.helpAppUrl = this.$conf.constant.img_base_url + this._accountinfo.headPic
+      this.helpAppUrl = this._accountinfo.headPic
     } else if (this._accountinfo.sex != 1) {
       this.helpAppUrl = require('@/assets/images/31.jpg')
     }
@@ -86,7 +89,7 @@ export default {
     intoacctsetinfo(e) {
       this.$router.push({
         name: 'acctestinfo',
-      query: 'ss'
+        query: 'ss'
       });
     },
     changeIMG(e) {

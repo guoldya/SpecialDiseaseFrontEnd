@@ -16,6 +16,9 @@ import Footer from './components/footer/footer.vue';
 import Loading from './components/loading/loading.vue';
 import Null from './components/null';
 import Search from './components/search/search.vue';
+import doctorList from './components/doctorList';
+import Apptab from './components/apptab/apptab.vue';
+import Recordcard from './components/recordcard';
 
 Vue.component('Null', Null);
 Vue.component('Loading', Loading);
@@ -23,6 +26,9 @@ Vue.component('Footer', Footer);
 Vue.component('Address', Address);
 Vue.component('Header', Header);
 Vue.component('Search', Search);
+Vue.component('doctorList', doctorList);
+Vue.component('Apptab', Apptab);
+Vue.component('Recordcard', Recordcard);
 
 Vue.prototype.$conf = Config;
 Vue.use(mandMobile)
@@ -99,7 +105,24 @@ axios.interceptors.request.use(function (config) {
     return Promise.reject(err);
 });
  
-
+// 微信公众号
+// axios.interceptors.request.use(function (config) {
+//     let url = config.url;
+//     // 如果是登陆
+//     if (sessionStorage.getItem("token7")) {
+//         console.log(sessionStorage.getItem("token7"), "南川要用的sss")
+//         config.headers.Authorization = sessionStorage.getItem("token7");
+//     } else {
+//         // if (url.indexOf("/appLogin/login") > -1 || (url.indexOf("appLoginlogin") > -1)) {
+//         //     config.headers.Authorization = "";
+//         // } else {
+//         //     config.headers.Authorization = "";
+//         // };
+//     }
+//     return config;
+// }, function (err) {
+//     return Promise.reject(err);
+// });
 // 添加一个响应拦截器
 axios.interceptors.response.use(function (res) {
     // console.log(res, "总配置")

@@ -3,38 +3,42 @@
 </style>
 <template>
   <div class="home">
-    <div class="homeheader">
+    <!-- <div class="homeheader">
       <p>医院门特在线</p>
-    </div>
+    </div> -->
     <div class="hometop">
-      <!-- <img src="@/assets/images/zhuce.png" alt=""> -->
     </div>
-    <div class="homePage">
+    <div class="homePage" v-if=" _cardlist.length==0">
       <div class="homeCard bindCard  ">
-        <span class="bindCardBtn" @click="addpeple">添加就诊人</span>
+        <span class="bindCardBtn" @click="addpeple">添加门特患者</span>
       </div>
       <div class="cardPositon"> </div>
       <!-- 测试的code：{{code}} -->
     </div>
-    <div class="cardhome">
-      <div class="left">
-        <p>申请病种</p>
-        <p>门特周期</p>
-        <p>状态</p>
-      </div>
-      <div class="right">
-        <p @click="doctorlist()">高血压>></p>
-        <p>2010.01.01-2105.0202</p>
-        <p>状态</p>
+    <!-- <div class="homePage" v-if=" _cardlist.length!=0"> -->
+    <div class="homePage" v-if=" _cardlist.length!=0">
+      <div class="cardhome" v-for="(item, index) in  _cardlist" v-if="item.id==chooseId" :key="'cardlist' + index">
+
+        <p class="name">{{item.name}}
+          <span class="code">{{item.code}}</span>
+        </p>
+        <!-- <p>{{item.code}}</p> -->
+        <p class="dise">{{item.diseaseName}}</p>
+        <p class="dise">{{item.idCard}}</p>
+        <!-- <p @click="switchCard(index)">切换门特患者</p> -->
+        <img class="qiehuan" src="@/assets/images/qiehuan.png">
       </div>
     </div>
+    <doctorList v-for="(item, index) in listdata" :datas="item" :key="index"></doctorList>
     <!-- 底部 -->
     <Footer></Footer>
   </div>
 </template>
 <script>
 import { mapState } from 'vuex';
+import doctorList from "../../../components/doctorList";
 let bizPatientRegisterselectCount = "/api/hos/bizPatientRegister/selectCount";
+let doctorlistURL = '/api/hos/sysDoctor/selectDoctorByPatient'
 export default {
   data() {
     return {
@@ -46,43 +50,42 @@ export default {
       isDown: false,
       chooseId: '',
       picName: '',
-      homeList: {
-        notPayCount: 0,
-        notReadMessageCount: 0,
-        notReadPacsReport: 0,
-        notSignCount: 0,
-      },
+      listdata: '',
       getInfo: '',
     }
   },
   computed: {
     ...mapState({
-      // _cardlist: state => state.home.cardList,
+      _cardlist: state => state.home.cardList,
+      _departList: state => state.home.departList,
       // _accountinfo: state => state.my.accountinfo,
     }),
   },
   created() {
-
+    console.log(this._cardlist, "sssssssssssssss", this._cardlist.length)
   },
   async mounted() {
-
-
+    // await this.$store.dispatch('getCards', { update: true });
+    await this.$store.dispatch('getCards', { update: true });
+    // await this.$store.dispatch('getDepart', { update: true });
     this.getInfo = JSON.parse(sessionStorage.getItem('objInfo'));
     if (this.getInfo) {
       if (this.getInfo.id) {
         this.chooseId = this.getInfo.id;
-        this.link2 = this.getInfo.cardNo;
       }
     } else {
       if (this._cardlist.length == 0) {
         return
       }
       this.chooseId = this._cardlist[0].id;
-      this.link2 = this._cardlist[0].cardNo;
       let setInfo = JSON.stringify(this._cardlist[0])
       sessionStorage.setItem('objInfo', setInfo)
     }
+    // this.homeNumber(2);
     this.homeNumber(this.chooseId);
+  },
+  components: {
+    doctorList
   },
   methods: {
     doctorlist() {
@@ -94,16 +97,13 @@ export default {
     },
     async homeNumber(data) {
       try {
-        let res = await this.$axios.put(bizPatientRegisterselectCount, {
-          cardId: data ? data : this.getInfo.id
-        }, {
-          TOKEN: localStorage.getItem("token7")
+        let res = await this.$axios.put(doctorlistURL, {
+          patientId: data
         });
         if (res.data.code != 200) {
           throw Error(res.data.msg);
         }
-        this.homeList = res.data.data;
-        this.$store.commit('homeListFun', this.homeList.notPayCount + this.homeList.notReadMessageCount + this.homeList.notReadPacsReport + this.homeList.notSignCount);
+        this.listdata = res.data.rows;
 
       } catch (error) {
         console.log(error);
@@ -192,7 +192,7 @@ export default {
 .hometop {
   width: 100%;
   height: 370px;
-  background: url("~@/assets/images/zhuce.png") no-repeat 100%;
+  background: url("~@/assets/images/bg.png") no-repeat 100%;
   background-size: cover;
   img {
     width: 100%;
@@ -200,7 +200,7 @@ export default {
   }
 }
 .homePage {
-  margin-top: -130px;
+  margin-top: -90px;
 }
 .bindCard {
   width: 94%;
@@ -210,7 +210,7 @@ export default {
   height: 240px;
   text-align: center;
   line-height: 240px;
-  border-radius: 20px;
+  border-radius: 10px;
   box-shadow: 0 0 17px rgba(20, 19, 51, 0.1);
 }
 
@@ -223,24 +223,42 @@ export default {
   font-size: 30px;
 }
 .cardhome {
+  position: relative;
   width: 94%;
   margin-left: 3%;
-  border-radius: 20px;
+  border-radius: 10px;
   box-shadow: 0 0 17px rgba(20, 19, 51, 0.1);
   padding: 24px;
-  display: flex;
-  justify-content: flex-start;
+  // display: flex;
+  // justify-content: flex-start;
   margin-top: 20px;
-  line-height: 50px;
+  line-height: 40px;
   background: #fff;
-  .left {
-    text-align: right;
-    margin-right: 20px;
+  height: 196px;
+  .name {
+    font-size: 35px;
+    font-weight: bold;
+    color: rgba(37, 44, 58, 1);
+    line-height: 55px;
   }
-  .right {
-    text-align: left;
-    flex-grow: 2;
-    margin-left: 40px;
+  .dise {
+    font-size: 26px;
+    color: rgba(138, 138, 138, 1);
+    line-height: 55px;
+  }
+  .qiehuan {
+    width: 146px;
+    height: 39px;
+    position: absolute;
+    right: 0;
+    top: 20px;
+  }
+  .code {
+    padding: 3px 15px;
+    background: #9ac3ff;
+    border-radius: 5px;
+    font-size: 17px;
+    color:#fff;
   }
 }
 </style>

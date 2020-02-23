@@ -4,13 +4,14 @@
       <div class="aui-user">
         <div class="aui-user-cell">
           <div class="aui-user-cell-logo">
-            <img src="@/assets/images/user.jpg">
+            <img v-if="$store.state.userInfo.headPic" :src="$store.state.userInfo.headPic">
+            <img v-else src="@/assets/images/user.jpg">
           </div>
           <div class="aui-user-cell-title">
-            <!-- <p>{{_accountinfo.name}}ssss</p>
-            <p class="aui-user-info" @click="acctest()">编辑个人资料{{_accountinfo.account}}</p> -->
-            <p> ssss</p>
+            <p>{{this.$store.state.userInfo.nickname}}</p>
             <p class="aui-user-info" @click="acctest()">编辑个人资料 </p>
+            <!-- <p> ssss</p>
+            <p class="aui-user-info" @click="acctest()">编辑个人资料 </p> -->
           </div>
           <div class="aui-user-row"></div>
         </div>
@@ -100,6 +101,7 @@ export default {
   },
   computed: {
     ...mapState({
+      _accountinfo: state => state.userinfo,
       // _accountinfo: state => state.my.accountinfo,
       _cardlist: state => state.home.cardList,
     }),
@@ -152,9 +154,7 @@ export default {
     },
     // 就医评价
     valuationList() {
-      if (!this.testRegist()) {
-        return
-      }
+     
       let argu = {};
       this.$router.push({
         name: "valuationList",

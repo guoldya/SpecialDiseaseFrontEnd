@@ -18,29 +18,33 @@ export default {
   },
   methods: {
     searchT: function () {
-      if (this.type == "onlines") {
-        this.$router.push({
-          path: "/onlinesearch",
-          query: { orgType: 3 },
-        });
-      } else if (this.type == "choosehospital") {
-        this.$store.commit("searchTypeFun", this.type);
-        this.$router.push({
-          path: "/hospitalsearch"
-        });
-      } else if (this.type == "workdepart") {
-        this.$store.commit("searchTypeFun", this.type);
-        this.$router.push({
+      this.$router.push({
           path: "/departsearch",
-          query: { type: this.type },
+          query: {   },
         });
-      } else {
-        this.$store.commit("searchTypeFun", this.type);
-        this.$router.push({
-          path: "/departsearch"
-          // query: argu,
-        });
-      }
+      // if (this.type == "onlines") {
+      //   this.$router.push({
+      //     path: "/onlinesearch",
+      //     query: { orgType: 3 },
+      //   });
+      // } else if (this.type == "choosehospital") {
+      //   this.$store.commit("searchTypeFun", this.type);
+      //   this.$router.push({
+      //     path: "/hospitalsearch"
+      //   });
+      // } else if (this.type == "workdepart") {
+      //   this.$store.commit("searchTypeFun", this.type);
+      //   this.$router.push({
+      //     path: "/departsearch",
+      //     query: { type: this.type },
+      //   });
+      // } else {
+      //   this.$store.commit("searchTypeFun", this.type);
+      //   this.$router.push({
+      //     path: "/departsearch"
+      //     // query: argu,
+      //   });
+      // }
     }
   }
 };

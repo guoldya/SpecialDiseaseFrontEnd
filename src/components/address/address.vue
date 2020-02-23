@@ -23,7 +23,7 @@ export default {
          if (res.data.code == '200') {
             this.pickerData1 = [this.areaList(res.data.rows)];
             res.data.rows.forEach((value, index) => {
-               console.log(value.areaCode)
+               // console.log(value.areaCode)
                if (value.areaCode.slice(0, 2) == String(this.defaultValue[0]).slice(0, 2)) {
                   var aa = value.label;
                   this.pickerDefaultIndex[0] = Number(value.areaCode);
@@ -56,7 +56,6 @@ export default {
       areaList(list) {
          let newArea = [];
          for (let i = 0; i < list.length; i++) {
-            console.log(list[i],"list[i]")
             let neslist = {
                text: list[i].label,
                value: list[i].id
@@ -78,10 +77,8 @@ export default {
             value && (res += `${value.text || value.label} `)
          })
          values.forEach(value => {
-            console.log(value,"我是循环的value")
             value && (test += `${value.value || value.label} `)
          })
-         console.log(res, test, values, "我是一个")
          this.$emit('adressByValue', test.split(' ')[2]);
          this.$store.commit('adressnameFun', res);
          this[`pickerValue${index}`] = res;

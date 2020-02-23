@@ -4,45 +4,59 @@
     <div class="margin55">
       <ul v-if="addressInfo.length!=0" v-show="!loadingtrue">
         <li v-for="(item,index) in addressInfo" :key="index">
-          <div class="adress-box">
-            <div class="adress-content" @click="selectFun(item)">
-              <p>
-                <span>{{item.receiver}}</span>&nbsp;
-                <span>{{item.mobile}}
-                  <span v-show="item.isDefault==1" class="default">
-                    默认
+          <div class="card">
+            <div class="cardText">
+              <div @click="selectFun(item)">
+                <p class="order-number">
+                  <span>{{item.receiver}}</span>
+                  <span>{{item.mobile}}</span>
+                </p>
+                <p class="headdesc">{{item.address}}</p>
+              </div>
+
+              <p class="order-bottom">
+                <span>
+                  <div class="md-agree" @click="onChange(item.id,item.isDefault)">
+                    <div :class="{ 'md-agree-icon':true,'checked':item.isDefault==1}">
+                      <div class="md-agree-icon-container">
+                        <i class="md-icon icon-font md-icon-checked md"></i>
+                        <i class="md-icon icon-font md-icon-check md"></i>
+                      </div>
+                    </div>
+                    <div class="md-agree-content">
+                      默认地址
+                    </div>
+                  </div>
+                </span>
+                <span class="fr">
+                  <span @click="adressinfo(item)" class="bbb mui-icon mui-icon-compose">
+                    <label class="bianji">编辑</label>
+                  </span>
+                  <span class="mui-icon" style="font-size: 13px;" @click="dedete(item.id)">
+                    <img class="lajitong" src="@/assets/images/lajitong.png"> 删除
                   </span>
                 </span>
               </p>
-              <p>{{item.address}}</p>
-            </div>
-            <div class="line"></div>
-            <div class="adress-btn">
-              <span class="mui-icon" @click="adressinfo(item)">
-                <img class="lajitong" src="@/assets/images/icom_write.png"> 编辑
-              </span>
-              <span class="mui-icon" @click="dedete(item.id)">
-                <img class="lajitong" src="@/assets/images/lajitong.png"> 删除
-              </span>
             </div>
           </div>
         </li>
+
       </ul>
+
       <Null :loading-true="!loadingtrue&&addressInfo.length==0"></Null>
     </div>
     <Loading v-show="loadingtrue"></Loading>
-    <p class="outbTN">
-      <span @click="addadress">添加地址</span>
-    </p>
+    <div style="height: 60px"></div>
+    <p class="add" @click="addadress()">添加地址</p>
   </div>
 </template>
 <script type="text/babel">
-import { mapState } from 'vuex';
 import { Toast } from 'mand-mobile';
 import { Dialog, Button } from 'mand-mobile'
-let appshippingAddressaddressList = "/api/hos/shippingAddress/addressList";
-let deleteAddress = "/api/hos/shippingAddress/delete";
-let isDefault = "/api/hos/shippingAddress/isDefault"
+
+let appshippingAddressaddressList = "/api/hos/bizShippingAddress/addressList";
+let deleteAddress = "/api/hos/bizShippingAddress/delete";
+let isDefault = "/api/hos/bizShippingAddress/insertOrUpdate"
 export default {
   data() {
     return {
@@ -52,71 +66,61 @@ export default {
       loadingtrue: true,
     };
   },
-  computed: {
-    ...mapState({
-      _selectAdress: state => state.selectAdress,
-    }),
-  },
   created() {
     this.$axios.put(appshippingAddressaddressList, {
     }).then((res) => {
+      console.log(res)
       if (res.data.code == '200') {
         this.loadingtrue = false;
         this.addressInfo = res.data.rows;
       } else {
-        this.$toast.info(res.msg);
+        console.log(res.msg);
       }
     }).catch(function (err) {
       console.log(err);
     });
   },
-  watch: {
-
-  },
-  mounted() {
-
-  },
+ 
   methods: {
     selectFun(val) {
       if (this.$route.query.checked) {
         this.$store.commit('selectAdressFun', val);
         this.$router.go(-1);
-      } else {
-        return
       }
+
     },
     onChange(data, index) {
       if (index == 1) {
         return
       }
       this.$axios.post(isDefault, {
-        id: data
+        id: data, isDefault: 1
       }).then((res) => {
+        console.log(res)
         if (res.data.code == '200') {
           this.$toast.info("设置成功");
           this.$axios.put(appshippingAddressaddressList, {
           }).then((res) => {
+            console.log(res)
             if (res.data.code == '200') {
               this.addressInfo = res.data.rows;
             } else {
-              this.$toast.info(res.msg);
+              console.log(res.msg);
             }
           }).catch(function (err) {
             console.log(err);
           });
         } else {
-          this.$toast.info(res.msg);
+          console.log(res.msg);
         }
       }).catch(function (err) {
         console.log(err);
       });
     },
     dedete(data) {
-
-
+      console.log(data)
       let params = {}, p_data = {};
       p_data.id = data;
-
       params.data = p_data;
       Dialog.confirm({
         title: '确认',
@@ -124,22 +128,16 @@ export default {
         confirmText: '确定',
         onConfirm: () => {
           this.$axios.delete(deleteAddress, params).then((res) => {
-
+            console.log(res)
             if (res.data.code == '200') {
               this.$toast.info("删除成功")
               this.$axios.put(appshippingAddressaddressList, {
               }).then((res) => {
+                console.log(res)
                 if (res.data.code == '200') {
                   this.addressInfo = res.data.rows;
-                  if (this._selectAdress.id == data) {
-                    if (res.data.rows.length != 0) {
-                      this.$store.commit('selectAdressFun', this.addressInfo.filter(item => item.isDefault == 1)[0]);
-                    } else {
-                      this.$store.commit('selectAdressFun', '');
-                    }
-                  }
                 } else {
-                  this.$toast.info(res.msg);
+                  console.log(res.msg);
                 }
               }).catch(function (err) {
                 console.log(err);
@@ -156,7 +154,7 @@ export default {
     adressinfo(data) {
       this.$router.push({
         name: 'adressinfo',
-        query: { id: data.id, isDefault: data.isDefault, checked: this.$route.query.checked ? 1 : undefined }
+        query: { id: data.id, isDefault: data.isDefault }
       });
     },
     addadress() {
@@ -168,57 +166,12 @@ export default {
 
 
   },
+  computed: {
 
+  },
 
 };
 </script>
- <style lang="scss" scoped>
+ <style scoped>
 @import "../adress/adress.css";
-.adress-box {
-  background: #ffffff;
-  padding: 24px;
-  border-bottom: 2px solid #e5e5e5;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  .adress-content {
-    line-height: 50px;
-    flex: 0 0 400px;
-    .default {
-      font-size: 24px;
-      color: var(--primary);
-      padding: 0 7px;
-      border-radius: 5px;
-      background: rgba(29, 161, 243, 0.31);
-    }
-  }
-  .line {
-    background: #e5e5e5;
-    width: 3px;
-    height: 50px;
-    margin: 30px;
-  }
-  .adress-btn {
-    // flex: 0 0 200px;
-    color: var(--primary--content);
-    font-size: 26px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-}
-.outbTN {
-  width: 100%;
-  line-height: 70px;
-  bottom: 0;
-  left: 0;
-  z-index: 999;
-  border-top: 2px solid #e5e5e5;
-  background: #1da1f3;
-  color: #ffffff;
-  position: fixed;
-  text-align: center;
-  padding: 20px 36px;
- 
-}
 </style>

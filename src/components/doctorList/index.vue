@@ -4,26 +4,26 @@
     <div class="header"><img src="@/assets/images/3.jpg" /></div>
     <div class="comment-right">
       <p class="introduce">
-        <span class="name">{{datas.name}}</span>&nbsp;
-        <span>{{datas.level|level}}</span>&nbsp;
-        <span>{{datas.orgName}}</span>&nbsp;
+        <span class="name">{{datas.drName}}</span>&nbsp;
+        <span>{{datas.education}}</span>&nbsp;
+        <span>{{datas.deptName}}</span>&nbsp;
       </p>
       <p class="colo13">
         <span class="picture" :class="datas.allowType<1||!datas.allowType ?'noOpen' :''">图文</span>&nbsp;
-        <span class="picture" :class="datas.allowType<2||!datas.allowType ?'noOpen' :''">电话</span>&nbsp;
+        <span class="picture" :class="datas.allowType<2||!datas.allowType ?'noOpen' :''">门特在线</span>&nbsp;
         <span class="picture" :class="datas.allowType<3||!datas.allowType ?'noOpen' :''">视频</span>&nbsp;
         <span class="reputation">好评率 {{datas.praiseRate||0}}%</span>&nbsp;
       </p>
-      <p class="content">擅长：{{datas.skill}}</p>
+      <p class="content">擅长：{{datas.major}}</p>
       <p class="colo13">
-        <span>咨询数：{{datas.diagnosisNum||'0'}}</span>&nbsp;
-        <span>平均回复时长：{{datas.replyTime||'0'}}分</span>&nbsp;
+        <span>咨询数：<span class="num">{{datas.diagnosisNum||'0'}}</span></span>&nbsp;
+        <span>平均回复时长：<span  class="num">{{datas.replyTime||'0'}}</span> 分</span>&nbsp;
       </p>
       <p class="price">￥{{datas.minPrice|keepTwoNum}} 起
         <router-link :to="{ path: '/consultDetail', query: { id: datas.id }}" class="consult">立即咨询</router-link>
         <router-link v-show="false" to="/pictureConsult">免费咨询</router-link>
       </p>
-      <em>已满</em>
+      <!-- <em>搜查</em> -->
     </div>
   </div>
 </template>
@@ -74,8 +74,13 @@ export default {
 /* .doctor-list {} */
 .doctor-list {
   position: relative;
-   margin-top: 20px;
+  margin-top: 20px;
   border-bottom: 1px solid #e0e0e0;
+  background: #fff;
+  width: 94%;
+  margin-left: 3%;
+  border-radius: 20px;
+  padding: 10px;
 }
 
 .doctor-list .header {
@@ -108,36 +113,43 @@ export default {
   border-bottom-left-radius: 15px;
 }
 .doctor-list p {
-  line-height: 50px;
+  line-height: 40px;
 }
 
 .doctor-list .name {
   font-size: 32px;
 }
-.doctor-list p {
-  line-height: 50px;
-}
 
-.doctor-list .name {
-  font-size: 32px;
+.content {
+  font-size: 24px;
+  color: #878787;
+  line-height: 30px;
 }
 
 .picture {
-  border: 1px solid var(--primary);
-  padding: 1px 10px;
+  padding: 1px 5px;
   border-radius: 7px;
-  color: var(--primary);
+  color: #fff;
+  background: #9ac3ff;
+  font-size: 22px;
 }
 
 .noOpen {
-  border: 2px solid var(--primary--content);
-  padding: 1px 10px;
+  padding: 1px 5px;
   border-radius: 7px;
   color: var(--primary--content);
+  color: #fff;
+  background: #9ac3ff;
 }
-
+.introduce {
+  font-size: 24px;
+}
+.num{
+   color: #3A3A3A;
+   font-size: 28px;
+}
 .doctor-list .price {
-  color: var(--primary);
+  color: #f74749;
   font-weight: 500;
   letter-spacing: 1px;
   overflow: hidden;
@@ -146,9 +158,9 @@ export default {
     font-size: 26px;
     float: right;
     display: inline-block;
-    height: 55px;
-    line-height: 55px;
-    padding: 0 30px;
+    height: 45px;
+    line-height: 45px;
+    padding: 0 20px;
     border: 1px solid var(--primary);
     border-radius: 30px;
     margin-left: 30px;
@@ -157,6 +169,7 @@ export default {
   .consult {
     color: #fff;
     background: var(--primary);
+    font-size: 23px;
   }
 }
 

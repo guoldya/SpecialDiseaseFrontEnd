@@ -1,7 +1,7 @@
 <template>
       <div class="result">
             <Header post-title="搜索"></Header>
-            <div class="margin50" style="background-color: #ffffff">
+            <!-- <div class="margin50" style="background-color: #ffffff">
                   <form action="">
                         <div class="g-suggest">
                               <div class="g-suggest--input">
@@ -35,7 +35,7 @@
                                     <p class="noMore">没有更多记录了</p>
                               </ul>
                         </div>
-                  </div>
+                  </div> -->
             </div>
       </div>
 
@@ -51,58 +51,58 @@ export default {
             }
       },
       mounted() {
-            document.getElementById("oc_vala").focus();
-            var aa = window.localStorage;
-            if (aa.getItem("HistoryList") != null && aa.getItem("HistoryList") != undefined) {
-                  var json = aa.getItem("HistoryList");
-                  this.HistoryList = JSON.parse(json);
-            }
+            // document.getElementById("oc_vala").focus();
+            // var aa = window.localStorage;
+            // if (aa.getItem("HistoryList") != null && aa.getItem("HistoryList") != undefined) {
+            //       var json = aa.getItem("HistoryList");
+            //       this.HistoryList = JSON.parse(json);
+            // }
       },
       methods: {
-            resultT: function (value) {
-                  this.SearchVal(value);
-            },
-            clearT: function (value) {
-                  this.HistoryList.splice(value, 1);
-                  localStorage.setItem('HistoryList', JSON.stringify(this.HistoryList));
-            },
-            clear: function () {
-                  this.HistoryList = [],
-                        localStorage.setItem('HistoryList', JSON.stringify(this.HistoryList));
-            },
-            SearchVal(value) {
-                  if (!value) {
-                        this.$toast.info("请输入你要搜索的内容")
-                        return;
-                  }
-                  let val = value.trim() // 清除空格
-                  if (this.HistoryList.length > 0) { // 有数据的话 判断
-                        if (this.HistoryList.indexOf(val) !== -1) { // 有相同的，先删除 再添加 
-                              this.HistoryList.splice(this.HistoryList.indexOf(val), 1)
-                              this.HistoryList.unshift(val);
-                        } else { // 没有相同的 添加
-                              this.HistoryList.unshift(val);
-                        }
-                  } else { // 没有数据 添加
-                        this.HistoryList.unshift(val);
-                  }
-                  if (this.HistoryList.length > 6) { // 保留六个值
-                        this.HistoryList.pop();
-                  }
-                  if (this.$route.query.type) {
-                        this.$router.push({
-                              name: 'result',
-                              query: { val: val, type: this.$route.query.type }
-                        });
-                  } else {
-                        this.$router.push({
-                              name: 'result',
-                              query: { val: val }
-                        });
-                  }
+            // resultT: function (value) {
+            //       this.SearchVal(value);
+            // },
+            // clearT: function (value) {
+            //       this.HistoryList.splice(value, 1);
+            //       localStorage.setItem('HistoryList', JSON.stringify(this.HistoryList));
+            // },
+            // clear: function () {
+            //       this.HistoryList = [],
+            //             localStorage.setItem('HistoryList', JSON.stringify(this.HistoryList));
+            // },
+            // SearchVal(value) {
+            //       if (!value) {
+            //             this.$toast.info("请输入你要搜索的内容")
+            //             return;
+            //       }
+            //       let val = value.trim() // 清除空格
+            //       if (this.HistoryList.length > 0) { // 有数据的话 判断
+            //             if (this.HistoryList.indexOf(val) !== -1) { // 有相同的，先删除 再添加 
+            //                   this.HistoryList.splice(this.HistoryList.indexOf(val), 1)
+            //                   this.HistoryList.unshift(val);
+            //             } else { // 没有相同的 添加
+            //                   this.HistoryList.unshift(val);
+            //             }
+            //       } else { // 没有数据 添加
+            //             this.HistoryList.unshift(val);
+            //       }
+            //       if (this.HistoryList.length > 6) { // 保留六个值
+            //             this.HistoryList.pop();
+            //       }
+            //       if (this.$route.query.type) {
+            //             this.$router.push({
+            //                   name: 'result',
+            //                   query: { val: val, type: this.$route.query.type }
+            //             });
+            //       } else {
+            //             this.$router.push({
+            //                   name: 'result',
+            //                   query: { val: val }
+            //             });
+            //       }
 
-                  localStorage.setItem('HistoryList', JSON.stringify(this.HistoryList));
-            }
+            //       localStorage.setItem('HistoryList', JSON.stringify(this.HistoryList));
+            // }
 
       }
 }

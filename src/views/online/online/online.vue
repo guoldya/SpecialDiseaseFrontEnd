@@ -33,7 +33,8 @@
         </li>
       </ul>
     </div>
-
+ <!-- 底部 -->
+    <Footer></Footer>
     <!-- 聊天工具栏 -->
     <div class="inquiry-online-tool">
       <div class="inquiry-online-tool-voice">

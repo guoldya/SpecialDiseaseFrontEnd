@@ -1,8 +1,8 @@
 <template>
   <div class="margin50">
     <Header post-title="医生列表"></Header>
-     <Search type="choosedepart" post-placeholder="请输入医生名称"></Search>
-    <div  >
+    <Search type="choosedepart" post-placeholder="请输入医生名称"></Search>
+    <div>
 
       <div class="doctor-list">
         <div class="header"><img src="@/assets/images/3.jpg" /></div>
@@ -14,7 +14,6 @@
           </p>
           <p class="colo13">
             <span class="picture">图文</span>&nbsp;
-
             <span class="reputation">好评率 100%</span>&nbsp;
           </p>
           <p class="content">擅长：占位 </p>
@@ -25,7 +24,7 @@
           <p class="price">
             <router-link :to="{ path: '/consultDetail', }" class="consult">立即咨询</router-link>
           </p>
-          <em>已满</em>
+          <em>关注</em>
         </div>
       </div>
       <!-- <div v-if="hospitaldata.length!=0" v-show="!loadingtrue">
@@ -63,7 +62,7 @@ export default {
     };
   },
   mounted() {
-    this.orgFun(false);
+    // this.orgFun(false);
   },
   methods: {
     intodoctorinfo(data) {
@@ -201,7 +200,7 @@ export default {
 }
 
 .doctor-list .price {
-  color: var(--primary);
+  color: #f74749;
   font-weight: 500;
   letter-spacing: 1px;
   overflow: hidden;
@@ -212,7 +211,7 @@ export default {
     display: inline-block;
     height: 55px;
     line-height: 55px;
-    padding: 0 30px;
+    padding: 0 10px;
     border: 1px solid var(--primary);
     border-radius: 30px;
     margin-left: 30px;
@@ -221,6 +220,7 @@ export default {
   .consult {
     color: #fff;
     background: var(--primary);
+    font-size: 23px;
   }
 }
 

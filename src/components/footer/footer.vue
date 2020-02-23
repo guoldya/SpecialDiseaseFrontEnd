@@ -42,8 +42,6 @@ export default {
   },
   methods: {
     switchTo(path) {
-      
-       
       this.$router.replace(path)
     },
 

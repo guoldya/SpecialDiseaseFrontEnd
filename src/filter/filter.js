@@ -418,12 +418,12 @@ const examStatus = function (value) {
     if (value == undefined) {
         return ""
     }
-    if (value == 1) {
-        return "已预约"
+    if (value == 0) {
+        return "发起申请"
+    } else if (value == 1) {
+        return "咨询中"
     } else if (value == 2) {
-        return "已检查"
-    } else if (value == 3) {
-        return "检查中"
+        return "已结束"
     }
 };
 const cardType = function (value) {
@@ -463,14 +463,16 @@ const busistatus = function (value) {
         return "已发件"
     }
 };
-const deliveryMode = function (value) {
+const outpationStatus = function (value) {
     if (value == undefined) {
         return " "
     }
-    if (value == 1) {
-        return "配送"
+    if (value == 0) {
+        return "新处方"
+    } else if (value == 1) {
+        return "已记账"
     } else if (value == 2) {
-        return "自取"
+        return "已失效"
     }
 };
 const weekMode = function (value) {
@@ -493,22 +495,7 @@ const weekMode = function (value) {
     }
 };
 
-// const feeType = function (value) {
-//     if (value == undefined) {
-//         return " "
-//     }
-//     if (value == 1) {
-//         return "西药费"
-//     } else if (value == 2) {
-//         return "检查费"
-//     } else if (value == 3) {
-//         return "检验费"
-//     } else if (value == 6) {
-//         return "材料费"
-//     } else if (value == 5) {
-//         return "检验费"
-//     }
-// };
+ 
 
 const feeType = function (value) {
     if (value == undefined) {
@@ -568,8 +555,7 @@ const getAge = function (value) {
                 else {
                     value = ageDiff;
                 }
-            }
-            else {
+            }else {
                 var monthDiff = nowMonth - birthMonth;//月之差
                 if (monthDiff < 0) {
                     value = ageDiff - 1;
@@ -605,7 +591,7 @@ export default {
     busistatus,
     cardType,
     recipeTypeFilter,
-    deliveryMode,
+    outpationStatus,
     payStatus,
     payStatusIMG,
     payStatusText,

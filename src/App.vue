@@ -35,7 +35,7 @@ export default {
  <style >
 :root {
   /* 主题色 */
-  --primary: #1da1f3;
+  --primary: #48B6FF;
   /* 内容字体颜色 5A5A5A*/
   --primary--content: #979797;
   --primary--right: #979797;
@@ -57,6 +57,12 @@ export default {
   max-width: 777px;
   margin: 0 auto;
 }
+.noMore {
+  text-align: center;
+  color: var(--primary--content);
+  font-size: 24px;
+  line-height: 70px;
+}
 .margin50 {
   margin-top: 100px;
 }
@@ -73,7 +79,12 @@ body {
   font-size: 26px;
   color: var(--primary--content);
 }
-.md-field {
-  padding: 0px !important;
+ .nullDiv {
+  text-align: center;
 }
+.nullDiv img {
+  width: 50%;
+  margin-top: 150px;
+}
+ 
 </style>

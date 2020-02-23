@@ -1,9 +1,14 @@
-
 stages:
   - build
   - deploy
+  
+cache:
+  key: npm-cache
+  untracked: true
+  paths:
+    - /root/npm/node_modules
 
-build site:
+build site: 
   image: node:9.4.0
   stage: build
   script:
@@ -17,14 +22,15 @@ build site:
     - npm
 
 deploy:
-  image: alpine
+  #image: alpine
+  image: migro78/rsync:latest
   stage: deploy
   script:
-    - apk add --no-cache rsync openssh
+    #- apk add --no-cache rsync openssh
     - mkdir -p ~/.ssh
     - echo "$SSH_PRIVATE_KEY" >> ~/.ssh/id_dsa
     - chmod 600 ~/.ssh/id_dsa
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    - rsync -rav --delete dist/ root@$DEPLOY_SERVER:/opt/nginx/www/h5/
+    - rsync -rav --delete dist/ root@$DEPLOY_SERVER:/opt/nginx/www/special_disease/
   tags:
     - npm

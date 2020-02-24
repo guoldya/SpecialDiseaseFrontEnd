@@ -106,9 +106,9 @@
 </template>
 <script>
 import { Dialog, Agree, Toast } from "mand-mobile";
-const onlineDoctorDetailUrl = "/api/hos/sysDoctor/selectDetail";
-const commentUrl = "/api/hos/bizOnlineServiceRecord/read/doctorRecordPage";
-const followDoctorUrl = "/api/hos/bizDoctorFollow/followDoctor"
+const onlineDoctorDetailUrl = "/sysDoctor/selectDetail";
+const commentUrl = "/bizOnlineServiceRecord/read/doctorRecordPage";
+const followDoctorUrl = "/bizDoctorFollow/followDoctor"
 export default {
   data() {
     return {
@@ -152,7 +152,7 @@ export default {
       try {
         let id = Number(this.$route.query.id);
         let res = await this.$axios.put(onlineDoctorDetailUrl, { id });
-        await this.queryCommon();
+        // await this.queryCommon();
         if (res.data.code != 200) {
           throw Error(res.data.msg);
         }
@@ -188,7 +188,7 @@ export default {
       this.busy = true;
       setTimeout(() => {
         this.pagingParams.num++
-        this.queryCommon(true)
+        // this.queryCommon(true)
         this.busy = false;
       }, 1000);
     },

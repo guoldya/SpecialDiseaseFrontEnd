@@ -5,7 +5,7 @@
    </div>
 </template>
 <script>
-let appshippingAddressareaList = '/api/hos/bdArea/read/list';
+let appshippingAddressareaList = '/bdArea/read/list';
 export default {
    data() {
       return {

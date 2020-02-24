@@ -5,7 +5,10 @@
 </template>
 
 <script>
-let appLoginlogin = '/api/hos/wechat/receiveCode';
+let appLoginlogin = '/wechat/receiveCode';
+// 传递    roleMark   角色标志 1、患者 2、医生
+// 返回   bindStatus  绑定状态  0未绑定  1正常绑定  2医生绑定(已停用)
+
 export default {
   mounted() {
     //   let str = location.href;
@@ -15,18 +18,31 @@ export default {
     let wechatCode;
     wechatCode = str.split("?")[0].split("&")[0].split("=")[1];
     sessionStorage.setItem('wechatCode', wechatCode);
-    this.$axios.get(appLoginlogin + '?wechatCode=' + 'code', {
+    this.$axios.get(appLoginlogin + '?wechatCode=' + 'code' + '&roleMark=' + '1', {
     }).then(res => {
       if (res.data.code == '200') {
         //   sessionStorage.setItem('token7', res.data.data.token);
         //   sessionStorage.removeItem('openid');
         //   sessionStorage.removeItem('accessToken');
         console.log(res.data.data)
-        this.$store.commit('SET_USERINFO', res.data.data)
-        console.log(this.$store.state.userInfo,"sssssssssssssss")
-        this.$router.replace({
-          name: 'home',
-        });
+         
+        if (res.data.data.bindStatus == 1) {
+          this.$store.commit('SET_USERINFO', res.data.data)
+        console.log(this.$store.state.userInfo, "sssssssssssssss")
+          this.$router.replace({
+            name: 'home',
+          });
+        } else if (res.data.data.bindStatus == 0) {
+          this.$router.replace({
+            name: 'addpeple',
+            query: { isnews: 1 }
+          });
+        } else {
+          this.$toast.info("错误信息")
+        }
+        // this.$router.replace({
+        //   name: 'home',
+        // });
       } else {
         sessionStorage.removeItem('token7');
         // this.$router.replace({

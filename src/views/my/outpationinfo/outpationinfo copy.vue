@@ -90,7 +90,7 @@
     <md-dialog title="提示" :closable="false" v-model="actDialog.open" :btns="actDialog.btns">
       是否确定记账
     </md-dialog>
-    <div style="padding:0.24rem"  v-show="this.$route.query.status==0">>
+    <div style="padding:0.24rem">
       <md-button type="primary" @click="tijiao" round style="margin-top:16px">处方确认记账</md-button>
     </div>
     <Loading v-show="loadingtrue"></Loading>

@@ -14,7 +14,7 @@
         </div>
         <div class="cardtopright" @click="updown(index)">
           <div>
-            <p>订单总额</p>
+            <p>{{item.status|payTypeFilter}}</p>
             <p class="money">￥{{item.totalMoney|keepTwoNum}}</p>
           </div>
           <div>
@@ -58,7 +58,8 @@
   </div>
 </template>
  <script>
-let pay_list_url = '/api/hos/bizOrder/selectPage'
+let pay_list_url = '/bizOrder/selectPage'
+ 
 export default {
   data() {
     return {
@@ -78,11 +79,11 @@ export default {
   methods: {
     updown(data) {
       console.log(data)
-      
-      if(this.isSHOW == data){
-        this.isSHOW='ssssss'
-      }else{
-         this.isSHOW = data;
+
+      if (this.isSHOW == data) {
+        this.isSHOW = 'ssssss'
+      } else {
+        this.isSHOW = data;
       }
     },
     WaitPay(flag) {

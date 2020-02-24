@@ -52,20 +52,22 @@ const payTypeFilter = function (value) {
     if (value == undefined) {
         return ""
     }
-    if (value == 0) {
-        return "未支付"
-    } else if (value == 1) {
-        return "已支付"
+    // 1--新单，2--支付，3--发货，4--申请退货，6--确认收货，7--退货完成，9--关闭
+
+    else if (value == 1) {
+        return "新单"
     } else if (value == 2) {
-        return "已退号"
+        return "支付"
     } else if (value == 3) {
-        return "已签到"
+        return "发货"
     } else if (value == 4) {
-        return "已就诊"
-    } else if (value == 5) {
-        return "已取消"
+        return "申请退货"
     } else if (value == 6) {
-        return "已失效"
+        return "确认收货"
+    } else if (value == 7) {
+        return "退货完成"
+    }else if (value == 9) {
+        return "关闭"
     }
 };
 const paystatusFilter = function (value) {

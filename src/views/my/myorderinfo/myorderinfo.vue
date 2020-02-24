@@ -3,10 +3,11 @@
     <Header post-title="订单详情"></Header>
 
     <div v-show="!loadingtrue">
+      <!-- // 1--新单，2--支付，3--发货，4--申请退货，6--确认收货，7--退货完成，9--关闭 -->
       <div class="infobottom">
         <div class="adress-box">
           <div class="iconImg">
-            <img class="addPic" src="@/assets/images/user_center4.png" alt="">
+            <img class="addPic" src="@/assets/images/icon_express.png" alt="">
           </div>
           <div class="adress-content">
             <p>
@@ -33,7 +34,7 @@
             </p>
             <p> {{reportInfoData.address}}</p>
           </div>
-          <div class="addImg nextImg"  >
+          <div class="addImg nextImg">
           </div>
         </div>
       </div>
@@ -41,6 +42,7 @@
       <div class="infobottom">
         <div class="orderinfo">
           <p>订单信息</p>
+          <p>订单状态：{{reportInfoData.status|payTypeFilter}}</p>
           <p>订单编号：{{reportInfoData.orderCode}}</p>
           <p>创建时间：{{reportInfoData.createTime|lasttime}}</p>
           <!-- <p>订单状态：{{reportInfoData.createTime|lasttime}}</p> -->
@@ -68,19 +70,42 @@
         </div>
       </div>
     </div>
+    <div style="padding:0.24rem" v-if="reportInfoData.status==3||reportInfoData.status==1">
+      <md-button type="primary" @click="tijiao" round style="margin-top:16px">确认收货</md-button>
+    </div>
+    <md-dialog title="提示" :closable="false" v-model="actDialog.open" :btns="actDialog.btns">
+      是否确认收货
+    </md-dialog>
+
     <Loading v-show="loadingtrue"></Loading>
   </div>
 </template>
 <script>
 import { mapState } from 'vuex';
 
-let bizLisReportreaddetail = '/api/hos/bizOrder/read/detail'
+let bizLisReportreaddetail = '/api/hosbizOrder/read/detail'
+let update_list_url = '/bizOrder/read/update'
 export default {
   data() {
     return {
       reportInfoData: '',
       loadingtrue: true,
       isTijiao: true,
+      actDialog: {
+        open: false,
+        btns: [
+          {
+            text: '取消',
+          },
+          {
+            text: '确定',
+            // warning: true,
+            handler: this.onActConfirm3,
+          },
+        ],
+      }
+
+
 
     };
   },
@@ -94,9 +119,34 @@ export default {
     this.checkReportDetail();
   },
   methods: {
+    tijiao() {
+      this.actDialog.open = true;
+    },
+
+    
+    onActConfirm3() {
+
+      this.actDialog.open = false;
+      let data = {};
+      data.id = parseInt(this.$route.query.id);
+      data.status = 6;
+      this.$axios.post(update_list_url, data, {
+      }).then((res) => {
+        if (res.data.code == '200') {
+          this.$router.go(-1);
+
+          this.$toast.info('确定收货成功');
+        } else {
+          this.$toast.info(res.data.msg);
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
     checkReportDetail() {
       let checkParams = {};
       checkParams.id = parseInt(this.$route.query.id);
+
       this.$axios.put(bizLisReportreaddetail, checkParams, {
       }).then((res) => {
         if (res.data.code == '200') {
@@ -233,8 +283,8 @@ export default {
     color: #f74749;
   }
 }
-.time{
+.time {
   font-size: 24px;
-  color: #979797
+  color: #979797;
 }
 </style>

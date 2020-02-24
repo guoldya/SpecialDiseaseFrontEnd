@@ -50,6 +50,9 @@ import './assets/global.css'
 
  
 Vue.config.productionTip = false;
+ const BASE_URL = '/api/sds';
+ 
+ axios.defaults.baseURL = BASE_URL;
 Vue.use(infiniteScroll);
 
 

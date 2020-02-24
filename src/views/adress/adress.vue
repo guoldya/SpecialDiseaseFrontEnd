@@ -54,9 +54,9 @@
 import { Toast } from 'mand-mobile';
 import { Dialog, Button } from 'mand-mobile'
 
-let appshippingAddressaddressList = "/api/hos/bizShippingAddress/addressList";
-let deleteAddress = "/api/hos/bizShippingAddress/delete";
-let isDefault = "/api/hos/bizShippingAddress/insertOrUpdate"
+let appshippingAddressaddressList = "/bizShippingAddress/addressList";
+let deleteAddress = "/bizShippingAddress/delete";
+let isDefault = "/bizShippingAddress/insertOrUpdate"
 export default {
   data() {
     return {

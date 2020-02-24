@@ -7,22 +7,23 @@
         <md-field-item class="outCarint" title="患与关系" arrow="arrow-right" :addon="selectorValue" @click="showSelector">
         </md-field-item>
         <md-input-item class="outCarint" ref="input13" v-model="idcard" title="身份证号" maxlength="18" placeholder="请输入身份证号"></md-input-item>
-        <md-button @click="tijiao" type="primary" round style="margin-top:16px">提交</md-button>
+        <md-button @click="tijiao" :inactive="!isTijiao" type="primary" round style="margin-top:16px">提交</md-button>
       </md-field>
       <md-selector v-model="isSelectorShow" :default-value="1" :data="test" max-height="320px" title="选择您与患者的关系" @choose="onSelectorChoose"></md-selector>
-      <p class="warnTip">温馨提示：提示提示是！</p>
+      <p class="warnTip">温馨提示：您可以累计添加五个患者！</p>
     </div>
   </div>
 </template>
 <script>
 import { InputItem, Field } from 'mand-mobile'
-let insertOrUpdatePatient = "/api/hos/sysPatientBinding/insertOrUpdate";
+let insertOrUpdatePatient = "/sysPatientBinding/insertOrUpdate";
 export default {
   data() {
     return {
       type: 1,
       name: '',
       idcard: '',
+       isTijiao: true,
       show: true,
       isSelectorShow: false,
       selectorValue: '自己',
@@ -71,9 +72,10 @@ export default {
     },
 
     tijiao() {
-      console.log("dddddddddddddd", this.name, this.idcard)
+        this.isTijiao = false;
       if (!this.name || !this.idcard) {
         this.$toast.info('请完善信息')
+         this.isTijiao = true;
       } else {
 
         this.$axios.post(insertOrUpdatePatient, {
@@ -83,7 +85,14 @@ export default {
         }).then(res => {
           if (res.data.code == '200') {
             this.$toast.info('添加成功')
-            
+            this.isTijiao = true;
+            if (this.$route.query.isnews) {
+              this.$router.replace({
+                name: 'home',
+              });
+            }else{
+              this.$router.go(-1);
+            }
           } else {
             this.$toast.info(res.data.msg)
           }

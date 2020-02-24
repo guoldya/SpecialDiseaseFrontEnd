@@ -40,24 +40,24 @@ module.exports = {
     proxy: {
       '/api/bas': {
         // target: 'http://192.168.0.224:8090',//吴
-        target: 'http://192.168.0.61:8066',//吴 新接口
+         //target: 'http://192.168.0.61:8066',//吴 新接口
         //target: 'http://192.168.0.110:8090',//安未
         // target: 'http://192.168.0.189:8090',//冉有钱
         // target: 'http://192.168.0.198:8080',//张 bas
         // target: 'http://192.168.0.198:8082',//张 hos
-        //target: 'http://192.168.0.150:40080/',
+        target: 'http://192.168.0.150:80/',
         // target: 'http://192.168.0.189:8090/',//冉雄蜂
         changeOrigin: true, // 允许跨域
         pathRewrite: {
           '^/api/bas': '/'
         }
       },
-      '/api/hos': {
-        // target: 'http://192.168.0.198:8082',//张 hos
-        target: 'http://192.168.0.61:8066',//吴 新接口
+      '/api/sds': {
+        target: 'http://192.168.0.150:80',//张 hos
+         //target: 'http://192.168.0.61:8066',//吴 新接口
         changeOrigin: true, // 允许跨域
         pathRewrite: {
-          '^/api/hos': '/'
+          '^/api/sds': '/'
         }
       },
     },

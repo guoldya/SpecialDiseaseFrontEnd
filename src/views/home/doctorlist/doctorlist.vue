@@ -49,7 +49,7 @@
   </div>
 </template>
 <script type="text/babel">
-let bdHospitalOrg = '/api/hos/bdHospitalDoctor/read/selectDoctorPage';
+let bdHospitalOrg = '/bdHospitalDoctor/read/selectDoctorPage';
 export default {
   data() {
     return {

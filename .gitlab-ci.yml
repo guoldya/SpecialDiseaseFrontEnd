@@ -31,6 +31,6 @@ deploy:
     - echo "$SSH_PRIVATE_KEY" >> ~/.ssh/id_dsa
     - chmod 600 ~/.ssh/id_dsa
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    - rsync -rav --delete dist/ root@$DEPLOY_SERVER:/opt/nginx/www/special_disease/
+    - rsync -rav --delete dist/ root@$DEPLOY_SERVER:/opt/nginx/www/sd_patient/
   tags:
     - npm

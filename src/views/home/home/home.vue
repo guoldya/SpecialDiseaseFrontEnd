@@ -42,7 +42,7 @@ let doctorlistURL = 'sysDoctor/selectDoctorByPatient'
 export default {
   data() {
     return {
-      link2: "12", // 二维码2
+    
       code: 'ss',
       showPic: false,
       showindex: 0,
@@ -147,11 +147,7 @@ export default {
         query: argu
       });
     },
-    showPicFun(data) {
-      this.link2 = data.cardNo;
-      this.picName = data.patientName;
-      this.showPic = true;
-    },
+ 
     switchCard(index) {
       let current = this._cardlist[index + 1];
       if (!current) {

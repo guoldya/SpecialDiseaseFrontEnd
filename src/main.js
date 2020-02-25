@@ -88,7 +88,6 @@ router.beforeEach((to, from, next) => {
 // Vue.config.productionTip = false;
  
 axios.interceptors.request.use(function (config) {
-    console.log(config,"我的请求第一次")
     let url = config.url;
     // 如果是登陆
     // if (localStorage.getItem("token7")) {
@@ -136,9 +135,9 @@ axios.interceptors.response.use(function (res) {
         // console.log(res)
         // router.replace('/control');
     } else if (res.data.code == 500) {
-        setTimeout(() => {
+       
              router.replace('/');
-        }, 3000)
+       
         console.log(res.data.msg)
     } else if (res.data.code == 406) {
         

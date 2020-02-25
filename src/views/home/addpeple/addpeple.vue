@@ -16,7 +16,7 @@
 </template>
 <script>
 import { InputItem, Field } from 'mand-mobile'
-let insertOrUpdatePatient = "/api/sds/sysPatientBinding/insertOrUpdate";
+let insertOrUpdatePatient = "sysPatientBinding/insertOrUpdate";
 export default {
   data() {
     return {

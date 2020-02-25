@@ -81,7 +81,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import { Icon, ImageReader, Tag, Toast } from "mand-mobile";
-const onlineDoctorDetailUrl = "/api/sds/sysDoctor/selectDetail";
+const onlineDoctorDetailUrl = "sysDoctor/selectDetail";
 
 let uploadImage = "/api/bas/upload/file";
 let bizConsultRecordinsertOrUpdate='/api/bas/bizConsultRecord/insertOrUpdate'

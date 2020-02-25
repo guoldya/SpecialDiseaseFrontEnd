@@ -34,10 +34,10 @@
 <script>
 import { mapState } from 'vuex';
 import { InputItem, Field } from 'mand-mobile'
-let addressDetails = "/api/sds/bizShippingAddress/addressDetails";
-let addOrUpdate = "/api/sds/bizShippingAddress/insertOrUpdate";
-let deleteAddress = "/api/sds/bizShippingAddress/delete";
-let appshippingAddressaddressList = "/api/sds/bizShippingAddress/addressList";
+let addressDetails = "bizShippingAddress/addressDetails";
+let addOrUpdate = "bizShippingAddress/insertOrUpdate";
+let deleteAddress = "bizShippingAddress/delete";
+let appshippingAddressaddressList = "bizShippingAddress/addressList";
 export default {
   name: 'input-item-demo',
 

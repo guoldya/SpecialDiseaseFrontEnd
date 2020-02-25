@@ -50,7 +50,7 @@ import './assets/global.css'
 
  
  
- const BASE_URL = '/p';
+ const BASE_URL = '/api/sds/';
  
  axios.defaults.baseURL = BASE_URL;
 Vue.use(infiniteScroll);
@@ -86,7 +86,7 @@ router.beforeEach((to, from, next) => {
  
 
 // Vue.config.productionTip = false;
-console.log('main.js里面的ssssssssssss',"我的请求第一次")
+ 
 axios.interceptors.request.use(function (config) {
     console.log(config,"我的请求第一次")
     let url = config.url;
@@ -136,9 +136,9 @@ axios.interceptors.response.use(function (res) {
         // console.log(res)
         // router.replace('/control');
     } else if (res.data.code == 500) {
-        // setTimeout(() => {
-        //     // router.replace('/lostpage');
-        // }, 5000)
+        setTimeout(() => {
+             router.replace('/');
+        }, 3000)
         console.log(res.data.msg)
     } else if (res.data.code == 406) {
         

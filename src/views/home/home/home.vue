@@ -38,7 +38,7 @@
 import { mapState } from 'vuex';
 import doctorList from "../../../components/doctorList";
 
-let doctorlistURL = '/api/sds/sysDoctor/selectDoctorByPatient'
+let doctorlistURL = 'sysDoctor/selectDoctorByPatient'
 export default {
   data() {
     return {

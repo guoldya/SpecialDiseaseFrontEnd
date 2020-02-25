@@ -14,7 +14,7 @@
 <script type="text/babel">
 import { mapState } from 'vuex';
 import { Toast } from "mand-mobile"
-let recipe_getList_url = "/api/sds/bizRecipe/selectPageByAccount";
+let recipe_getList_url = "bizRecipe/selectPageByAccount";
 export default {
   data() {
     return {

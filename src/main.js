@@ -49,8 +49,8 @@ import './assets/global.css'
 
 
  
-Vue.config.productionTip = false;
- const BASE_URL = '/api/sds';
+ 
+ const BASE_URL = '/p';
  
  axios.defaults.baseURL = BASE_URL;
 Vue.use(infiniteScroll);
@@ -85,24 +85,24 @@ router.beforeEach((to, from, next) => {
 
  
 
-Vue.config.productionTip = false;
+// Vue.config.productionTip = false;
  
 axios.interceptors.request.use(function (config) {
     let url = config.url;
     // 如果是登陆
-    if (localStorage.getItem("token7")) {
-        // config.headers.TOKEN = localStorage.getItem("token7");
-        // config.headers.UUID = localStorage.getItem("UUID7");
+    // if (localStorage.getItem("token7")) {
+    //     // config.headers.TOKEN = localStorage.getItem("token7");
+    //     // config.headers.UUID = localStorage.getItem("UUID7");
          
 
-        config.headers.Authorization = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7XCJtb2JpbGVcIjpcIjE4OTk2MTI4NzkxXCIsXCJuaWNrbmFtZVwiOlwi5Zmr5oGL44CCZmxvd2VyXCIsXCJpZFwiOjE4OX0iLCJqdGkiOiIxZjgxODhkZC01ZTk2LTQwZjUtODIxNC00YjFmMDg2MjQ3MWQiLCJpYXQiOjE1NjE2MDM4NzYsImV4cCI6MTU2NDE5NTg3Nn0.Tff9tLESvE7f0QgjiTsp4K1mdgpS8ZUUnrsc07aUFgU";
-    } else {
-        if (url.indexOf("/appLogin/login") > -1 || (url.indexOf("appLoginlogin") > -1)) {
-            config.headers.Authorization = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7XCJtb2JpbGVcIjpcIjE4OTk2MTI4NzkxXCIsXCJuaWNrbmFtZVwiOlwi5Zmr5oGL44CCZmxvd2VyXCIsXCJpZFwiOjE4OX0iLCJqdGkiOiIxZjgxODhkZC01ZTk2LTQwZjUtODIxNC00YjFmMDg2MjQ3MWQiLCJpYXQiOjE1NjE2MDM4NzYsImV4cCI6MTU2NDE5NTg3Nn0.Tff9tLESvE7f0QgjiTsp4K1mdgpS8ZUUnrsc07aUFgU";
-        } else {
-            config.headers.Authorization = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7XCJtb2JpbGVcIjpcIjE4OTk2MTI4NzkxXCIsXCJuaWNrbmFtZVwiOlwi5Zmr5oGL44CCZmxvd2VyXCIsXCJpZFwiOjE4OX0iLCJqdGkiOiIxZjgxODhkZC01ZTk2LTQwZjUtODIxNC00YjFmMDg2MjQ3MWQiLCJpYXQiOjE1NjE2MDM4NzYsImV4cCI6MTU2NDE5NTg3Nn0.Tff9tLESvE7f0QgjiTsp4K1mdgpS8ZUUnrsc07aUFgU";
-        };
-    }
+    //     config.headers.Authorization = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7XCJtb2JpbGVcIjpcIjE4OTk2MTI4NzkxXCIsXCJuaWNrbmFtZVwiOlwi5Zmr5oGL44CCZmxvd2VyXCIsXCJpZFwiOjE4OX0iLCJqdGkiOiIxZjgxODhkZC01ZTk2LTQwZjUtODIxNC00YjFmMDg2MjQ3MWQiLCJpYXQiOjE1NjE2MDM4NzYsImV4cCI6MTU2NDE5NTg3Nn0.Tff9tLESvE7f0QgjiTsp4K1mdgpS8ZUUnrsc07aUFgU";
+    // } else {
+    //     if (url.indexOf("/appLogin/login") > -1 || (url.indexOf("appLoginlogin") > -1)) {
+    //         config.headers.Authorization = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7XCJtb2JpbGVcIjpcIjE4OTk2MTI4NzkxXCIsXCJuaWNrbmFtZVwiOlwi5Zmr5oGL44CCZmxvd2VyXCIsXCJpZFwiOjE4OX0iLCJqdGkiOiIxZjgxODhkZC01ZTk2LTQwZjUtODIxNC00YjFmMDg2MjQ3MWQiLCJpYXQiOjE1NjE2MDM4NzYsImV4cCI6MTU2NDE5NTg3Nn0.Tff9tLESvE7f0QgjiTsp4K1mdgpS8ZUUnrsc07aUFgU";
+    //     } else {
+    //         config.headers.Authorization = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7XCJtb2JpbGVcIjpcIjE4OTk2MTI4NzkxXCIsXCJuaWNrbmFtZVwiOlwi5Zmr5oGL44CCZmxvd2VyXCIsXCJpZFwiOjE4OX0iLCJqdGkiOiIxZjgxODhkZC01ZTk2LTQwZjUtODIxNC00YjFmMDg2MjQ3MWQiLCJpYXQiOjE1NjE2MDM4NzYsImV4cCI6MTU2NDE5NTg3Nn0.Tff9tLESvE7f0QgjiTsp4K1mdgpS8ZUUnrsc07aUFgU";
+    //     };
+    // }
     return config;
 }, function (err) {
     return Promise.reject(err);
@@ -127,24 +127,24 @@ axios.interceptors.request.use(function (config) {
 //     return Promise.reject(err);
 // });
 // 添加一个响应拦截器
-axios.interceptors.response.use(function (res) {
-    // console.log(res, "总配置")
-    if (res.data.code == 401 && res.data.msg && res.data.msg.indexOf('未登录') || (res.data.code == 402) || (res.data.code == 800)) {
-        // 未登录操作npm
-        // router.replace('/login?back=1');
-        // console.log(res)
-        // router.replace('/control');
-    } else if (res.data.code == 500) {
-        // setTimeout(() => {
-        //     // router.replace('/lostpage');
-        // }, 5000)
-    } else if (res.data.code == 406) {
-        var storage = window.sessionStorage;
-        storage.setItem('token7', res.data.data.token);
-        router.replace('/home')
-    }
-    return res;
-});
+// axios.interceptors.response.use(function (res) {
+//     // console.log(res, "总配置")
+//     if (res.data.code == 401 && res.data.msg && res.data.msg.indexOf('未登录') || (res.data.code == 402) || (res.data.code == 800)) {
+//         // 未登录操作npm
+//         // router.replace('/login?back=1');
+//         // console.log(res)
+//         // router.replace('/control');
+//     } else if (res.data.code == 500) {
+//         // setTimeout(() => {
+//         //     // router.replace('/lostpage');
+//         // }, 5000)
+//     } else if (res.data.code == 406) {
+//         var storage = window.sessionStorage;
+//         storage.setItem('token7', res.data.data.token);
+//         router.replace('/home')
+//     }
+//     return res;
+// });
 Vue.prototype.$axios = axios;
 
 

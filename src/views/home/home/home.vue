@@ -37,7 +37,7 @@
 <script>
 import { mapState } from 'vuex';
 import doctorList from "../../../components/doctorList";
-let bizPatientRegisterselectCount = "/api/sds/bizPatientRegister/selectCount";
+
 let doctorlistURL = '/api/sds/sysDoctor/selectDoctorByPatient'
 export default {
   data() {
@@ -57,7 +57,7 @@ export default {
   computed: {
     ...mapState({
       _cardlist: state => state.home.cardList,
-      _departList: state => state.home.departList,
+      // _departList: state => state.home.departList,
       // _accountinfo: state => state.my.accountinfo,
     }),
   },
@@ -96,6 +96,7 @@ export default {
       });
     },
     async homeNumber(data) {
+      console.log("ddddddddddddd")
       try {
         let res = await this.$axios.put(doctorlistURL, {
           patientId: data
@@ -258,7 +259,7 @@ export default {
     background: #9ac3ff;
     border-radius: 5px;
     font-size: 17px;
-    color:#fff;
+    color: #fff;
   }
 }
 </style>

@@ -38,26 +38,26 @@ module.exports = {
   // 这里写你调用接口的基础路径，来解决跨域，如果设置了代理，那你本地开发环境的axios的publicPath要写为 '' ，即空字符串
   devServer: {
     proxy: {
-      '/api/bas': {
-        // target: 'http://192.168.0.224:8090',//吴
-         //target: 'http://192.168.0.61:8066',//吴 新接口
-        //target: 'http://192.168.0.110:8090',//安未
-        // target: 'http://192.168.0.189:8090',//冉有钱
-        // target: 'http://192.168.0.198:8080',//张 bas
-        // target: 'http://192.168.0.198:8082',//张 hos
-        target: 'http://192.168.0.150:80/',
-        // target: 'http://192.168.0.189:8090/',//冉雄蜂
-        changeOrigin: true, // 允许跨域
-        pathRewrite: {
-          '^/api/bas': '/'
-        }
-      },
-      '/api/sds': {
+      // '/api/bas': {
+      //   // target: 'http://192.168.0.224:8090',//吴
+      //    //target: 'http://192.168.0.61:8066',//吴 新接口
+      //   //target: 'http://192.168.0.110:8090',//安未
+      //   // target: 'http://192.168.0.189:8090',//冉有钱
+      //   // target: 'http://192.168.0.198:8080',//张 bas
+      //   // target: 'http://192.168.0.198:8082',//张 hos
+      //   target: 'http://192.168.0.150:80/',
+      //   // target: 'http://192.168.0.189:8090/',//冉雄蜂
+      //   changeOrigin: true, // 允许跨域
+      //   pathRewrite: {
+      //     '^/api/bas': '/'
+      //   }
+      // },
+      '/p': {
         target: 'http://192.168.0.150:80',//张 hos
          //target: 'http://192.168.0.61:8066',//吴 新接口
         changeOrigin: true, // 允许跨域
         pathRewrite: {
-          '^/api/sds': '/'
+          '^/p': '/'
         }
       },
     },

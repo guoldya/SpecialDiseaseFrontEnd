@@ -83,7 +83,7 @@
 <script>
 import { mapState } from 'vuex';
 
-let bizLisReportreaddetail = '/api/sds/hosbizOrder/read/detail'
+let bizLisReportreaddetail = '/api/sds/bizOrder/read/detail'
 let update_list_url = '/api/sds/bizOrder/read/update'
 export default {
   data() {

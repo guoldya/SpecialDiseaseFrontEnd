@@ -56,7 +56,7 @@ import './assets/global.css'
 Vue.use(infiniteScroll);
 
 
-
+ 
 // import Vconsole from 'vconsole';
 // const vConsole = new Vconsole();
 // 路由拦截
@@ -86,8 +86,9 @@ router.beforeEach((to, from, next) => {
  
 
 // Vue.config.productionTip = false;
- 
+console.log('main.js里面的ssssssssssss',"我的请求第一次")
 axios.interceptors.request.use(function (config) {
+    console.log(config,"我的请求第一次")
     let url = config.url;
     // 如果是登陆
     // if (localStorage.getItem("token7")) {
@@ -127,24 +128,23 @@ axios.interceptors.request.use(function (config) {
 //     return Promise.reject(err);
 // });
 // 添加一个响应拦截器
-// axios.interceptors.response.use(function (res) {
-//     // console.log(res, "总配置")
-//     if (res.data.code == 401 && res.data.msg && res.data.msg.indexOf('未登录') || (res.data.code == 402) || (res.data.code == 800)) {
-//         // 未登录操作npm
-//         // router.replace('/login?back=1');
-//         // console.log(res)
-//         // router.replace('/control');
-//     } else if (res.data.code == 500) {
-//         // setTimeout(() => {
-//         //     // router.replace('/lostpage');
-//         // }, 5000)
-//     } else if (res.data.code == 406) {
-//         var storage = window.sessionStorage;
-//         storage.setItem('token7', res.data.data.token);
-//         router.replace('/home')
-//     }
-//     return res;
-// });
+axios.interceptors.response.use(function (res) {
+    // console.log(res, "总配置")
+    if (res.data.code == 401 && res.data.msg && res.data.msg.indexOf('未登录') || (res.data.code == 402) || (res.data.code == 800)) {
+        // 未登录操作npm
+        // router.replace('/login?back=1');
+        // console.log(res)
+        // router.replace('/control');
+    } else if (res.data.code == 500) {
+        // setTimeout(() => {
+        //     // router.replace('/lostpage');
+        // }, 5000)
+        console.log(res.data.msg)
+    } else if (res.data.code == 406) {
+        
+    }
+    return res;
+});
 Vue.prototype.$axios = axios;
 
 

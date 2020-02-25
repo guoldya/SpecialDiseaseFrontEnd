@@ -23,8 +23,7 @@ const mutations = {
    }
    
 }
-console.log(loadCards(),"ssssssss嗡嗡嗡嗡嗡嗡sssss")
-console.log(loadDepart(),"ssssssss嗡嗡嗡嗡嗡嗡sssss")
+ 
 const actions = {
    // 获取就诊卡片
    async getCards({ commit, state }, { update = false } = {}) {

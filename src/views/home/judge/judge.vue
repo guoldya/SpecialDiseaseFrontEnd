@@ -5,7 +5,7 @@
 </template>
 
 <script>
-let appLoginlogin = '/wechat/receiveCode';
+let appLoginlogin = '/api/sds/wechat/receiveCode';
 // 传递    roleMark   角色标志 1、患者 2、医生
 // 返回   bindStatus  绑定状态  0未绑定  1正常绑定  2医生绑定(已停用)
 

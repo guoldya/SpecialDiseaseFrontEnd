@@ -84,7 +84,7 @@
 import { mapState } from 'vuex';
 
 let bizLisReportreaddetail = '/api/hosbizOrder/read/detail'
-let update_list_url = '/bizOrder/read/update'
+let update_list_url = '/api/sds/bizOrder/read/update'
 export default {
   data() {
     return {

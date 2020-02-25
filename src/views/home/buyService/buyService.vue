@@ -26,9 +26,9 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import { Cashier } from 'mand-mobile'
-let appbizOnlineServiceRecordnowPay = "/bizOnlineServiceRecord/nowPay";
-let appbizOnlineServiceRecordupdate = "/bizOnlineServiceRecord/updateOrder";
-let bizOnlineChatUserUpdate = "/bizOnlineChatUser/update";
+let appbizOnlineServiceRecordnowPay = "/api/sds/bizOnlineServiceRecord/nowPay";
+let appbizOnlineServiceRecordupdate = "/api/sds/bizOnlineServiceRecord/updateOrder";
+let bizOnlineChatUserUpdate = "/api/sds/bizOnlineChatUser/update";
 export default {
   data() {
     return {

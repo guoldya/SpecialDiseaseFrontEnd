@@ -58,7 +58,7 @@
   </div>
 </template>
  <script>
-let pay_list_url = '/bizOrder/selectPage'
+let pay_list_url = '/api/sds/bizOrder/selectPage'
  
 export default {
   data() {

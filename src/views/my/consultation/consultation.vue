@@ -54,7 +54,7 @@
 
 
 
-let pay_list_url = '/bizConsultRecord/selectList'
+let pay_list_url = '/api/sds/bizConsultRecord/selectList'
 
 export default {
   data() {

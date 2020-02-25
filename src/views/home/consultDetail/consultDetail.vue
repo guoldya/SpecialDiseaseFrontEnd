@@ -106,9 +106,9 @@
 </template>
 <script>
 import { Dialog, Agree, Toast } from "mand-mobile";
-const onlineDoctorDetailUrl = "/sysDoctor/selectDetail";
-const commentUrl = "/bizOnlineServiceRecord/read/doctorRecordPage";
-const followDoctorUrl = "/bizDoctorFollow/followDoctor"
+const onlineDoctorDetailUrl = "/api/sds/sysDoctor/selectDetail";
+const commentUrl = "/api/sds/bizOnlineServiceRecord/read/doctorRecordPage";
+const followDoctorUrl = "/api/sds/bizDoctorFollow/followDoctor"
 export default {
   data() {
     return {

@@ -98,9 +98,9 @@
 </template>
 <script>
 import { mapState } from 'vuex';
-let bizLisReportreaddetail = '/bizRecipeDetails/selectDrugListByRecipeId';
-let appshippingAddressaddressList = "/bizShippingAddress/addressList";
-let recipeAccounting = '/bizRecipe/recipeAccounting'
+let bizLisReportreaddetail = '/api/sds/bizRecipeDetails/selectDrugListByRecipeId';
+let appshippingAddressaddressList = "/api/sds/bizShippingAddress/addressList";
+let recipeAccounting = '/api/sds/bizRecipe/recipeAccounting'
 export default {
   data() {
     return {

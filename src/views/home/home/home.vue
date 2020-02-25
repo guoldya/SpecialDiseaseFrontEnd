@@ -37,8 +37,8 @@
 <script>
 import { mapState } from 'vuex';
 import doctorList from "../../../components/doctorList";
-let bizPatientRegisterselectCount = "/bizPatientRegister/selectCount";
-let doctorlistURL = '/sysDoctor/selectDoctorByPatient'
+let bizPatientRegisterselectCount = "/api/sds/bizPatientRegister/selectCount";
+let doctorlistURL = '/api/sds/sysDoctor/selectDoctorByPatient'
 export default {
   data() {
     return {

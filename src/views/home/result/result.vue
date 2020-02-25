@@ -23,7 +23,7 @@
 
 </template>
 <script type="text/babel">
-let bdHospitalOrg = '/bdHospitalOrg/read/searchClinicListByClinicOrDoctor';
+let bdHospitalOrg = '/api/sds/bdHospitalOrg/read/searchClinicListByClinicOrDoctor';
 export default {
     data() {
         return {

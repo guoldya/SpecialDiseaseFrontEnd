@@ -31,7 +31,7 @@ const outpation = () => import(/* webpackChunkName: "my" */ "@/views/my/outpatio
 const outpationinfo = () => import(/* webpackChunkName: "my" */ "@/views/my/outpationinfo/outpationinfo.vue")
 const payorder = () => import(/* webpackChunkName: "my" */ "@/views/my/payorder/payorder.vue")
 const mydoctor = () => import(/* webpackChunkName: "my" */ "@/views/my/mydoctor/mydoctor.vue")
- 
+const valuation = () => import(/* webpackChunkName: "my" */ "@/views/my/valuation/valuation.vue")
  
  
 
@@ -192,7 +192,14 @@ export default new Router({
       title: '订单详情'
     }
   },
-   
+  {
+    path: '/valuation',
+    name: 'valuation',
+    component: valuation,
+    meta: {
+      title: '在线调查'
+    }
+  },
   {
     path: '/payment',
     name: 'payment',

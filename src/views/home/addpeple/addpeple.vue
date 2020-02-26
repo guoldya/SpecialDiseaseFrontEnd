@@ -15,6 +15,9 @@
   </div>
 </template>
 <script>
+ 
+ 
+
 import { InputItem, Field } from 'mand-mobile'
 let insertOrUpdatePatient = "sysPatientBinding/insertOrUpdate";
 export default {

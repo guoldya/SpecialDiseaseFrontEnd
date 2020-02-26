@@ -78,6 +78,7 @@ export default {
   .listData {
     padding: 7px 24px;
     border-bottom: none;
+    color: #8E8E97;
     span {
       padding: 0;
       max-width: 70%;

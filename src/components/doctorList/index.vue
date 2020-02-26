@@ -5,21 +5,20 @@
     <div class="comment-right">
       <p class="introduce">
         <span class="name">{{datas.drName}}</span>&nbsp;
-        <span>{{datas.education}}</span>&nbsp;
-        <span>{{datas.deptName}}</span>&nbsp;
+        <span class="education">{{datas.education}}</span>&nbsp;
+        <span class="education">{{datas.deptName}}</span>&nbsp;
       </p>
-      <p class="colo13">
+      <p class="colo3">
         <span class="picture" :class="datas.allowType<1||!datas.allowType ?'noOpen' :''">图文</span>&nbsp;
-        <span class="picture" :class="datas.allowType<2||!datas.allowType ?'noOpen' :''">门特在线</span>&nbsp;
-        <span class="picture" :class="datas.allowType<3||!datas.allowType ?'noOpen' :''">视频</span>&nbsp;
-        <span class="reputation">好评率 {{datas.praiseRate||0}}%</span>&nbsp;
+        <span class="picture picture1" :class="datas.allowType<2||!datas.allowType ?'noOpen' :''">门特在线</span>&nbsp;
+        <span class="picture picture2" :class="datas.allowType<3||!datas.allowType ?'noOpen' :''">视频</span>&nbsp;
       </p>
-      <p class="content">擅长：{{datas.major}}</p>
-      <p class="colo13">
-        <span>咨询数：<span class="num">{{datas.diagnosisNum||'0'}}</span></span>&nbsp;
-        <span>平均回复时长：<span  class="num">{{datas.replyTime||'0'}}</span> 分</span>&nbsp;
+      <p class="content">擅长：{{datas.expertField}}</p>
+      <p class="colo3">
+        <span style=" margin-right: 20px;">咨询数：<span class="num">{{datas.diagnosisNum||'12'}}</span></span>&nbsp;
+        <span>平均回复时长：<span class="num">{{datas.replyTime||'0'}}</span> 分</span>&nbsp;
       </p>
-      <p class="price">￥{{datas.minPrice|keepTwoNum}} 起
+      <p class="price">￥{{datas.minPrice|keepTwoNum}}
         <router-link :to="{ path: '/consultDetail', query: { id: datas.id }}" class="consult">立即咨询</router-link>
         <router-link v-show="false" to="/pictureConsult">免费咨询</router-link>
       </p>
@@ -115,11 +114,19 @@ export default {
 .doctor-list p {
   line-height: 40px;
 }
-
+.colo3 {
+  font-size: 17px;
+  font-weight: 400;
+  color: #626262;
+   
+}
 .doctor-list .name {
   font-size: 32px;
 }
-
+.doctor-list .education {
+  font-size: 20px;
+  color: #626262;
+}
 .content {
   font-size: 24px;
   color: #878787;
@@ -133,20 +140,24 @@ export default {
   background: #9ac3ff;
   font-size: 22px;
 }
-
+.picture1 {
+  background: #a5dbff;
+}
+.picture2 {
+  background: #82e0c3;
+}
 .noOpen {
   padding: 1px 5px;
   border-radius: 7px;
   color: var(--primary--content);
   color: #fff;
-  background: #9ac3ff;
 }
 .introduce {
   font-size: 24px;
 }
-.num{
-   color: #3A3A3A;
-   font-size: 28px;
+.num {
+  color: #3a3a3a;
+  font-size: 28px;
 }
 .doctor-list .price {
   color: #f74749;

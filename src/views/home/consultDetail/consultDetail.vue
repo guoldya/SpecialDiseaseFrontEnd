@@ -51,7 +51,7 @@
       <!--擅长-->
       <div class="doctor-speciality doctor-item">
         <div class="title">擅长</div>
-        <div class="skill">{{ doctorInfo.major }}</div>
+        <div class="skill">{{ doctorInfo.expertField }}</div>
       </div>
       <!--简介  -->
       <div class="doctor-abstract doctor-item">

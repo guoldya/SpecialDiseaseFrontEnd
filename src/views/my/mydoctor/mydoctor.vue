@@ -11,11 +11,10 @@
         </p>
         <p class="colo13">
           <span class="picture" :class="item.allowType<1||!item.allowType ?'noOpen' :''">图文</span>&nbsp;
-          <span class="picture" :class="item.allowType<2||!item.allowType ?'noOpen' :''">门特在线</span>&nbsp;
-          <span class="picture" :class="item.allowType<3||!item.allowType ?'noOpen' :''">视频</span>&nbsp;
-          <span class="reputation">好评率 {{item.praiseRate||0}}%</span>&nbsp;
+          <span class="picture picture1" :class="item.allowType<2||!item.allowType ?'noOpen' :''">门特在线</span>&nbsp;
+          <span class="picture picture2" :class="item.allowType<3||!item.allowType ?'noOpen' :''">视频</span>&nbsp;
         </p>
-        <p class="content">擅长：{{item.major}}</p>
+        <p class="content">擅长：{{item.expertField}}</p>
         <p class="colo13">
           <span>咨询数：<span class="num">{{item.diagnosisNum||'0'}}</span></span>&nbsp;
           <span>平均回复时长：<span class="num">{{item.replyTime||'0'}}</span> 分</span>&nbsp;
@@ -167,13 +166,17 @@ export default {
   background: #9ac3ff;
   font-size: 22px;
 }
-
+.picture1 {
+  background: #a5dbff;
+}
+.picture2 {
+  background: #82e0c3;
+}
 .noOpen {
   padding: 1px 5px;
   border-radius: 7px;
   color: var(--primary--content);
   color: #fff;
-  background: #9ac3ff;
 }
 .introduce {
   font-size: 24px;

@@ -36,7 +36,7 @@
 </template>
 <script>
 import { mapState } from 'vuex';
-import doctorList from "../../../components/doctorList";
+ 
 
 let doctorlistURL = 'sysDoctor/selectDoctorByPatient'
 export default {
@@ -84,9 +84,7 @@ export default {
     // this.homeNumber(2);
     this.homeNumber(this.chooseId);
   },
-  components: {
-    doctorList
-  },
+ 
   methods: {
     doctorlist() {
       let argu = {};

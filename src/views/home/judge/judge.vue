@@ -18,17 +18,23 @@ export default {
     let wechatCode;
     wechatCode = str.split("?")[0].split("&")[0].split("=")[1];
     sessionStorage.setItem('wechatCode', wechatCode);
-    this.$axios.get(appLoginlogin + '?wechatCode=' + 'code' + '&roleMark=' + '1', {
+
+   
+    let url = appLoginlogin + '?wechatCode=' + 'code' + '&roleMark=' + '1';
+    if (this.$route.query.loginAgin) {
+      url = appLoginlogin + '?accountId=' + this.$route.query.accountId;
+    }
+    this.$axios.get(url, {
     }).then(res => {
       if (res.data.code == '200') {
         //   sessionStorage.setItem('token7', res.data.data.token);
         //   sessionStorage.removeItem('openid');
         //   sessionStorage.removeItem('accessToken');
         console.log(res.data.data)
-         
+
         if (res.data.data.bindStatus == 1) {
           this.$store.commit('SET_USERINFO', res.data.data)
-        console.log(this.$store.state.userInfo, "sssssssssssssss")
+          console.log(this.$store.state.userInfo, "sssssssssssssss")
           this.$router.replace({
             name: 'home',
           });

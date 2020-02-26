@@ -92,4 +92,11 @@ body {
 .md-landscape .md-icon.md-landscape-close {
     display: none !important;
 }
+.nomore {
+  height: 80px;
+  line-height: 70px;
+  font-size: 24px;
+  color: var(--primary--content);
+  margin-left: 39%;
+}
 </style>

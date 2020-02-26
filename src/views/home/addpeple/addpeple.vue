@@ -12,21 +12,41 @@
       <md-selector v-model="isSelectorShow" :default-value="1" :data="test" max-height="320px" title="选择您与患者的关系" @choose="onSelectorChoose"></md-selector>
       <p class="warnTip">温馨提示：您可以累计添加五个患者！</p>
     </div>
+    <!-- 咨询弹窗 -->
+    <md-dialog :title="basicDialog.title" :closable="true" v-model="basicDialog.open" :btns="basicDialog.btns">
+      <p>绑定成功，用此账号登录？</p>
+    </md-dialog>
   </div>
 </template>
 <script>
- 
- 
+
+
 
 import { InputItem, Field } from 'mand-mobile'
 let insertOrUpdatePatient = "sysPatientBinding/insertOrUpdate";
 export default {
   data() {
     return {
+      accountId: '',
+      basicDialog: {
+        open: false,
+        checked: true,
+        title: "提示",
+        content: '',
+        price: '',
+        type: null, // 咨询弹窗类型 type 1 图文 2 电话 3视频
+        btns: [
+
+          {
+            text: "确定",
+            handler: this.onConfirm
+          }
+        ]
+      },
       type: 1,
       name: '',
       idcard: '',
-       isTijiao: true,
+      isTijiao: true,
       show: true,
       isSelectorShow: false,
       selectorValue: '自己',
@@ -73,12 +93,20 @@ export default {
       this.selectorValue = data.text;
       this.type = data.value * 1;
     },
+    // 点击申请咨询按钮
+    onConfirm() {
 
+      this.basicDialog.open = false;
+      this.$router.push({
+        path: "/",
+        query: { loginAgin: 1, accountId: this.accountId }
+      });
+    },
     tijiao() {
-        this.isTijiao = false;
+      this.isTijiao = false;
       if (!this.name || !this.idcard) {
         this.$toast.info('请完善信息')
-         this.isTijiao = true;
+        this.isTijiao = true;
       } else {
 
         this.$axios.post(insertOrUpdatePatient, {
@@ -89,11 +117,10 @@ export default {
           if (res.data.code == '200') {
             this.$toast.info('添加成功')
             this.isTijiao = true;
+            this.accountId = res.data.data.accountId
             if (this.$route.query.isnews) {
-              this.$router.replace({
-                name: 'home',
-              });
-            }else{
+              this.basicDialog.open = true;
+            } else {
               this.$router.go(-1);
             }
           } else {

@@ -14,11 +14,11 @@
       </div>
 
       <div class="content-card">
-        <!-- <p class="title">{{doctorInfo[0].name}} </p> -->
-        <div class="content-card-div" v-for="(item2,index2) in doctorInfo" :key="index2+'1'">
-          <p :class="item2.type==4?'title':''">{{item2.name}}<span class="wran" v-if="item2.type==2">(多选)</span></p>
-          <div class="content-card-tag tiwen" v-if="item2.sn==3||item2.sn==4||item2.sn==6&&item2.type!=4" :class="item2.sn==4?'aa100':''">
-            <div v-for="(item,index) in item2.childNode" :key="index+'1'" @click="selectService(index,index2,item2.type)" style="display:flex">
+        <p class="title">{{doctorInfo[0].name}} </p>
+        <div class="content-card-div">
+          <p>{{doctorInfo[1].name}}</p>
+          <div class="content-card-tag">
+            <div v-for="(item,index) in consultList1" :key="index+'1'" @click="selectService(index)" style="display:flex">
               <!-- <img :src="aa" alt=""> -->
 
               <label :class="[{'is-checked': item.checked }, 'md-radio']">
@@ -29,18 +29,90 @@
               <span>{{item.name}}</span>
             </div>
           </div>
-          <div v-if="item2.sn!=3&&item2.sn!=4&&item2.sn!=6&&item2.type!=4" class="content-card-tag">
-            <div v-for="(item,index) in item2.childNode" :key="index+'1'" @click="selectService(index,index2,item2.type)" style="display:flex">
-              <label :class="[{'is-checked': item.checked }, 'md-radio']">
-                <div class="md-radio-icon">
-                  <i class="md-icon icon-font md-icon-checked checked md"></i>
-                </div>
-              </label>
-              <span>{{item.name}}</span>
+        </div>
+        <div class="content-card-div">
+          <p>{{doctorInfo[2].name}} </p>
+          <div class="content-card-tag tiwen">
+            <div v-for="(item2,index2) in doctorInfo[2].childNode" :key="index2+'1'" @click="checkedFun(item2,num0+1)">
+              <img src="@/assets/images/danxuan1.png" alt="">
+              <span>{{item2.name}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="content-card-div">
+          <p>
+           {{doctorInfo[3].name}}
+          </p>
+          <div class="content-card-tag wendu">
+            <div class="slecettitle">
+              <p>请选择最高体温</p>
+              <div class="slecet">
+                38.9 c <img src="@/assets/images/aa.png" alt="">
+              </div>
+            </div>
+            <div class="slecettitle">
+              <p>
+                请选择开始发热日期
+              </p>
+              <div class="slecet" @click="isDatePickerShow = true">
+                {{datePickerValue}} <img src="@/assets/images/aa.png" alt="">
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="content-card-div">
+          <p>4、发热时有没有以下情况？</p>
+          <div class="content-card-tag tiwen">
+            <div style="width:100%" v-for="(item,index) in list2" :key="index+'1'" @click="checkedFun(item,num0+1)">
+              <img src="@/assets/images/danxuan1.png" alt="">
+              <span>{{item.text}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="content-card-div">
+          <p>5、吃退热药后的体温情况是？</p>
+          <div class="content-card-tag tiwen">
+            <div v-for="(item,index) in list3" :key="index+'1'" @click="checkedFun(item,num0+1)">
+              <img src="@/assets/images/danxuan1.png" alt="">
+              <span>{{item.text}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="content-card-div">
+          <p>6、有没有咳痰？</p>
+          <div class="content-card-tag tiwen">
+            <div v-for="(item,index) in list4" :key="index+'1'" @click="checkedFun(item,num0+1)">
+              <img src="@/assets/images/danxuan1.png" alt="">
+              <span>{{item.text}}</span>
             </div>
           </div>
         </div>
 
+      </div>
+      <div class="content-card card2" style="  border-radius: 0 ">
+        <p class="title">症状时长 </p>
+        <div class="content-card-div">
+          <p>7、本次不舒服有多久？</p>
+          <div class="content-card-tag tiwen">
+            <div v-for="(item,index) in list5" :key="index+'1'" @click="checkedFun(item,num0+1)">
+              <img src="@/assets/images/danxuan1.png" alt="">
+              <span>{{item.text}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content-card card2" style="  border-radius: 0 0 10px 10px;">
+        <p class="title">接触史询问 </p>
+        <div class="content-card-div">
+          <p>1、是否有以下症状？</p>
+          <div class="content-card-tag">
+            <div v-for="(item,index) in consultList1" :key="index+'1'" @click="checkedFun(item,num0+1)">
+              <img src="@/assets/images/xuan1.png" alt="">
+              <span>{{item.text}}</span>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -74,7 +146,6 @@
 import data from './data.js'
 let updateByList = "/api/hos/bizPatientEvaluate/updateByList";
 let detailurl = "bizSurvey/read/queryById";
-let saveResult = 'bizSurvey/read/saveResult'
 export default {
   data() {
     return {
@@ -83,13 +154,14 @@ export default {
       minDate: new Date('2019/12/1'),
       currentDate: new Date(),
       isTijiao: true,
-     
+      isshow: false,
       recordDetai: '',
       title: '',
+
       num0: 0,
       count: 1,
       actDialog: {
-        open: true,
+        open: false,
         btns: [
           {
             text: '取消',
@@ -99,16 +171,91 @@ export default {
 
         ],
       },
-      parm: {
-        accountId: 0,
-        list: [
-          {
-            result: "string",
-            resultId: 0
-          }
-        ],
-        surveyId: 0
-      },
+      img1: require('@/assets/images/xuan1.png'),
+      img2: require('@/assets/images/xuan2.png'),
+      list1: [
+        {
+          value: 1,
+          text: '＜37.3',
+        },
+        {
+          value: 2,
+          text: '＞37.3',
+        },
+
+      ],
+      // 门诊
+      list2: [
+        {
+          value: 1,
+          text: '发热时体温持续不退、体温一直大于38℃',
+        },
+        {
+          value: 2,
+          text: '都没有',
+        },
+
+      ],
+      // 体检
+      list3: [
+        {
+          value: 1,
+          text: '体温下降',
+        },
+        {
+          value: 2,
+          text: '体温下降又升高',
+        },
+        {
+          value: 3,
+          text: '体温没有下降',
+        },
+      ],
+      // 体检
+      list4: [
+        {
+          value: 1,
+          text: '没有咳痰(干咳)',
+        },
+        {
+          value: 2,
+          text: '有咳痰',
+        },
+
+      ],
+      list5: [
+        {
+          value: 1,
+          text: '14天以内',
+        },
+        {
+          value: 2,
+          text: '14天以上',
+        },
+
+      ],
+      list6: [
+        {
+          value: 1,
+          text: '1.有武汉（湖北）等疫区旅游史或居住史',
+        },
+        {
+          value: 2,
+          text: '2.有接触过武汉（湖北）等疫区的人员',
+        },
+        {
+          value: 1,
+          text: '3.有接触过疑似或确诊新冠状病毒感染者',
+        },
+        {
+          value: 2,
+          text: '4.身边有多人出现发热、乏力、咳嗽、咽痛等',
+        },
+        {
+          value: 5,
+          text: '5.都没有',
+        },
+      ],
       consultList1: '',
       doctorInfo: [{ id: 1, name: "症状采集", sn: 1, surveyId: 1, type: 4 }, { id: 1, name: "症状采集", sn: 1, surveyId: 1, type: 4 }],
     }
@@ -163,22 +310,11 @@ export default {
         if (res.data.code != 200) {
           throw Error(res.data.msg);
         }
-
-        res.data.data.list.map(x => {
-          if (x.childNode) {
-            x.childNode.forEach(item => item.checked = false);
-            console.log(x.childNode.length)
-            console.log(x.childNode[1])
-            x.childNode[0].checked = true;
-          }
-
-        })
-        this.parm.surveyId = res.data.data.id;
-        // res.data.data.list[1].childNode.forEach(item => item.checked = false);
-
+        res.data.data.list[1].childNode.forEach(item => item.checked = false);
         this.doctorInfo = res.data.data.list;
-        this.consultList1 = this.doctorInfo[1].childNode;
+        this.consultList1 = res.data.data.list[1].childNode;
 
+        console.log(this.consultList1, "wo ")
         this.isloading = false;
       } catch (error) {
         this.isloading = false;
@@ -194,33 +330,19 @@ export default {
       // })
       this.actDialog.open = false
     },
-    selectService(index, index2, data) {
-      console.log(data, index2, "这里")
-      if (data == 2) {
-        if (index == 10) {
-          const serviceresult = this.consultList1.filter(item => item.id != 13);
-          console.log(serviceresult, "这里")
-          // this.doctorInfo[index2].childNode
-          serviceresult.forEach(item => item.checked = false)
-          this.consultList1[index].checked = !this.consultList1[index].checked;
-        } else {
-          const serviceresult2 = this.consultList1.filter(item => item.id == 13);
-          serviceresult2.forEach(item => item.checked = false)
-          this.consultList1[index].checked = !this.consultList1[index].checked;
-        }
+    selectService(index) {
+
+      if (index == 10) {
+
+        const serviceresult = this.consultList1.filter(item => item.id != 13);
+        console.log(serviceresult, "这里")
+        serviceresult.forEach(item => item.checked = false)
+        this.consultList1[index].checked = !this.consultList1[index].checked;
       } else {
-
-        // this.doctorInfo[index2].childNode[index].checked = !this.doctorInfo[index2].childNode[index].checked;
-        if (this.doctorInfo[index2].childNode[index].checked) {
-          return
-        } else {
-          this.doctorInfo[index2].childNode.forEach(item => item.checked = false)
-          this.doctorInfo[index2].childNode[index].checked = true;
-
-        }
+        const serviceresult2 = this.consultList1.filter(item => item.id == 13);
+        serviceresult2.forEach(item => item.checked = false)
+        this.consultList1[index].checked = !this.consultList1[index].checked;
       }
-
-
     },
     // 住院评价
     checkedFun: function (val, i) {
@@ -229,37 +351,14 @@ export default {
     },
 
     tijiao() {
-
-
-      // this.doctorInfo.forEach(item => item.checked = true);
-
-      // this.parm.list.push = this.doctorInfo.map(x => {
-      var aaa = [];
-      this.doctorInfo.map(x => {
-        if (x.childNode) {
-          x.childNode.map(a => {
-            console.log(a)
-            if (a.checked) {
-              console.log(a.id, a.name, "提交中")
-
-              aaa.push({ id: a.id, result: a.name });
-              return { id: a.id, result: a.name }
-
-            }
-
-          })
-
-        }
-        // return { id: x.id, feeType: x.name, }
-      })
-      this.parm.list = aaa;
-      console.log(this.parm, "ssssssssssssssssss")
       this.$toast.loading("提交中...")
-      this.isTijiao = false;
-      this.$axios.put(saveResult, this.parm).then(res => {
+
+      this.$axios.post(updateByList, {
+        list: this.list
+      }).then(res => {
         if (res.data.code == '200') {
-          this.$toast.hide()
-          this.isTijiao = true;
+          this.$store.dispatch('getMessage', { update1: true });
+          this.$toast.info("评价成功")
           this.$router.go(-1)
         } else {
           this.$toast.hide()
@@ -347,10 +446,9 @@ export default {
       color: #209fff;
       position: relative;
       padding-left: 45px;
-      line-height: 80px !important;
-      // border-bottom: 1px solid #ededed;
+      line-height: 80px;
+      border-bottom: 1px solid #ededed;
       font-size: 30px;
-      margin: 0 25px !important;
     }
     .title:before {
       position: absolute;
@@ -363,18 +461,14 @@ export default {
       transform: translateX(-50%);
     }
     .content-card-div {
-      // margin: 35px 24px;
+      margin: 35px 24px;
       border-bottom: 1px solid #ededed;
       p {
         line-height: 35px;
-        margin: 35px 24px;
       }
-      .wran {
-        font-size: 22px;
-        color: #ffac1b;
-      }
+
       .content-card-tag {
-        margin: 30px 25px 10px;
+        margin: 30px 0 10px;
         display: flex;
         flex-wrap: wrap;
         text-align: center;
@@ -418,7 +512,6 @@ export default {
         div {
           width: 50%;
         }
-
         img {
           position: relative;
           top: 4px;
@@ -518,9 +611,6 @@ export default {
       margin: 20px;
     }
   }
-}
-.valuation-top .content-card .content-card-div .aa100 div {
-  width: 100%;
 }
 </style>
  

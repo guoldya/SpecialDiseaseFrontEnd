@@ -11,13 +11,13 @@
             <img src="@/assets/images/3.jpg" alt="" />
           </div>
           <div class="doctor-info-content">
-            <p>{{ doctorInfo.drName }}</p>
+            <p>{{ doctorInfo.drName }} <span class="education">{{ doctorInfo.education }}</span></p>
             <p class="gray">
-              <span>{{ doctorInfo.education }}</span>
+
               <span>{{ doctorInfo.deptName }}</span>
             </p>
           </div>
-          <div class="doctor-info-follow"  >
+          <div class="doctor-info-follow">
             <!-- <img v-if="!doctorInfo.followStatus" src="@/assets/images/icon_follow.png" alt="" />
             <img v-else src="@/assets/images/icon_follow_pre.png" alt="" /> -->
           </div>
@@ -37,27 +37,100 @@
           </div>
         </div>
       </div>
+      <!--擅长-->
+
+      <!--简介  -->
+
+      <div class="good">
+        <div class="goodleft">
+          <img src="@/assets/images/skill.png" alt="">
+          <p>擅长：</p>
+        </div>
+        <div class="goodRIGHT">
+          <p>
+            {{ doctorInfo.expertField }}
+          </p>
+        </div>
+      </div>
+      <div class="good">
+        <div class="goodleft">
+          <img src="@/assets/images/jianjie.png" alt="">
+          <p>简介：</p>
+        </div>
+        <div class="goodRIGHT">
+          <p>
+            {{ doctorInfo.profile }}
+          </p>
+        </div>
+      </div>
       <!-- 沟通方式 -->
-      <div class="doctor-way">
+      <!-- <div class="doctor-way">
         <div class="doctor-way-item video" @click="consult({type:1,status:1})">
           <div class="doctor-way-item-img">
             <img src="@/assets/images/icon_teletext.png" alt="" />
           </div>
           <div class="doctor-way-item-money doctor-way-item-image">
-            门特在线
+            图文
+          </div>
+          
+        </div>
+      </div> -->
+      <!-- <div class="doctor-way">
+        <div class="doctor-way-item">
+          <div class="doctor-way-item-img">
+            <img src="@/assets/images/icon_teletext.png" alt="" />
+
+            <img src="@/assets/images/icon_telephone_gray.png" alt="" />
+
+            <img src="@/assets/images/icon_video_pre.png" alt="" />
+          </div>
+          <div class="doctor-way-item-money doctor-way-item-image">
+            图文
+          </div>
+
+          <div class="doctor-way-item-money doctor-way-item-phone doctor-way-item-disabled">
+            暂未开通
+          </div>
+          <div class="doctor-way-item-money doctor-way-item-video doctor-way-item-disabled">
+            暂未开通
           </div>
         </div>
-      </div>
-      <!--擅长-->
-      <div class="doctor-speciality doctor-item">
-        <div class="title">擅长</div>
-        <div class="skill">{{ doctorInfo.expertField }}</div>
-      </div>
-      <!--简介  -->
-      <div class="doctor-abstract doctor-item">
-        <div class="title">简介</div>
-        <div class="skill">
-          {{ doctorInfo.profile }}
+      </div> -->
+      <div class="cardMobilea">
+        <div class="cardMobile">
+          <div class="cardMobileleft">
+            <img src="@/assets/images/messge.png" alt="" />
+            <div>
+              <p>图文咨询</p>
+            </div>
+          </div>
+          <div class="cardMobileright" @click="consult({type:1,status:1})">
+            <span class="consult">去咨询</span>
+          </div>
+        </div>
+        <div class="cardMobile">
+          <div class="cardMobileleft">
+            <img src="@/assets/images/source.png" alt="" />
+            <div>
+              <p>语音问诊</p>
+
+            </div>
+          </div>
+          <div class="cardMobileright">
+            <span class="consult consult1">待开放</span>
+          </div>
+        </div>
+        <div class="cardMobile">
+          <div class="cardMobileleft">
+            <img src="@/assets/images/video.png" alt="" />
+            <div>
+              <p>视频问诊</p>
+
+            </div>
+          </div>
+          <div class="cardMobileright">
+            <span class="consult consult1">待开放</span>
+          </div>
         </div>
       </div>
 
@@ -143,25 +216,7 @@ export default {
         console.log(error.message);
       }
     },
-    async queryCommon(val) {
-      // 查询评论
-      try {
-        let res = await this.$axios.put(commentUrl, {
-          id: Number(this.$route.query.id),
-          pageNumber: this.pagingParams.num
-        });
-        if (res.data.code != 200) {
-          throw Error(res.data.msg);
-        }
-        if (res.data.rows) {
-          this.commonList = val ? this.commonList.concat(res.data.rows) : res.data.rows
-        }
-        this.pagingParams.num = res.data.current
-        this.pagingParams.pages = res.data.pages
-      } catch (error) {
-        console.log(error.message);
-      }
-    },
+    
     loadMore: function () {
       if (this.isloading) return false;
       if (this.pagingParams.num == this.pagingParams.pages) return false
@@ -222,7 +277,7 @@ export default {
 <style lang="scss" scoped>
 .doctor-detail {
   margin-top: 100px;
-
+  background: #ffffff;
   .gray {
     font-size: 26px;
     line-height: 55px;
@@ -265,8 +320,8 @@ export default {
       }
     }
     .doctor-info-content {
-      font-size: 32px;
-      line-height: 50px;
+      font-size: 30px;
+      line-height: 45px;
       flex: 1;
       .gray span {
         margin-right: 20px;
@@ -435,6 +490,72 @@ export default {
     .info {
       width: 100%;
     }
+  }
+}
+.education {
+  font-size: 26px;
+}
+.cardMobilea {
+  background: #ffffff;
+  box-shadow: 0 0 0.18rem rgba(20, 19, 51, 0.1);
+  border-radius: 16px;
+  margin: 24px;
+  .cardMobile {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ededed;
+    &:last-child {
+      border: none;
+    }
+    padding: 24px;
+    .cardMobileleft {
+      font-size: 32px;
+      line-height: 80px;
+      display: flex;
+      justify-content: space-between;
+      img {
+        width: 81px;
+        height: 81px;
+        margin-right: 20px;
+      }
+    }
+    .cardMobileright {
+      .consult {
+        font-size: 26px;
+        color: #ffffff;
+        background: #61acfa;
+        padding: 10px 25px;
+        border-radius: 50px;
+        display: block;
+        margin-top: 20px;
+      }
+      .consult1 {
+        background: #c1c9d1;
+      }
+    }
+  }
+}
+.good {
+  display: flex;
+  font-size: 28px;
+  color: #8b8b8b;
+  padding: 24px;
+  line-height: 40px;
+  .goodleft {
+    display: flex;
+    color: #232323;
+    font-size: 32px;
+    flex: 0 0 200px;
+    line-height: 60px;
+    text-align: left;
+    img {
+      width: 67px;
+      height: 67px;
+      margin-right: 20px;
+    }
+  }
+  .goodRIGHT {
+    margin-top: 10px;
   }
 }
 </style>

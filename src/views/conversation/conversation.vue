@@ -71,6 +71,7 @@
                     this.tim
                         .getMyProfile()
                         .then(({data}) => {
+                            console.log(data)
                             this.$store.commit('updateCurrentUserProfile', data)
                         })
                         .catch(error => {

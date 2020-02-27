@@ -86,5 +86,7 @@ body {
   width: 50%;
   margin-top: 150px;
 }
- 
+ .el-popover{
+   left:0 !important;
+ }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="base" :class="[ isMine ? 'right' : 'left']">
         <!-- <div class="name text-ellipsis">{{ from }}</div> -->
-        <div class="date" v-if="isMine">{{ message.isRead?'已读':'未读' }}</div>
+        <div class="date" v-if="isMine" :class="message.isRead?'':'warn'">{{ message.isRead?'已读':'未读' }}</div>
         <div class="date" v-else>{{ date }}</div>
     </div>
 </template>
@@ -74,5 +74,8 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+    .warn{
+        color: #FFAC1B;
     }
 </style>

@@ -26,7 +26,7 @@
         <p class="dise">{{item.diseaseName}}</p>
         <p class="dise">{{item.idCard}}</p>
         <!-- <p @click="switchCard(index)">切换门特患者</p> -->
-        <img class="qiehuan" src="@/assets/images/qiehuan.png">
+        <img class="qiehuan"  @click="switchCard(index)" src="@/assets/images/qiehuan.png">
       </div>
     </div>
     <doctorList v-for="(item, index) in listdata" :datas="item" :key="index"></doctorList>

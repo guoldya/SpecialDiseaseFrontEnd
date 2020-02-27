@@ -9,7 +9,7 @@
         <span :class="{on: '/home' === $route.path}">主页</span>
         <span v-if="footNumber!=0" class="footNumber"></span>
       </a>
-      <a href="javascript:;" class="aui-tabBar-item " @click="switchTo('/online')">
+      <a href="javascript:;" class="aui-tabBar-item " @click="switchTo('/conversation')">
         <span class="aui-tabBar-item-icon">
           <img :src="'/online' === $route.path ? tabBarImgArr[1].selected : tabBarImgArr[1].normal" alt="消息中心">
         </span>

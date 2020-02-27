@@ -50,7 +50,7 @@
 
       <div class="bindcardwarn">
         <p>
-          温馨提示：您累计可添加5个门特患者，
+          温馨提示：您累计可添加5个门特患者
         </p>
       </div>
     </div>
@@ -117,6 +117,7 @@ export default {
   border-radius: 5px;
   width: 94%;
   margin-left: 3%;
+  margin-top: 20px;
   .mentecardtitlt {
     background: #eef5ff;
     padding: 12px 24px;
@@ -150,7 +151,7 @@ export default {
   color: #f99c2e;
   bottom: 0;
   padding-top: 40px;
-  margin-top: 20px;
+  margin-bottom: 40px;
   font-size: 24px;
   margin-left: 34px;
 }

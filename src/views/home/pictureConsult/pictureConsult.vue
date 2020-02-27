@@ -39,7 +39,7 @@
       <textarea maxlength="500" v-model="questionDes"></textarea>
     </div>
     <div style="padding:0.24rem">
-      <md-button type="primary" round style="margin-top:16px">提交问题</md-button>
+      <md-button type="primary" @click="handleConfirm" round style="margin-top:16px">提交问题</md-button>
     </div>
   </div>
 </template>
@@ -70,6 +70,41 @@ export default {
         console.log(error.message);
       }
     },
+
+    handleConfirm() { //点击医生调用此方法，跳转到聊天页面
+      if (this.userID !== '@TIM#SYSTEM') {
+        // 查找医生是否在线
+        // this.$store.dispatch('checkoutConversation', `C2C${this.userID}`)
+        this.$store.commit('pushCurrentMessageList', this.questionDes)
+        
+        this.tim.sendMessage(this.questionDes).catch(error => {
+          this.$store.commit('showMessage', {
+            type: 'error',
+            message:'ssssss'
+          })
+        })
+        this.$router.push({
+          name: 'chatRoom'
+        })
+        this.$store.dispatch('checkoutConversation', `C2Cuser3`).then(() => {
+          this.showDialog = false
+        }).catch(() => {
+          this.$store.commit('showMessage', {
+            message: '没有找到该用户',
+            type: 'warning'
+          })
+        })
+      } else {
+        this.$store.commit('showMessage', {
+          message: '没有找到该用户',
+          type: 'warning'
+        })
+      }
+      this.userID = ''
+    },
+
+
+
   }
 }
  </script>

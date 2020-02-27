@@ -117,7 +117,8 @@ export default {
           if (res.data.code == '200') {
             this.$toast.info('添加成功')
             this.isTijiao = true;
-            this.accountId = res.data.data.accountId
+            this.accountId = res.data.data.accountId;
+           this.$store.dispatch('getCards', { update: true });
             if (this.$route.query.isnews) {
               this.basicDialog.open = true;
             } else {
@@ -149,9 +150,5 @@ export default {
 .cardblind .md-field {
   padding: 0px !important;
 }
-.cardblind .warnTip {
-  text-align: left;
-  color: red;
-  padding: 24px;
-}
+   
 </style>

@@ -11,7 +11,10 @@ const result = () => import(/* webpackChunkName: "home" */ "@/views/home/result/
 const consultDetail = () => import(/* webpackChunkName: "home" */ "@/views/home/consultDetail/consultDetail.vue")
 const buyService = () => import(/* webpackChunkName: "home" */ "@/views/home/buyService/buyService.vue")
 const pictureConsult = () => import(/* webpackChunkName: "home" */ "@/views/home/pictureConsult/pictureConsult.vue")
- 
+
+const conversation = () => import(/* webpackChunkName: "home" */ "@/views/conversation/conversation.vue")
+const chatRoom = () => import(/* webpackChunkName: "home" */ "@/views/chat-room/chatRoom.vue")
+
 //  在线问诊
 const online = () => import(/* webpackChunkName: "online" */ "@/views/online/online/online.vue")
 
@@ -32,11 +35,11 @@ const outpationinfo = () => import(/* webpackChunkName: "my" */ "@/views/my/outp
 const payorder = () => import(/* webpackChunkName: "my" */ "@/views/my/payorder/payorder.vue")
 const mydoctor = () => import(/* webpackChunkName: "my" */ "@/views/my/mydoctor/mydoctor.vue")
 const valuation = () => import(/* webpackChunkName: "my" */ "@/views/my/valuation/valuation.vue")
- 
- 
 
 
- 
+
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -76,8 +79,8 @@ export default new Router({
       title: '医生详情'
     }
   },
-  
-   
+
+
   {
     path: '/addpeple',
     name: 'addpeple',
@@ -127,7 +130,7 @@ export default new Router({
       title: '我的医生'
     }
   },
-   
+
   {
     path: '/acctest',
     name: 'acctest',
@@ -168,7 +171,7 @@ export default new Router({
       title: '患者信息'
     }
   },
-   
+
   {
     path: '/myorder',
     name: 'myorder',
@@ -185,14 +188,14 @@ export default new Router({
       title: '订单详情'
     }
   },
-  {
-    path: '/valuation',
-    name: 'valuation',
-    component: valuation,
-    meta: {
-      title: '在线调查'
-    }
-  },
+      {
+          path: '/valuation',
+          name: 'valuation',
+          component: valuation,
+          meta: {
+              title: '在线调查'
+          }
+      },
   {
     path: '/payment',
     name: 'payment',
@@ -225,7 +228,7 @@ export default new Router({
       title: '我的咨询'
     }
   },
-   
+
   {
     path: '/online',
     name: 'online',
@@ -234,7 +237,23 @@ export default new Router({
       title: '在线问诊'
     }
   },
-   
+      {
+          path: '/conversation',
+          name: 'conversation',
+          component: conversation,
+          meta: {
+              title: '会话室'
+          }
+      },
+      {
+          path: '/chatRoom',
+          name: 'chatRoom',
+          component: chatRoom,
+          meta: {
+              title: '聊天室'
+          }
+      },
+
   ],
   scrollBehavior(to, from, savedPosition) {
     return new Promise((resolve, reject) => {

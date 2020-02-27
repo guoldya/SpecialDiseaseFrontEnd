@@ -9,6 +9,7 @@
     <div class="right" @click="switchTo()"  :class="active.length==0? 'mu-secondary-text-color' : '' ">
       <slot>{{titleRight}}</slot>
     </div>
+    <slot name="right"></slot>
   </div>
 </template>
 <script>

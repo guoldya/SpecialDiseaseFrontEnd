@@ -37,10 +37,10 @@ export default {
   /* 主题色 */
   --primary: #48B6FF;
   /* 内容字体颜色 5A5A5A*/
-  --primary--content: #979797;
-  --primary--right: #979797;
+  --primary--content: #8B8B8B;
+  --primary--right: #8B8B8B;
   /* 题目字体颜色 */
-  --primary--title: #272727;
+  --primary--title: #232323;
   /* 线颜色 */
   --primary--line: #ededed;
   /* 背景色 */
@@ -86,7 +86,13 @@ body {
   width: 50%;
   margin-top: 150px;
 }
- .el-popover{
-   left:0 !important;
- }
+.el-popover{
+    left:0 !important;
+}
+ .md-landscape-content {
+ width:601px !important;
+}
+.md-landscape .md-icon.md-landscape-close {
+    display: none !important;
+}
 </style>

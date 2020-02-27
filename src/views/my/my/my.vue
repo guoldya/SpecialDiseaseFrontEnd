@@ -19,15 +19,15 @@
       <div class="my-tool">
         <ul>
           <li @click="mydoctor">
-            <img src="@/assets/images/icon_register1.png" alt="" class="image">
+            <img src="@/assets/images/my1.png" alt="" class="image">
             <p>我的医生</p>
           </li>
           <li @click="outpation()">
-            <img src="@/assets/images/icon_self.png" alt="" class="image">
+            <img src="@/assets/images/my2.png" alt="" class="image">
             <p>我的处方</p>
           </li>
           <li @click="myOrder">
-            <img src="@/assets/images/icon_signin.png" alt="" class="image">
+            <img src="@/assets/images/my3.png" alt="" class="image">
             <p>我的订单</p>
           </li>
         </ul>
@@ -37,7 +37,7 @@
       <div class="aui-list-cell">
         <a href="javascript:;" class="aui-list-item" @click="consultation">
           <div class="aui-list-item-fl">
-            <i class="icon icon-item09"></i>
+            <i class="icon icon-item01"></i>
             我的咨询
           </div>
           <div class="aui-list-item-fr aui-list-item-arrow">
@@ -46,7 +46,7 @@
         </a>
         <a href="javascript:;" class="aui-list-item" @click="idcardlist">
           <div class="aui-list-item-fl">
-            <i class="icon icon-item09"></i>
+            <i class="icon icon-item02"></i>
             就诊人管理
           </div>
           <div class="aui-list-item-fr aui-list-item-arrow">
@@ -55,7 +55,7 @@
         </a>
         <a href="javascript:;" class="aui-list-item" @click="adress">
           <div class="aui-list-item-fl">
-            <i class="icon icon-item10"></i>
+            <i class="icon icon-item03"></i>
             地址管理
           </div>
           <div class="aui-list-item-fr aui-list-item-arrow">
@@ -64,8 +64,17 @@
         </a>
         <a href="javascript:;" class="aui-list-item" @click="valuationList">
           <div class="aui-list-item-fl">
-            <i class="icon icon-item10"></i>
+            <i class="icon icon-item04"></i>
             我的档案
+          </div>
+          <div class="aui-list-item-fr aui-list-item-arrow">
+            <i></i>
+          </div>
+        </a>
+        <a href="javascript:;" class="aui-list-item" @click="valuation">
+          <div class="aui-list-item-fl">
+            <i class="icon icon-item10"></i>
+            问卷调查
           </div>
           <div class="aui-list-item-fr aui-list-item-arrow">
             <i></i>
@@ -73,7 +82,7 @@
         </a>
         <a href="javascript:;" class="aui-list-item" @click="suggestion">
           <div class="aui-list-item-fl">
-            <i class="icon icon-item10"></i>
+            <i class="icon icon-item05"></i>
             提醒设置
           </div>
           <div class="aui-list-item-fr aui-list-item-arrow">
@@ -154,10 +163,18 @@ export default {
     },
     // 就医评价
     valuationList() {
-     
+
       let argu = {};
       this.$router.push({
         name: "valuationList",
+        query: argu
+      });
+    },
+    valuation() {
+
+      let argu = {};
+      this.$router.push({
+        name: "valuation",
         query: argu
       });
     },
@@ -204,11 +221,14 @@ export default {
 }
 
 .aui-user {
-  background-color: rgba(27, 130, 210, 1);
+  // background-color: rgba(27, 130, 210, 1);
+  background: url("~@/assets/images/bg17.png") 100%;
+  background-size: 100%;
   padding: 50px 20px 150px 30px;
 }
 
 .aui-user-cell {
+  // background-image: url("~@/assets/images/bg17.png");
   position: relative;
   display: -webkit-box;
   display: -webkit-flex;
@@ -262,8 +282,8 @@ export default {
       text-align: center;
       position: relative;
       .image {
-        width: 60px;
-        height: 60px;
+        width: 70px;
+        height: 70px;
       }
     }
   }
@@ -378,22 +398,22 @@ export default {
   background-repeat: no-repeat;
 }
 .icon-item01 {
-  background-image: url("~@/assets/images/7nn1.png");
+  background-image: url("~@/assets/images/my4.png");
 }
 
 .icon-item02 {
-  background-image: url("~@/assets/images/7nn2.png");
+  background-image: url("~@/assets/images/my5.png");
 }
 .icon-item03 {
-  background-image: url("~@/assets/images/7nn3.png");
+  background-image: url("~@/assets/images/my6.png");
 }
 
 .icon-item04 {
-  background-image: url("~@/assets/images/7nn4.png");
+  background-image: url("~@/assets/images/my7.png");
 }
 
 .icon-item05 {
-  background-image: url("~@/assets/images/7nn5.png");
+  background-image: url("~@/assets/images/my8.png");
 }
 
 .icon-item06 {

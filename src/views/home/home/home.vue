@@ -241,7 +241,7 @@ export default {
   .dise {
     font-size: 26px;
     color: rgba(138, 138, 138, 1);
-    line-height: 55px;
+    line-height: 45px;
   }
   .qiehuan {
     width: 146px;

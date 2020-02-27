@@ -17,9 +17,9 @@
               <span>{{ doctorInfo.deptName }}</span>
             </p>
           </div>
-          <div class="doctor-info-follow" @click="followDoctor">
-            <img v-if="!doctorInfo.followStatus" src="@/assets/images/icon_follow.png" alt="" />
-            <img v-else src="@/assets/images/icon_follow_pre.png" alt="" />
+          <div class="doctor-info-follow"  >
+            <!-- <img v-if="!doctorInfo.followStatus" src="@/assets/images/icon_follow.png" alt="" />
+            <img v-else src="@/assets/images/icon_follow_pre.png" alt="" /> -->
           </div>
         </div>
         <div class="doctor-info-bottom">
@@ -51,7 +51,7 @@
       <!--擅长-->
       <div class="doctor-speciality doctor-item">
         <div class="title">擅长</div>
-        <div class="skill">{{ doctorInfo.major }}</div>
+        <div class="skill">{{ doctorInfo.expertField }}</div>
       </div>
       <!--简介  -->
       <div class="doctor-abstract doctor-item">
@@ -59,26 +59,6 @@
         <div class="skill">
           {{ doctorInfo.profile }}
         </div>
-      </div>
-
-      <!-- 评论 -->
-      <div class="doctor-comment doctor-item ">
-        <div class="title">评论</div>
-      </div>
-      <!-- 评论详情 -->
-      <div class="doctor-comment-item" infinite-scroll-distance="30" v-for="(item, index) in commonList" :key="index">
-        <div class="doctor-comment-item-header">
-          <span>{{ item.accountEncrypt }}</span>
-          <span class="assess">满意</span>
-          <span>{{ item.createTime.substring(0, 10) }}</span>
-        </div>
-        <div class="doctor-comment-item-content">
-          <div class="ellipsis">
-            {{ item.comment }}
-          </div>
-
-        </div>
-        <div v-if="!item.comment">暂无消息</div>
       </div>
 
       <!-- 咨询弹窗 -->
@@ -241,12 +221,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .doctor-detail {
-  overflow-y: auto;
-  // height: 100vh;
-  box-sizing: border-box;
-  margin-top: 70px;
+  margin-top: 100px;
+
   .gray {
-    color: #999;
+    font-size: 26px;
+    line-height: 55px;
   }
 
   .doctor-item {
@@ -261,9 +240,11 @@ export default {
     // padding: 24px 40px;
   }
   .doctor-info {
-    padding: 34px 24px;
-    background: #ffffff;
-    margin-top: 40px;
+    height: 300px;
+    background-image: url("~@/assets/images/bg2.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    color: #ffffff;
     // padding: 40px 30px;
     // box-shadow: 0 0 0.18rem rgba(20, 19, 51, 0.1);
     // border-radius: 16px;
@@ -272,15 +253,20 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-top: 40px;
+    padding-left: 35px;
     .doctor-info-header {
       margin-right: 20px;
       img {
         width: 100px;
         height: 100px;
         border-radius: 50px;
+        border: 3px solid #ffffff;
       }
     }
     .doctor-info-content {
+      font-size: 32px;
+      line-height: 50px;
       flex: 1;
       .gray span {
         margin-right: 20px;
@@ -289,16 +275,18 @@ export default {
   }
   .doctor-info-bottom {
     display: flex;
-    margin-top: 20px;
+    margin-top: 30px;
     > div {
       flex: 1;
-      border-right: 1px solid #f1f3f1;
+      color: #fffcfc;
       &:last-child {
         border-right: none;
       }
       p {
         text-align: center;
         font-size: 24px;
+        color: #fffcfc;
+        line-height: 45px;
       }
     }
   }

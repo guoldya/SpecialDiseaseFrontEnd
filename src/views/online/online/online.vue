@@ -30,11 +30,128 @@
           <div class="online-content-list-text"  >
             <img  alt style="width:100px;" @load="scrollBottom">
           </div>
+        </li><li  class="online-content-list right"  >
+          <img class="online-content-list-head" src="@/assets/images/head1.png"   alt>
+          <div class="online-content-list-text"  >
+            <em></em>
+            <div ></div>
+          </div>
+          <div class="online-content-list-text"  >
+            <img  alt style="width:100px;" @load="scrollBottom">
+          </div>
+        </li><li  class="online-content-list right"  >
+          <img class="online-content-list-head" src="@/assets/images/head1.png"   alt>
+          <div class="online-content-list-text"  >
+            <em></em>
+            <div ></div>
+          </div>
+          <div class="online-content-list-text"  >
+            <img  alt style="width:100px;" @load="scrollBottom">
+          </div>
+        </li><li  class="online-content-list right"  >
+          <img class="online-content-list-head" src="@/assets/images/head1.png"   alt>
+          <div class="online-content-list-text"  >
+            <em></em>
+            <div ></div>
+          </div>
+          <div class="online-content-list-text"  >
+            <img  alt style="width:100px;" @load="scrollBottom">
+          </div>
+        </li><li  class="online-content-list right"  >
+          <img class="online-content-list-head" src="@/assets/images/head1.png"   alt>
+          <div class="online-content-list-text"  >
+            <em></em>
+            <div ></div>
+          </div>
+          <div class="online-content-list-text"  >
+            <img  alt style="width:100px;" @load="scrollBottom">
+          </div>
+        </li><li  class="online-content-list right"  >
+          <img class="online-content-list-head" src="@/assets/images/head1.png"   alt>
+          <div class="online-content-list-text"  >
+            <em></em>
+            <div ></div>
+          </div>
+          <div class="online-content-list-text"  >
+            <img  alt style="width:100px;" @load="scrollBottom">
+          </div>
+        </li><li  class="online-content-list right"  >
+          <img class="online-content-list-head" src="@/assets/images/head1.png"   alt>
+          <div class="online-content-list-text"  >
+            <em></em>
+            <div ></div>
+          </div>
+          <div class="online-content-list-text"  >
+            <img  alt style="width:100px;" @load="scrollBottom">
+          </div>
+        </li><li  class="online-content-list right"  >
+          <img class="online-content-list-head" src="@/assets/images/head1.png"   alt>
+          <div class="online-content-list-text"  >
+            <em></em>
+            <div ></div>
+          </div>
+          <div class="online-content-list-text"  >
+            <img  alt style="width:100px;" @load="scrollBottom">
+          </div>
+        </li><li  class="online-content-list right"  >
+          <img class="online-content-list-head" src="@/assets/images/head1.png"   alt>
+          <div class="online-content-list-text"  >
+            <em></em>
+            <div ></div>
+          </div>
+          <div class="online-content-list-text"  >
+            <img  alt style="width:100px;" @load="scrollBottom">
+          </div>
+        </li><li  class="online-content-list right"  >
+          <img class="online-content-list-head" src="@/assets/images/head1.png"   alt>
+          <div class="online-content-list-text"  >
+            <em></em>
+            <div ></div>
+          </div>
+          <div class="online-content-list-text"  >
+            <img  alt style="width:100px;" @load="scrollBottom">
+          </div>
+        </li><li  class="online-content-list right"  >
+          <img class="online-content-list-head" src="@/assets/images/head1.png"   alt>
+          <div class="online-content-list-text"  >
+            <em></em>
+            <div ></div>
+          </div>
+          <div class="online-content-list-text"  >
+            <img  alt style="width:100px;" @load="scrollBottom">
+          </div>
+        </li><li  class="online-content-list right"  >
+          <img class="online-content-list-head" src="@/assets/images/head1.png"   alt>
+          <div class="online-content-list-text"  >
+            <em></em>
+            <div ></div>
+          </div>
+          <div class="online-content-list-text"  >
+            <img  alt style="width:100px;" @load="scrollBottom">
+          </div>
+        </li><li  class="online-content-list right"  >
+          <img class="online-content-list-head" src="@/assets/images/head1.png"   alt>
+          <div class="online-content-list-text"  >
+            <em></em>
+            <div ></div>
+          </div>
+          <div class="online-content-list-text"  >
+            <img  alt style="width:100px;" @load="scrollBottom">
+          </div>
+        </li><li  class="online-content-list right"  >
+          <img class="online-content-list-head" src="@/assets/images/head1.png"   alt>
+          <div class="online-content-list-text"  >
+            <em></em>
+            <div ></div>
+          </div>
+          <div class="online-content-list-text"  >
+            <img  alt style="width:100px;" @load="scrollBottom">
+          </div>
         </li>
       </ul>
     </div>
  <!-- 底部 -->
-    <Footer></Footer>
+   
     <!-- 聊天工具栏 -->
     <div class="inquiry-online-tool">
       <div class="inquiry-online-tool-voice">

@@ -1,24 +1,20 @@
 <template>
-  <div class="current-conversation-wrapper">
-    <div class="current-conversation" @scroll="onScroll">
-      <div class="content">
-        <div class="message-list" ref="message-list" @scroll="this.onScroll">
-          <div class="more" v-if="!isCompleted">
-            <md-button type="link" @click="$store.dispatch('getMessageList', currentConversation.conversationID)">查看更多</md-button>
-          </div>
-          <div class="no-more" v-else>没有更多了</div>
-          <message-item v-for="message in currentMessageList" :key="message.ID" :message="message" />
-
-          
-
-
+  <div class="current-conversation-wrapper" >
+   
+    <div class="content">
+      <div class="message-list" ref="message-list" @scroll="this.onScroll">
+        <div class="more" v-if="!isCompleted">
+          <md-button type="link" @click="$store.dispatch('getMessageList', currentConversation.conversationID)">查看更多</md-button>
         </div>
-        <div v-show="isShowScrollButtomTips" class="newMessageTips" @click="scrollMessageListToButtom">回到最新位置</div>
+        <div class="no-more" v-else>没有更多了</div>
+        <message-item v-for="message in currentMessageList" :key="message.ID" :message="message" />
       </div>
-      <div class="footer">
-        <message-send-box />
-      </div>
+      <div v-show="isShowScrollButtomTips" class="newMessageTips" @click="scrollMessageListToButtom">回到最新位置</div>
     </div>
+    <div class="footer">
+      <message-send-box />
+    </div>
+   
   </div>
 </template>
 <script>
@@ -119,6 +115,7 @@ export default {
     }
   },
   mounted() {
+    
     this.$bus.$on('image-loaded', this.onImageLoaded)
     this.$bus.$on('scroll-bottom', this.scrollMessageListToButtom)
     if (this.currentConversation.conversationID === '@TIM#SYSTEM') {
@@ -148,7 +145,18 @@ export default {
     }
   },
   methods: {
+
+    // scrollBottom() {
+    //   // 内容区在底部
+    //   this.$nextTick(function () {
+    //     var ele = this.$refs['message-list']
+    //     ele.scrollTop = ele.scrollHeight;
+    //   });
+    // },
+
+    
     onScroll({ target: { scrollTop } }) {
+      console.log('执行')
       let messageListNode = this.$refs['message-list']
       if (!messageListNode) {
         return
@@ -197,21 +205,24 @@ export default {
 </script>
 <style lang="less" scoped>
 .current-conversation-wrapper {
-  margin-top: 110px;
   display: flex;
   height: 100vh;
   background-color: #f5f5f5;
   color: #1c2438;
-  .current-conversation {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100vh;
-  }
+  box-sizing: border-box;
+  padding-top: 100px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  overflow: hidden;
   .more {
+    .md-button-content {
+      font-size: 20px !important;
+    }
+    font-size: 20px;
     display: flex;
     justify-content: center;
-    font-size: 12px;
   }
   .no-more {
     display: flex;
@@ -220,14 +231,23 @@ export default {
     font-size: 12px;
     padding: 10px 10px;
   }
+  .current-conversation {
+    // display: flex;
+    // flex-direction: column;
+    // width: 100%;
+    // height: 100vh;
+  }
 }
 .content {
-  display: flex;
+  // display: flex;
+  // flex: 1;
+  // flex-direction: column;
+  // height: 100%;
+  // overflow: hidden;
+  // position: relative;
   flex: 1;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-  position: relative;
+  overflow: auto;
+  background: #ededed;
   .message-list {
     width: 100%;
     box-sizing: border-box;

@@ -90,8 +90,9 @@ export default {
           conversationType: 'C2C',
           payload: { text: this.questionDes },
         })
-        this.$store.dispatch('checkoutConversation', `C2Cuser3`).then(() => {
-          console.log("执行这里面")
+        let test= `C2Cuser`+this.$route.query.name+this.$route.query.id;
+        this.$store.dispatch('checkoutConversation', test).then(() => {
+        
           this.showDialog = false
           this.$store.commit('pushCurrentMessageList', message)
           this.tim.sendMessage(message).catch(error => {

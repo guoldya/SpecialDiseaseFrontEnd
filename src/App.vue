@@ -18,8 +18,8 @@ export default {
     }
   },
   created() {
-    this.login();
-    this.initListener()
+    // this.login();
+    // this.initListener()
     //在页面加载时读取sessionStorage里的状态信息
     if (sessionStorage.getItem("store")) {
       //this.$store.replaceState()替换 store 的根状态
@@ -29,6 +29,7 @@ export default {
     window.addEventListener("beforeunload", () => {
       sessionStorage.setItem("store", JSON.stringify(this.$store.state))
     })
+    
   },
   methods: {
     login() {

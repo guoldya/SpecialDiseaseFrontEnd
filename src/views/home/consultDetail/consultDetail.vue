@@ -240,7 +240,7 @@ export default {
       this.basicDialog.open = false;
       this.$router.push({
         path: "/pictureConsult",
-        query: { name: this.doctorInfo.name, id: this.doctorInfo.id, money: this.money, title: this.doctorInfo.title, type: this.basicDialog.type }
+        query: { name: this.doctorInfo.drName, id: this.doctorInfo.id, money: this.money, title: this.doctorInfo.title, type: this.basicDialog.type }
       });
     },
     // 咨询

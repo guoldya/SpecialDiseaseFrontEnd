@@ -83,7 +83,7 @@ export default {
       minDate: new Date('2019/12/1'),
       currentDate: new Date(),
       isTijiao: true,
-     
+
       recordDetai: '',
       title: '',
       num0: 0,
@@ -109,7 +109,7 @@ export default {
         ],
         surveyId: 0
       },
-      consultList1: '',
+      
       doctorInfo: [{ id: 1, name: "症状采集", sn: 1, surveyId: 1, type: 4 }, { id: 1, name: "症状采集", sn: 1, surveyId: 1, type: 4 }],
     }
   },
@@ -167,7 +167,7 @@ export default {
         res.data.data.list.map(x => {
           if (x.childNode) {
             x.childNode.forEach(item => item.checked = false);
-            console.log(x.childNode.length)
+            console.log(x.childNode.length,"hhhhhhhhhhhhhhh")
             console.log(x.childNode[1])
             x.childNode[0].checked = true;
           }
@@ -177,7 +177,7 @@ export default {
         // res.data.data.list[1].childNode.forEach(item => item.checked = false);
 
         this.doctorInfo = res.data.data.list;
-        this.consultList1 = this.doctorInfo[1].childNode;
+
 
         this.isloading = false;
       } catch (error) {
@@ -198,15 +198,16 @@ export default {
       console.log(data, index2, "这里")
       if (data == 2) {
         if (index == 10) {
-          const serviceresult = this.consultList1.filter(item => item.id != 13);
-          console.log(serviceresult, "这里")
+         
+          const serviceresult = this.doctorInfo[index2].childNode.filter(item => item.id != 13);
+          console.log(serviceresult, "这里555555555")
           // this.doctorInfo[index2].childNode
           serviceresult.forEach(item => item.checked = false)
-          this.consultList1[index].checked = !this.consultList1[index].checked;
+          this.doctorInfo[index2].childNode[index].checked = !this.doctorInfo[index2].childNode[index].checked;
         } else {
-          const serviceresult2 = this.consultList1.filter(item => item.id == 13);
+          const serviceresult2 = this.doctorInfo[index2].childNode.filter(item => item.id == 13);
           serviceresult2.forEach(item => item.checked = false)
-          this.consultList1[index].checked = !this.consultList1[index].checked;
+          this.doctorInfo[index2].childNode[index].checked = !this.doctorInfo[index2].childNode[index].checked;
         }
       } else {
 
@@ -241,12 +242,9 @@ export default {
             console.log(a)
             if (a.checked) {
               console.log(a.id, a.name, "提交中")
-
-              aaa.push({ id: a.id, result: a.name });
+              aaa.push({ resultId: a.id, result: a.name });
               return { id: a.id, result: a.name }
-
             }
-
           })
 
         }

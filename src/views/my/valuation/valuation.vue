@@ -55,7 +55,7 @@
         </div>
         <div class="blind-card-two">
           <div class="blind">
-            <p>建议立刻发热门诊就诊，并且佩戴好口罩 做好防护。佩戴医用外科口罩或N95， 避免乘坐公共交通工具。</p>
+            <p>疫情期间，请注意做好个人防护，并戴好口罩，如果体温大于38度,建议立刻发热门诊就诊，并且佩戴好口罩 做好防护。佩戴医用外科口罩或N95， 避免乘坐公共交通工具。</p>
           </div>
           <div>
             <md-button type="primary" size="small" inline round @click="onActConfirm" style="width:100%;margin-top:20px">我知道了</md-button>
@@ -89,7 +89,7 @@ export default {
       num0: 0,
       count: 1,
       actDialog: {
-        open: true,
+        open: false,
         btns: [
           {
             text: '取消',
@@ -109,7 +109,7 @@ export default {
         ],
         surveyId: 0
       },
-      
+
       doctorInfo: [{ id: 1, name: "症状采集", sn: 1, surveyId: 1, type: 4 }, { id: 1, name: "症状采集", sn: 1, surveyId: 1, type: 4 }],
     }
   },
@@ -167,7 +167,7 @@ export default {
         res.data.data.list.map(x => {
           if (x.childNode) {
             x.childNode.forEach(item => item.checked = false);
-            console.log(x.childNode.length,"hhhhhhhhhhhhhhh")
+            console.log(x.childNode.length, "hhhhhhhhhhhhhhh")
             console.log(x.childNode[1])
             x.childNode[0].checked = true;
           }
@@ -193,12 +193,14 @@ export default {
       //    content: '你点击了确认',
       // })
       this.actDialog.open = false
+
+      this.$router.go(-1)
     },
     selectService(index, index2, data) {
       console.log(data, index2, "这里")
       if (data == 2) {
         if (index == 10) {
-         
+
           const serviceresult = this.doctorInfo[index2].childNode.filter(item => item.id != 13);
           console.log(serviceresult, "这里555555555")
           // this.doctorInfo[index2].childNode
@@ -258,7 +260,9 @@ export default {
         if (res.data.code == '200') {
           this.$toast.hide()
           this.isTijiao = true;
-          this.$router.go(-1)
+          this.actDialog.open = true;
+
+
         } else {
           this.$toast.hide()
           this.$toast.info(res.data.msg)
@@ -499,7 +503,7 @@ export default {
   .blind-card-two {
     .blind {
       width: 509px;
-      height: 247px;
+      height: 307px;
       background: #ffffff;
       border-radius: 10px;
       margin-top: -180px;

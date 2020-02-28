@@ -1,7 +1,7 @@
 <template>
-  <div class="current-conversation-wrapper" >
-   
-    <div class="content">
+  <div class="current-conversation-wrapper">
+
+    <div class="content"  >
       <div class="message-list" ref="message-list" @scroll="this.onScroll">
         <div class="more" v-if="!isCompleted">
           <md-button type="link" @click="$store.dispatch('getMessageList', currentConversation.conversationID)">查看更多</md-button>
@@ -14,7 +14,7 @@
     <div class="footer">
       <message-send-box />
     </div>
-   
+
   </div>
 </template>
 <script>
@@ -115,7 +115,7 @@ export default {
     }
   },
   mounted() {
-    
+    this.scrollMessageListToButtom()
     this.$bus.$on('image-loaded', this.onImageLoaded)
     this.$bus.$on('scroll-bottom', this.scrollMessageListToButtom)
     if (this.currentConversation.conversationID === '@TIM#SYSTEM') {
@@ -154,16 +154,21 @@ export default {
     //   });
     // },
 
-    
+
     onScroll({ target: { scrollTop } }) {
-      console.log('执行')
-      let messageListNode = this.$refs['message-list']
-      if (!messageListNode) {
-        return
-      }
-      if (this.preScrollHeight - messageListNode.clientHeight - scrollTop < 20) {
-        this.isShowScrollButtomTips = false
-      }
+      // console.log('执行滚动')
+      // let messageListNode = this.$refs['message-list']
+      // if (!messageListNode) {
+      //   return
+      // }
+      // if (this.preScrollHeight - messageListNode.clientHeight - scrollTop < 20) {
+      //   this.isShowScrollButtomTips = false
+      // }
+
+      this.$nextTick(function () {
+        var ele = this.$refs['message-list'];
+        ele.scrollTop = ele.scrollHeight;
+      });
     },
     // 如果滚到底部就保持在底部，否则提示是否要滚到底部
     keepMessageListOnButtom() {
@@ -184,15 +189,20 @@ export default {
     },
     // 直接滚到底部
     scrollMessageListToButtom() {
-      this.$nextTick(() => {
+
+      this.$nextTick(function () {
         let messageListNode = this.$refs['message-list']
         if (!messageListNode) {
           return
         }
         messageListNode.scrollTop = messageListNode.scrollHeight
+        console.log(messageListNode.scrollHeight, "直接的滚动")
         this.preScrollHeight = messageListNode.scrollHeight
         this.isShowScrollButtomTips = false
-      })
+      });
+
+
+
     },
     showMore() {
       this.showConversationProfile = !this.showConversationProfile

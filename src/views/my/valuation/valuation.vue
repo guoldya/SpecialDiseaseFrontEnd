@@ -16,21 +16,26 @@
       <div class="content-card">
         <!-- <p class="title">{{doctorInfo[0].name}} </p> -->
         <div class="content-card-div" v-for="(item2,index2) in doctorInfo" :key="index2+'1'">
-          <p :class="item2.type==4?'title':''">{{item2.name}}<span class="wran" v-if="item2.type==2">(多选)</span></p>
-          <div class="content-card-tag tiwen" v-if="item2.sn==3||item2.sn==4||item2.sn==6&&item2.type!=4" :class="item2.sn==4?'aa100':''">
-            <div v-for="(item,index) in item2.childNode" :key="index+'1'" @click="selectService(index,index2,item2.type)" style="display:flex">
-              <!-- <img :src="aa" alt=""> -->
+          <p :class="item2.type==4?'title':''">{{item2.name}} <span class="wran" v-if="item2.type==2">(多选)</span></p>
 
-              <label :class="[{'is-checked': item.checked }, 'md-radio']">
-                <div class="md-radio-icon">
-                  <i class="md-icon icon-font md-icon-checked checked md"></i>
-                </div>
-              </label>
-              <span>{{item.name}}</span>
+          <template v-if="item2.childNode">
+            <!-- <div class="content-card-tag tiwen" v-if="item2.sn==3||item2.sn==8||item2.sn==4||item2.sn==6&&item2.type!=4" :class="item2.childNode[0].name.length>9?'aa100':''"> -->
+            <div class="content-card-tag tiwen" v-if="item2.type!=2" :class="item2.childNode[0].name.length>9?'aa100':''">
+              <div v-for="(item,index) in item2.childNode" :key="index+'1'" @click="selectService(index,index2,item2.type,item.name)" style="display:flex">
+                <!-- <img :src="aa" alt=""> -->
+
+                <label :class="[{'is-checked': item.checked }, 'md-radio']">
+                  <div class="md-radio-icon">
+                    <i class="md-icon icon-font md-icon-checked checked md"></i>
+                  </div>
+                </label>
+                <span>{{item.name}}</span>
+              </div>
             </div>
-          </div>
-          <div v-if="item2.sn!=3&&item2.sn!=4&&item2.sn!=6&&item2.type!=4" class="content-card-tag">
-            <div v-for="(item,index) in item2.childNode" :key="index+'1'" @click="selectService(index,index2,item2.type)" style="display:flex">
+          </template>
+          <div v-if="item2.type==2" class="content-card-tag" :class="item2.childNode[0].name.length>9?'aa100':''">
+            <!-- <div v-if="item2.sn!=3&&item2.sn!=4&&item2.sn!=6&&item2.type!=4" class="content-card-tag"> -->
+            <div v-for="(item,index) in item2.childNode" :key="index+'1'" @click="selectService(index,index2,item2.type,item.name)" style="display:flex">
               <label :class="[{'is-checked': item.checked }, 'md-radio']">
                 <div class="md-radio-icon">
                   <i class="md-icon icon-font md-icon-checked checked md"></i>
@@ -196,18 +201,33 @@ export default {
 
       this.$router.go(-1)
     },
-    selectService(index, index2, data) {
-      console.log(data, index2, "这里")
-      if (data == 2) {
-        if (index == 10) {
+    selectService(index, index2, data, name) {
 
-          const serviceresult = this.doctorInfo[index2].childNode.filter(item => item.id != 13);
+      if (data == 2) {
+        console.log(name.search("都没有") != -1)
+        if (name.search("都没有") != -1) {
+
+
+          //  const serviceresult = this.doctorInfo[index2].childNode.filter(item => item.id != 13);
+          // const serviceresult = this.doctorInfo[index2].childNode.filter(item => item.name != '都没有');
+          const serviceresult = this.doctorInfo[index2].childNode.filter(item => item.name.search("都没有") == -1);
+          if (this.doctorInfo[index2].childNode.filter(item => item.name.search("都没有") != -1)[0].checked) {
+            return
+          }
           console.log(serviceresult, "这里555555555")
           // this.doctorInfo[index2].childNode
           serviceresult.forEach(item => item.checked = false)
           this.doctorInfo[index2].childNode[index].checked = !this.doctorInfo[index2].childNode[index].checked;
         } else {
-          const serviceresult2 = this.doctorInfo[index2].childNode.filter(item => item.id == 13);
+
+          const serviceresult2 = this.doctorInfo[index2].childNode.filter(item => item.name.search("都没有") != -1);
+          const serviceresult3 = this.doctorInfo[index2].childNode.filter(item => item.name.search("都没有") == -1);
+          const serviceresult4 = serviceresult3.filter(item => item.checked == true);
+          console.log(serviceresult4.length, "我是选中的长度")
+          // const serviceresult2 = this.doctorInfo[index2].childNode.filter(item => item.id != 13);
+          if (serviceresult4.length == 1) {
+            if (this.doctorInfo[index2].childNode[index].checked) return
+          }
           serviceresult2.forEach(item => item.checked = false)
           this.doctorInfo[index2].childNode[index].checked = !this.doctorInfo[index2].childNode[index].checked;
         }

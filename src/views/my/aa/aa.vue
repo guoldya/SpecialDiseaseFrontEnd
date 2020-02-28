@@ -1,6 +1,6 @@
 <template>
   <div class="margin55" v-show="false">
-    
+
     <!-- <Header post-title="我的咨询"> -->
     <!-- <a @click="$store.dispatch('logout')" slot="right" class="title-right">退出</a> -->
     <!-- </Header> -->
@@ -18,11 +18,14 @@ export default {
   },
   mounted() {
     this.login();
-    this.initListener()
-    this.$router.replace({
-      path: "/pictureConsult",
-      query: { name: this.$route.query.name, id: this.$route.query.id,   }
-    });
+    this.initListener();
+    setTimeout(() => {
+      this.$router.replace({
+        path: "/pictureConsult",
+        query: { name: this.$route.query.name, id: this.$route.query.id, }
+      });
+    }, 1000)
+
   },
   methods: {
     login() {

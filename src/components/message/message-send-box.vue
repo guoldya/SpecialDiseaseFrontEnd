@@ -46,13 +46,6 @@
         <i class="iconfont icon-biaoqing1"></i>
       </span>
 
-      <div class="emoji-list" v-if="toolType == 'emoji'">
-        <ul>
-          <li v-for="(item,index) in emojiName" :key="index" @click="emojiAdd(item)">
-            <img :src="emojiUrl + emojiMap[item]" style="width:30px;height:30px" />
-          </li>
-        </ul>
-      </div>
       <!-- <el-popover placement="top" width="400" trigger="click">
         <div class="emojis">
           <div v-for="item in emojiName" class="emoji" :key="item" @click="chooseEmoji(item)">
@@ -66,7 +59,13 @@
       </span>
 
     </div>
-
+    <div class="emoji-list" v-if="toolType == 'emoji'">
+      <ul>
+        <li v-for="(item,index) in emojiName" :key="index" @click="emojiAdd(item)">
+          <img :src="emojiUrl + emojiMap[item]" style="width:30px;height:30px" />
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -84,7 +83,7 @@ import { mapGetters, mapState } from 'vuex'
 //   Rate
 // } from 'element-ui'
 import { emojiMap, emojiName, emojiUrl } from '../../utils/emojiMap'
-
+ 
 export default {
   name: 'message-send-box',
   props: ['scrollMessageListToButtom'],
@@ -144,11 +143,12 @@ export default {
     })
   },
   mounted() {
-    this.$refs['text-input'].addEventListener('paste', this.handlePaste)
+    // this.$refs['text-input'].addEventListener('paste', this.handlePaste)
     this.$bus.$on('reEditMessage', this.reEditMessage)
+    console.log(this.currentConversationType,"放呱呱呱呱呱呱")
   },
   beforeDestroy() {
-    this.$refs['text-input'].removeEventListener('paste', this.handlePaste)
+    // this.$refs['text-input'].removeEventListener('paste', this.handlePaste)
   },
   methods: {
     // 添加消息
@@ -325,15 +325,12 @@ export default {
         description: '',
         extension: ''
       })
-      this.tim
-        .sendMessage(message)
-        .then(() => {
+      this.tim.sendMessage(message).then(() => {
           Object.assign(this, {
             rate: 5,
             suggestion: ''
           })
-        })
-        .catch(error => {
+        }).catch(error => {
           this.$store.commit('showMessage', {
             type: 'error',
             message: error.message
@@ -367,13 +364,13 @@ export default {
       })
       this.$store.commit('pushCurrentMessageList', message)
       this.tim.sendMessage(message).then(() => {
-          this.$refs.imagePicker.value = null
-        }).catch(imError => {
-          this.$store.commit('showMessage', {
-            message: imError.message,
-            type: 'error'
-          })
+        this.$refs.imagePicker.value = null
+      }).catch(imError => {
+        this.$store.commit('showMessage', {
+          message: imError.message,
+          type: 'error'
         })
+      })
     },
     sendFile() {
       const message = this.tim.createFileMessage({
@@ -388,13 +385,13 @@ export default {
       })
       this.$store.commit('pushCurrentMessageList', message)
       this.tim.sendMessage(message).then(() => {
-          this.$refs.imagePicker.value = null
-        }).catch(imError => {
-          this.$store.commit('showMessage', {
-            message: imError.message,
-            type: 'error'
-          })
+        this.$refs.imagePicker.value = null
+      }).catch(imError => {
+        this.$store.commit('showMessage', {
+          message: imError.message,
+          type: 'error'
         })
+      })
     }
   }
 }
@@ -579,15 +576,18 @@ textarea {
 //   padding: 20px !important;
 //   margin-left: 24px;
 // }
+ 
+
 .emoji-list {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
-  background: #fff;
-  width: 100%;
   padding: 20px;
   overflow-y: scroll;
   height: 300px;
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
   li {
     margin: 10px;
   }

@@ -181,8 +181,8 @@ export default {
     consultation() {
       let argu = {};
       this.$router.push({
-        name: "conversation",
-        // name: "consultation",最开始写的有样式
+
+        name: "consultation",
         query: argu
       });
     },

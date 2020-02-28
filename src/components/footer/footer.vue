@@ -11,9 +11,9 @@
       </a>
       <a href="javascript:;" class="aui-tabBar-item " @click="switchTo('/conversation')">
         <span class="aui-tabBar-item-icon">
-          <img :src="'/online' === $route.path ? tabBarImgArr[1].selected : tabBarImgArr[1].normal" alt="消息中心">
+          <img :src="'/conversation' === $route.path ? tabBarImgArr[1].selected : tabBarImgArr[1].normal" alt="消息中心">
         </span>
-        <span :class="{on: '/online' === $route.path}">在线咨询</span>
+        <span :class="{on: '/conversation' === $route.path}">在线咨询</span>
       </a>
       <a href="javascript:;" class="aui-tabBar-item aui-tabBar-item-active" @click="switchTo('/my')">
         <span class="aui-tabBar-item-icon">

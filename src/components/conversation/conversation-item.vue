@@ -38,7 +38,7 @@
       </div>
     </div>
   </div> -->
-  <div class="content" @click="selectConversation">
+  <div class="content22" @click="selectConversation">
     <div class="content-cell">
       <div class="content-cell-body" :class="isMove && itemIndex == index ? 'move' : ''" @touchstart="touchStart($event, index)" @touchmove="touchMove($event, index)">
         <div class="content-cell-body-content">
@@ -58,7 +58,7 @@
                 <!-- <div v-if="conversation.lastMessage" class="text-ellipsis"> -->
                 <span class="remind" style="color:red;" v-if="hasMessageAtMe">[有人提到我]</span>
                 <span class="text" :title="conversation.lastMessage.messageForShow">
-                  {{messageForShow.substring(7)}}
+                  {{messageForShow }}
                 </span>
 
                 <!-- </div> -->
@@ -261,139 +261,140 @@ export default {
   }
 }
 </script>
-<style lang="less" scoped>
-.conversation-item-container {
-  padding: 15px 20px;
-  cursor: pointer;
-  /*overflow: hidden;*/
-  transition: 0.2s;
-  background: #fff;
-  border-bottom: 1px solid #ededed;
-  &:hover {
-    background: #404953;
+ <style lang="less" scoped>
+// .conversation-item-container {
+//   padding: 15px 20px;
+//   cursor: pointer;
+//   /*overflow: hidden;*/
+//   transition: 0.2s;
+//   background: #fff;
+//   border-bottom: 1px solid #ededed;
+//   &:hover {
+//     background: #404953;
 
-    .close-btn {
-      right: 3px;
-    }
-  }
-}
+//     .close-btn {
+//       right: 3px;
+//     }
+//   }
+// }
 
-.close-btn {
-  position: absolute;
-  right: -25px;
-  top: 103px;
-  color: #76828c;
-  transition: all 0.2s ease;
+// .close-btn {
+//   position: absolute;
+//   right: -25px;
+//   top: 103px;
+//   color: #76828c;
+//   transition: all 0.2s ease;
 
-  &:hover {
-    color: #f35f5f;
-  }
-}
+//   &:hover {
+//     color: #f35f5f;
+//   }
+// }
 
-.warp {
-  display: flex;
-}
+// .warp {
+//   display: flex;
+// }
 
-.avatar {
-  width: 100px;
-  height: 100px;
-  margin-right: 20px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
+// .avatar {
+//   width: 100px;
+//   height: 100px;
+//   margin-right: 20px;
+//   border-radius: 50%;
+//   flex-shrink: 0;
+// }
 
-.content {
-  flex: 1;
-  height: 50px;
-  /*overflow: hidden;*/
+// .content22 {
+//   flex: 1;
+//   height: 155px;
+//   /*overflow: hidden;*/
+//   border-bottom: 1px solid red;
+//   .row-1 {
+//     display: flex;
+//     line-height: 50px;
 
-  .row-1 {
-    display: flex;
-    line-height: 50px;
+//     .name {
+//       color: #76828c;
+//       flex: 1;
+//       min-width: 0px;
+//       font-size: 40px;
+//     }
 
-    .name {
-      color: #76828c;
-      flex: 1;
-      min-width: 0px;
-      font-size: 40px;
-    }
+//     .unread-count {
+//       padding-left: 10px;
+//       flex-shrink: 0;
+//       color: #76828c;
+//       font-size: 14px;
 
-    .unread-count {
-      padding-left: 10px;
-      flex-shrink: 0;
-      color: #76828c;
-      font-size: 14px;
+//       .badge {
+//         vertical-align: bottom;
+//         background-color: #f35f5f;
+//         border-radius: 15px;
+//         color: #fff;
+//         display: inline-block;
+//         font-size: 30px;
+//         height: 30px;
+//         max-width: 30px;
+//         line-height: 30px;
+//         padding: 0 6px;
+//         text-align: center;
+//         white-space: nowrap;
+//       }
+//     }
+//   }
 
-      .badge {
-        vertical-align: bottom;
-        background-color: #f35f5f;
-        border-radius: 15px;
-        color: #fff;
-        display: inline-block;
-        font-size: 30px;
-        height: 30px;
-        max-width: 30px;
-        line-height: 30px;
-        padding: 0 6px;
-        text-align: center;
-        white-space: nowrap;
-      }
-    }
-  }
+//   .row-2 {
+//     display: flex;
+//     font-size: 26px;
+//     padding-top: 3px;
 
-  .row-2 {
-    display: flex;
-    font-size: 26px;
-    padding-top: 3px;
+//     .summary {
+//       flex: 1;
+//       overflow: hidden;
+//       min-width: 0;
+//       color: #a5b5c1;
 
-    .summary {
-      flex: 1;
-      overflow: hidden;
-      min-width: 0;
-      color: #a5b5c1;
+//       .remind {
+//         color: #f35f5f;
+//       }
+//     }
 
-      .remind {
-        color: #f35f5f;
-      }
-    }
+//     .date {
+//       padding-left: 10px;
+//       flex-shrink: 0;
+//       text-align: right;
+//       color: #76828c;
+//     }
+//   }
+// }
 
-    .date {
-      padding-left: 10px;
-      flex-shrink: 0;
-      text-align: right;
-      color: #76828c;
-    }
-  }
-}
+// .choose {
+//   background-color: #404953;
+// }
 
-.choose {
-  background-color: #404953;
-}
-
-.context-menu-button {
-  padding: 10px;
-  border: 2px solid #2d8cf0;
-  border-radius: 8px;
-}
-.move .content-cell-body-tool {
-  width: 150px;
-  background: red;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-</style>
+// .context-menu-button {
+//   padding: 10px;
+//   border: 2px solid #2d8cf0;
+//   border-radius: 8px;
+// }
+// .move .content-cell-body-tool {
+//   width: 150px;
+//   background: red;
+//   color: #fff;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+ </style>
 <style lang="scss" scoped>
-.content {
-  height: calc(100vh - 100px);
+.content22 {
+  height: 140px;
   overflow-x: hidden;
   overflow-y: scroll;
+   border-bottom: 1px solid #ededed;
   &.hidden {
     overflow-y: hidden;
   }
   .content-cell {
-    border-bottom: 1px solid #ededed;
+    
     .content-cell-body {
       height: 133px;
       width: 120%;
@@ -409,7 +410,7 @@ export default {
         margin: 29px 27px 26px 0;
       }
       .content-cell-body-content {
-        width: 83.33%;
+        width:100%;
         display: flex;
         align-items: center;
         box-sizing: border-box;
@@ -427,9 +428,9 @@ export default {
 }
 .online-item {
   display: flex;
-  padding: 30px;
-  border-bottom: 1px solid #f4f4f4;
-  background: rgba(255, 255, 255, 1);
+  padding-left: 30px;
+  background: #ffffff;
+  width: 90%;
   .header {
     position: relative;
     width: 90px;
@@ -469,7 +470,6 @@ export default {
     }
     .messge {
       color: #979797;
-      
     }
     .content-info {
       height: 36px;

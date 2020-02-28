@@ -45,6 +45,7 @@
 </template>
  <script>
 const onlineDoctorDetailUrl = "sysDoctor/selectDetail";
+import { mapGetters, mapState } from 'vuex'
 export default {
   data() {
     return {
@@ -53,9 +54,17 @@ export default {
       questionDes: '',
     };
   },
+  computed: {
+    ...mapGetters(['toAccount', 'currentConversationType']),
+    ...mapState({
+      // memberList: state => state.group.currentMemberList,
+      userID: state => state.user.userID
+    })
+  },
   mounted() {
     this.init();
   },
+
   methods: {
     // 初始化
     async init() {
@@ -72,22 +81,29 @@ export default {
     },
 
     handleConfirm() { //点击医生调用此方法，跳转到聊天页面
+    console.log(this.userID,"userID用户的id")
       if (this.userID !== '@TIM#SYSTEM') {
         // 查找医生是否在线
         // this.$store.dispatch('checkoutConversation', `C2C${this.userID}`)
-        this.$store.commit('pushCurrentMessageList', this.questionDes)
-        
-        this.tim.sendMessage(this.questionDes).catch(error => {
-          this.$store.commit('showMessage', {
-            type: 'error',
-            message:'ssssss'
-          })
-        })
-        this.$router.push({
-          name: 'chatRoom'
+        const message = this.tim.createTextMessage({
+          to: this.toAccount,
+          conversationType: 'C2C',
+          payload: { text: this.questionDes },
         })
         this.$store.dispatch('checkoutConversation', `C2Cuser3`).then(() => {
+          console.log("执行这里面")
           this.showDialog = false
+          this.$store.commit('pushCurrentMessageList', message)
+          this.tim.sendMessage(message).catch(error => {
+            this.$store.commit('showMessage', {
+              type: 'error',
+              message: error.message
+            })
+            console.log( error.message)
+          })
+          this.$router.push({
+            name: 'chatRoom'
+          })
         }).catch(() => {
           this.$store.commit('showMessage', {
             message: '没有找到该用户',
@@ -100,7 +116,7 @@ export default {
           type: 'warning'
         })
       }
-      this.userID = ''
+      // this.userID = ''
     },
 
 

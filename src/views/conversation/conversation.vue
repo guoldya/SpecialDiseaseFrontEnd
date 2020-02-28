@@ -4,6 +4,8 @@
       <!-- <a @click="$store.dispatch('logout')" slot="right" class="title-right">退出</a> -->
     </Header>
     <conversation-list />
+     <!-- 底部 -->
+    <Footer></Footer>
   </div>
 </template>
 <script>

@@ -216,7 +216,7 @@ export default {
         console.log(error.message);
       }
     },
-    
+
     loadMore: function () {
       if (this.isloading) return false;
       if (this.pagingParams.num == this.pagingParams.pages) return false
@@ -238,10 +238,18 @@ export default {
         return false;
       }
       this.basicDialog.open = false;
+      // this.$router.push({
+      //   path: "/pictureConsult",
+      //   query: { name: this.doctorInfo.drName, id: this.doctorInfo.id, money: this.money, title: this.doctorInfo.title, type: this.basicDialog.type }
+      // });
       this.$router.push({
-        path: "/pictureConsult",
+        path: "/aa",
         query: { name: this.doctorInfo.drName, id: this.doctorInfo.id, money: this.money, title: this.doctorInfo.title, type: this.basicDialog.type }
       });
+
+
+
+
     },
     // 咨询
     consult(val) {

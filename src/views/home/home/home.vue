@@ -26,7 +26,7 @@
         <p class="dise">{{item.diseaseName}}</p>
         <p class="dise">{{item.idCard}}</p>
         <!-- <p @click="switchCard(index)">切换门特患者</p> -->
-        <img class="qiehuan"  @click="switchCard(index)" src="@/assets/images/qiehuan.png">
+        <img class="qiehuan" @click="switchCard(index)" src="@/assets/images/qiehuan.png">
       </div>
     </div>
     <doctorList v-for="(item, index) in listdata" :datas="item" :key="index"></doctorList>
@@ -36,13 +36,13 @@
 </template>
 <script>
 import { mapState } from 'vuex';
- 
+
 
 let doctorlistURL = 'sysDoctor/selectDoctorByPatient'
 export default {
   data() {
     return {
-    
+
       code: 'ss',
       showPic: false,
       showindex: 0,
@@ -68,6 +68,7 @@ export default {
     // await this.$store.dispatch('getCards', { update: true });
     await this.$store.dispatch('getCards', { update: true });
     // await this.$store.dispatch('getDepart', { update: true });
+
     this.getInfo = JSON.parse(sessionStorage.getItem('objInfo'));
     if (this.getInfo) {
       if (this.getInfo.id) {
@@ -81,10 +82,14 @@ export default {
       let setInfo = JSON.stringify(this._cardlist[0])
       sessionStorage.setItem('objInfo', setInfo)
     }
-    // this.homeNumber(2);
     this.homeNumber(this.chooseId);
+
+
+
+
+
   },
- 
+
   methods: {
     doctorlist() {
       let argu = {};
@@ -97,7 +102,8 @@ export default {
       console.log("ddddddddddddd")
       try {
         let res = await this.$axios.put(doctorlistURL, {
-          patientId: data
+         
+           patientId: data ? data : this.getInfo.id
         });
         if (res.data.code != 200) {
           throw Error(res.data.msg);
@@ -145,14 +151,15 @@ export default {
         query: argu
       });
     },
- 
+
     switchCard(index) {
       let current = this._cardlist[index + 1];
       if (!current) {
         current = this._cardlist[0]
       }
-      this.homeNumber(this.chooseId);
+     
       this.chooseId = current.id;
+        this.homeNumber(this.chooseId);
       let setInfo = JSON.stringify(current)
       sessionStorage.setItem('objInfo', setInfo)
     },

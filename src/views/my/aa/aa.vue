@@ -1,15 +1,11 @@
 <template>
-  <div class="margin55">
-    <div class="navigation"><i class="icon-iconfontjiantou"> </i>
-      <div class="navigation-content"> 我的咨询 </div>
-      <div class="right"></div>
-    </div>
+  <div class="margin55" v-show="false">
+    
     <!-- <Header post-title="我的咨询"> -->
-      <!-- <a @click="$store.dispatch('logout')" slot="right" class="title-right">退出</a> -->
+    <!-- <a @click="$store.dispatch('logout')" slot="right" class="title-right">退出</a> -->
     <!-- </Header> -->
     <conversation-list />
     <!-- 底部 -->
-    <Footer></Footer>
   </div>
 </template>
 <script>
@@ -23,6 +19,10 @@ export default {
   mounted() {
     this.login();
     this.initListener()
+    this.$router.replace({
+      path: "/pictureConsult",
+      query: { name: this.$route.query.name, id: this.$route.query.id,   }
+    });
   },
   methods: {
     login() {

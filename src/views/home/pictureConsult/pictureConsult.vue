@@ -90,7 +90,7 @@ export default {
           conversationType: 'C2C',
           payload: { text: this.questionDes },
         })
-        let test= `C2Cuser`+this.$route.query.name+this.$route.query.id;
+        let test= `C2Cuser`+this.$route.query.id;
         this.$store.dispatch('checkoutConversation', test).then(() => {
         
           this.showDialog = false

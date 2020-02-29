@@ -470,7 +470,7 @@ export default {
       color: #979797;
       .text {
         width: 300px;
-        line-height: 25px;
+        line-height: 30px;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;

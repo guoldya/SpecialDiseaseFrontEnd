@@ -96,6 +96,7 @@ export default {
         // this.$store.dispatch('checkoutConversation', `C2C${this.userID}`)
 
         let test = `C2Cuser` + this.$route.query.id;
+        console.log(test,"sssssssss")
         this.$store.dispatch('checkoutConversation', test).then(() => {
           console.log(" 查找医生是否在线")
           // this.showDialog = false

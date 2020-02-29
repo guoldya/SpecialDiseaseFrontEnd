@@ -468,7 +468,6 @@ export default {
     }
     .messge {
       color: #979797;
-
       .text {
         width: 300px;
         line-height: 25px;

@@ -53,9 +53,7 @@ export default {
     },
     handleConfirm() {
       if (this.userID !== '@TIM#SYSTEM') {
-        this.$store
-          .dispatch('checkoutConversation', `C2C${this.userID}`)
-          .then(() => {
+        this.$store.dispatch('checkoutConversation', `C2C${this.userID}`).then(() => {
             this.showDialog = false
           }).catch(() => {
             this.$store.commit('showMessage', {
@@ -90,29 +88,23 @@ export default {
     },
     checkoutPrev(currentIndex) {
       this.isCheckouting = true
-      this.$store
-        .dispatch(
+      this.$store.dispatch(
           'checkoutConversation',
           this.conversationList[currentIndex - 1].conversationID
-        )
-        .then(() => {
+        ).then(() => {
           this.isCheckouting = false
-        })
-        .catch(() => {
+        }).catch(() => {
           this.isCheckouting = false
         })
     },
     checkoutNext(currentIndex) {
       this.isCheckouting = true
-      this.$store
-        .dispatch(
+      this.$store.dispatch(
           'checkoutConversation',
           this.conversationList[currentIndex + 1].conversationID
-        )
-        .then(() => {
+        ).then(() => {
           this.isCheckouting = false
-        })
-        .catch(() => {
+        }).catch(() => {
           this.isCheckouting = false
         })
     },

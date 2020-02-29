@@ -223,6 +223,7 @@ export default {
       //         this.conversation.conversationID  //点击的好友id
       //     )
       // }
+      console.log(this.conversation.conversationID,"我的聊天用户的id")
       this.$router.push({
         name: 'chatRoom'
       })

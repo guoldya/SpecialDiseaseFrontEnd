@@ -147,6 +147,7 @@ export default {
       padding: 5px 12px;
       color: red;
       font-size: 12px;
+      
     }
     .ing {
       border: 1px solid #9ac3ff;

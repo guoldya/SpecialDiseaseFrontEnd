@@ -1,7 +1,7 @@
 <template>
   <div class="current-conversation-wrapper">
 
-    <div class="content"  >
+    <div class="content">
       <div class="message-list" ref="message-list" @scroll="this.onScroll">
         <div class="more" v-if="!isCompleted">
           <md-button type="link" @click="$store.dispatch('getMessageList', currentConversation.conversationID)">查看更多</md-button>
@@ -116,6 +116,7 @@ export default {
   },
   mounted() {
     this.scrollMessageListToButtom()
+    this.onScroll()
     this.$bus.$on('image-loaded', this.onImageLoaded)
     this.$bus.$on('scroll-bottom', this.scrollMessageListToButtom)
     if (this.currentConversation.conversationID === '@TIM#SYSTEM') {
@@ -155,7 +156,7 @@ export default {
     // },
 
 
-    onScroll({ target: { scrollTop } }) {
+    onScroll() {
       // console.log('执行滚动')
       // let messageListNode = this.$refs['message-list']
       // if (!messageListNode) {
@@ -164,10 +165,13 @@ export default {
       // if (this.preScrollHeight - messageListNode.clientHeight - scrollTop < 20) {
       //   this.isShowScrollButtomTips = false
       // }
-
+      // var scrollDom = document.getElementById('ID');
+      //     scrollDom.scrollTop = scrollDom.scrollHeight
       this.$nextTick(function () {
         var ele = this.$refs['message-list'];
-        ele.scrollTop = ele.scrollHeight;
+        console.log(ele.scrollHeight, "内容的高度")
+        ele.scrollTop = 1000;
+        console.log(ele.scrollTop, "执行滚动")
       });
     },
     // 如果滚到底部就保持在底部，否则提示是否要滚到底部

@@ -19,12 +19,18 @@ export default {
   mounted() {
     this.login();
     this.initListener();
-    setTimeout(() => {
-      this.$router.replace({
-        path: "/pictureConsult",
-        query: { name: this.$route.query.name, id: this.$route.query.id, }
-      });
-    }, 1000)
+
+    this.$router.replace({
+      path: "/pictureConsult",
+      query: { name: this.$route.query.name, id: this.$route.query.id, }
+    });
+
+    this.$store.dispatch(
+      'checkoutConversation',//切换会话
+      `C2Cuser` + this.$route.query.id   //点击的好友id
+    )
+
+
 
   },
   methods: {

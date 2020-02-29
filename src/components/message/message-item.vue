@@ -81,7 +81,7 @@ export default {
       //     profileCustomField: [],
       //     role: 0,
       //     selfSignature: "",
-      //     userID: "user0"
+      //     userID: "'user0'"
       // },
       // currentConversation: {
       //     conversationID: "C2Cuser3",

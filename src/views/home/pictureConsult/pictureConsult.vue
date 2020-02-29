@@ -81,30 +81,44 @@ export default {
     },
 
     handleConfirm() { //点击医生调用此方法，跳转到聊天页面
-    console.log(this.userID,"userID用户的id")
+      console.log(this.questionDes.replace(/\s*/g, '').length)
+      if (this.questionDes.replace(/\s*/g, '').length == 0) {
+        this.$toast.info("请输入问题")
+        return
+      }
+      console.log(this.toAccount, " toAccount")
       if (this.userID !== '@TIM#SYSTEM') {
+        console.log(" 执行这里")
         // 查找医生是否在线
         // this.$store.dispatch('checkoutConversation', `C2C${this.userID}`)
-        const message = this.tim.createTextMessage({
-          to: this.toAccount,
-          conversationType: 'C2C',
-          payload: { text: this.questionDes },
-        })
-        let test= `C2Cuser`+this.$route.query.id;
+
+        let test = `C2Cuser` + this.$route.query.id;
         this.$store.dispatch('checkoutConversation', test).then(() => {
-        
-          this.showDialog = false
+          console.log(" 查找医生是否在线")
+          // this.showDialog = false
+          const message = this.tim.createTextMessage({
+            to: this.toAccount,
+            conversationType: 'C2C',
+            payload: { text: this.questionDes },
+          })
+          console.log(" 执行这里发送过后")
           this.$store.commit('pushCurrentMessageList', message)
+          this.$bus.$emit('scroll-bottom')
           this.tim.sendMessage(message).catch(error => {
             this.$store.commit('showMessage', {
               type: 'error',
               message: error.message
             })
-            console.log( error.message)
+            console.log(error.message)
           })
-          this.$router.push({
-            name: 'chatRoom'
-          })
+          setTimeout(() => {
+            this.$router.push({
+              name: 'chatRoom'
+            })
+          }, 2000);
+
+
+
         }).catch(() => {
           this.$store.commit('showMessage', {
             message: '没有找到该用户',

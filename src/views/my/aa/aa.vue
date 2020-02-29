@@ -19,26 +19,32 @@ export default {
   mounted() {
     this.login();
     this.initListener();
-    setTimeout(() => {
-      this.$router.replace({
-        path: "/pictureConsult",
-        query: { name: this.$route.query.name, id: this.$route.query.id, }
-      });
-    }, 1000)
+
+    this.$router.replace({
+      path: "/pictureConsult",
+      query: { name: this.$route.query.name, id: this.$route.query.id, }
+    });
+
+    // this.$store.dispatch(
+    //   'checkoutConversation',//切换会话
+    //   `C2Cuser` + this.$route.query.id   //点击的好友id
+    // )
+
+
 
   },
   methods: {
     login() {
       this.tim.login({
-        userID: 'user0',// userID 用户ID（必须字母开头）
-        userSig: window.genTestUserSig('user0').userSig
+        userID: 'user'+this.$store.state.userInfo.patientId,// userID 用户ID（必须字母开头）
+        userSig: window.genTestUserSig('user'+this.$store.state.userInfo.patientId).userSig
       }).then(() => {
         this.$store.commit('toggleIsLogin', true)//已登录
         this.$store.commit('startComputeCurrent')//启动定时器设定当前时间
         this.$store.commit({//设定当前登录用户信息
           type: 'GET_USER_INFO',
-          userID: 'user0',
-          userSig: window.genTestUserSig('user0').userSig,
+          userID: 'user'+this.$store.state.userInfo.patientId,
+          userSig: window.genTestUserSig('user'+this.$store.state.userInfo.patientId).userSig,
           sdkAppID: window.genTestUserSig('').SDKAppID
         })
         // this.$store.commit('showMessage', {

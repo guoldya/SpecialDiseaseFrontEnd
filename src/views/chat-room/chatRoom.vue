@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div refs='message-list'>
     <Header :post-title="name"></Header>
     <current-conversation />
   </div>
@@ -11,6 +11,14 @@ export default {
   name: 'ChatRoom',
   components: {
     CurrentConversation
+  },
+  mounted(){
+    //  this.$nextTick(function () {
+    //     var ele = this.$refs['message-list'];
+     
+    //   ele.scrollTop = 1000;
+    //   console.log(ele.scrollTop, "执行滚动aaaaaaaaaaaaa")
+    // });
   },
   computed: {
     ...mapState({

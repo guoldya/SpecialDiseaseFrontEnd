@@ -55,9 +55,12 @@ export default {
     };
   },
   computed: {
+
+
     ...mapGetters(['toAccount', 'currentConversationType']),
     ...mapState({
       // memberList: state => state.group.currentMemberList,
+      currentMessageList: state => state.conversation.currentMessageList,
       userID: state => state.user.userID
     })
   },
@@ -102,18 +105,23 @@ export default {
             payload: { text: this.questionDes },
           })
           console.log(" 执行这里发送过后")
-          this.$store.commit('pushCurrentMessageList', message)
-          this.$bus.$emit('scroll-bottom')
-          this.tim.sendMessage(message).catch(error => {
-            this.$store.commit('showMessage', {
-              type: 'error',
-              message: error.message
-            })
-            console.log(error.message)
-          })
+
+          console.log(this.currentMessageList, "提交问题")
+          // this.$bus.$emit('scroll-bottom')
+          // this.tim.sendMessage(message).catch(error => {
+          //   this.$store.commit('showMessage', {
+          //     type: 'error',
+          //     message: error.message
+          //   })
+          //   console.log(error.message)
+          // })
+          // this.$store.commit('pushCurrentMessageList', message)
           setTimeout(() => {
             this.$router.push({
-              name: 'chatRoom'
+              name: 'chatRoom',
+              query: {
+                questionDes: this.questionDes
+              }
             })
           }, 2000);
 

@@ -100,7 +100,7 @@ export default {
       return !!this.currentConversation.conversationID
     },
     name() {
-      console.log(this.currentMessageList)
+      console.log(this.currentMessageList) 
       if (this.currentConversation.type === 'C2C') {
         return this.currentConversation.userProfile.nick || this.toAccount
       } else if (this.currentConversation.type === 'GROUP') {
@@ -115,6 +115,7 @@ export default {
     }
   },
   mounted() {
+    
      console.log(this.currentMessageList,"消息记录")
     this.scrollMessageListToButtom()
     this.onScroll()

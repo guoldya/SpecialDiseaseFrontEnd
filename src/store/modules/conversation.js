@@ -95,14 +95,16 @@ const conversationModules = {
          */
         pushCurrentMessageList(state, data) {
             // 还没当前会话，则跳过
-            if (!state.currentConversation.conversationID) {
-                return
-            }
+            // if (!state.currentConversation.conversationID) {
+            //     return
+            // }
             if (Array.isArray(data)) {
                 // 筛选出当前会话的消息
+                console.log( state.currentMessageList,"执行的多个消息缓存记录77777777777",data)
                 const result = data.filter(item => item.conversationID === state.currentConversation.conversationID)
                 state.currentMessageList = [...state.currentMessageList, ...result]
             } else if (data.conversationID === state.currentConversation.conversationID) {
+                console.log( state.currentMessageList,"执行的单个缓存消息记录",data)
                 state.currentMessageList = [...state.currentMessageList, data]
             }
         }
@@ -146,6 +148,7 @@ const conversationModules = {
                 return
             }
             const {nextReqMessageID, currentMessageList} = context.state
+            // 拉15条历史消息
             tim.getMessageList({conversationID, nextReqMessageID, count: 15}).then(imReponse => {
                 // 更新messageID，续拉时要用到
                 context.state.nextReqMessageID = imReponse.data.nextReqMessageID

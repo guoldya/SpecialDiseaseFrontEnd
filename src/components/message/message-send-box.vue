@@ -83,7 +83,7 @@ import { mapGetters, mapState } from 'vuex'
 //   Rate
 // } from 'element-ui'
 import { emojiMap, emojiName, emojiUrl } from '../../utils/emojiMap'
- 
+
 export default {
   name: 'message-send-box',
   props: ['scrollMessageListToButtom'],
@@ -136,6 +136,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      currentMessageList: state => state.conversation.currentMessageList,
+    }),
     ...mapGetters(['toAccount', 'currentConversationType']),
     ...mapState({
       // memberList: state => state.group.currentMemberList,
@@ -145,7 +148,7 @@ export default {
   mounted() {
     // this.$refs['text-input'].addEventListener('paste', this.handlePaste)
     this.$bus.$on('reEditMessage', this.reEditMessage)
-    console.log(this.currentConversationType,"放呱呱呱呱呱呱")
+    console.log(this.currentConversationType, "放呱呱呱呱呱呱")
   },
   beforeDestroy() {
     // this.$refs['text-input'].removeEventListener('paste', this.handlePaste)
@@ -261,6 +264,7 @@ export default {
         payload: { text: this.messageContent }
       })
       this.$store.commit('pushCurrentMessageList', message)
+      console.log(this.currentMessageList, "点击发送按钮")
       this.$bus.$emit('scroll-bottom')
       this.tim.sendMessage(message).catch(error => {
         this.$store.commit('showMessage', {
@@ -326,16 +330,16 @@ export default {
         extension: ''
       })
       this.tim.sendMessage(message).then(() => {
-          Object.assign(this, {
-            rate: 5,
-            suggestion: ''
-          })
-        }).catch(error => {
-          this.$store.commit('showMessage', {
-            type: 'error',
-            message: error.message
-          })
+        Object.assign(this, {
+          rate: 5,
+          suggestion: ''
         })
+      }).catch(error => {
+        this.$store.commit('showMessage', {
+          type: 'error',
+          message: error.message
+        })
+      })
       this.surveyDialogVisible = false
     },
     chooseEmoji(item) {
@@ -576,7 +580,6 @@ textarea {
 //   padding: 20px !important;
 //   margin-left: 24px;
 // }
- 
 
 .emoji-list {
   display: flex;

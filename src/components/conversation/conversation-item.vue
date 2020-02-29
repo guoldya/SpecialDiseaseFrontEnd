@@ -52,7 +52,6 @@
               <p class="doctorname">
                 <span :title="conversation.userProfile.nick || conversation.userProfile.userID" v-if="conversation.type ===  TIM.TYPES.CONV_C2C">{{conversation.userProfile.nick || conversation.userProfile.userID}}</span>
                 <span v-else-if="conversation.type === TIM.TYPES.CONV_SYSTEM">系统通知</span>
-
               </p>
               <p class="messge" v-if="conversation.lastMessage">
                 <!-- <div v-if="conversation.lastMessage" class="text-ellipsis"> -->
@@ -60,7 +59,6 @@
                 <span class="text" :title="conversation.lastMessage.messageForShow">
                   {{messageForShow }}
                 </span>
-
                 <!-- </div> -->
               </p>
               <!-- <p v-if="item.msgType == 0" class="message">{{item.content}}</p>

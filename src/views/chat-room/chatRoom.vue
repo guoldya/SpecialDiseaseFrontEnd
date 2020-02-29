@@ -12,13 +12,28 @@ export default {
   components: {
     CurrentConversation
   },
-  mounted(){
+  mounted() {
     //  this.$nextTick(function () {
     //     var ele = this.$refs['message-list'];
-     
+
     //   ele.scrollTop = 1000;
     //   console.log(ele.scrollTop, "执行滚动aaaaaaaaaaaaa")
     // });
+    console.log(this.currentMessageList, "消息记录chatRoom")
+    const message = this.tim.createTextMessage({
+      to: this.toAccount,
+      conversationType: 'C2C',
+      payload: { text: this.$route.query.questionDes },
+    })
+     
+    this.tim.sendMessage(message).catch(error => {
+      this.$store.commit('showMessage', {
+        type: 'error',
+        message: error.message
+      })
+      console.log(error.message)
+    })
+    this.$store.commit('pushCurrentMessageList', message)
   },
   computed: {
     ...mapState({

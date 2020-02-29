@@ -99,11 +99,11 @@ export default {
         this.$store.dispatch('checkoutConversation', test).then(() => {
           console.log(" 查找医生是否在线")
           // this.showDialog = false
-          const message = this.tim.createTextMessage({
-            to: this.toAccount,
-            conversationType: 'C2C',
-            payload: { text: this.questionDes },
-          })
+          // const message = this.tim.createTextMessage({
+          //   to: this.toAccount,
+          //   conversationType: 'C2C',
+          //   payload: { text: this.questionDes },
+          // })
           console.log(" 执行这里发送过后")
 
           console.log(this.currentMessageList, "提交问题")

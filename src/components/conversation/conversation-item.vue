@@ -221,7 +221,7 @@ export default {
       //         this.conversation.conversationID  //点击的好友id
       //     )
       // }
-      console.log(this.conversation.conversationID,"我的聊天用户的id")
+      console.log(this.conversation.conversationID, "我的聊天用户的id")
       this.$router.push({
         name: 'chatRoom'
       })
@@ -382,18 +382,17 @@ export default {
 //   justify-content: center;
 //   align-items: center;
 // }
- </style>
+</style>
 <style lang="scss" scoped>
 .content22 {
   height: 140px;
   overflow-x: hidden;
   overflow-y: scroll;
-   border-bottom: 1px solid #ededed;
+  border-bottom: 1px solid #ededed;
   &.hidden {
     overflow-y: hidden;
   }
   .content-cell {
-    
     .content-cell-body {
       height: 133px;
       width: 120%;
@@ -409,7 +408,7 @@ export default {
         margin: 29px 27px 26px 0;
       }
       .content-cell-body-content {
-        width:100%;
+        width: 100%;
         display: flex;
         align-items: center;
         box-sizing: border-box;
@@ -469,6 +468,15 @@ export default {
     }
     .messge {
       color: #979797;
+
+      .text {
+        width: 300px;
+        line-height: 25px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        display: block;
+      }
     }
     .content-info {
       height: 36px;

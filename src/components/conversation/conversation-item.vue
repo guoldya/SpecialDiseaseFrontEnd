@@ -1,65 +1,26 @@
 <template>
-  <!-- <div class="conversation-item-container" @click="selectConversation">
-    
-    <div class="content-cell-body-tool" @click="deleteConversation">
-      <span>删除会话{{index}}</span>
-    </div>
-    <div class="warp">
-      <avatar :src="avatar" :type="conversation.type" />
-      <div class="content">
-        <div class="row-1">
-          <div class="name">
-            <div class="text-ellipsis">
-              <span :title="conversation.userProfile.nick || conversation.userProfile.userID" v-if="conversation.type ===  TIM.TYPES.CONV_C2C">{{conversation.userProfile.nick || conversation.userProfile.userID}}</span>
-              <span v-else-if="conversation.type === TIM.TYPES.CONV_SYSTEM">系统通知</span>
-            
-            </div>
-          </div>
-          <div class="unread-count">
-            <span class="badge" v-if="showUnreadCount">
-              {{conversation.unreadCount > 99 ? '99+' : conversation.unreadCount}}
-            </span>
-           
-          </div>
-        </div>
-        <div class="row-2">
-          <div class="summary">
-            <div v-if="conversation.lastMessage" class="text-ellipsis">
-              <span class="remind" style="color:red;" v-if="hasMessageAtMe">[有人提到我]</span>
-              <span class="text" :title="conversation.lastMessage.messageForShow">
-                {{messageForShow}}
-              </span>
-            
-          </div>
-          <div class="date">
-            {{date}}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
+   
   <div class="content22" @click="selectConversation">
     <div class="content-cell">
       <div class="content-cell-body" :class="isMove && itemIndex == index ? 'move' : ''" @touchstart="touchStart($event, index)" @touchmove="touchMove($event, index)">
         <div class="content-cell-body-content">
-
           <div class="online-item">
             <div class="header">
               <avatar :src="avatar" :type="conversation.type" />
-              <span v-if="showUnreadCount"> {{conversation.unreadCount > 99 ? '99+' : conversation.unreadCount}}</span>
+              <span v-if="showUnreadCount"> {{conversation.unreadMessageCount > 99 ? '99+' : conversation.unreadMessageCount}}</span>
             </div>
             <div class="content1">
               <p class="doctorname">
-                <span :title="conversation.userProfile.nick || conversation.userProfile.userID" v-if="conversation.type ===  TIM.TYPES.CONV_C2C">{{conversation.userProfile.nick || conversation.userProfile.userID}}</span>
-                <span v-else-if="conversation.type === TIM.TYPES.CONV_SYSTEM">系统通知</span>
+                <!-- <span :title="conversation.userProfile.nick || conversation.userProfile.userID" v-if="conversation.type ===  TIM.TYPES.CONV_C2C">{{conversation.userProfile.nick || conversation.userProfile.userID}}</span>
+                <span v-else-if="conversation.type === TIM.TYPES.CONV_SYSTEM">系统通知</span> -->
+                <span>{{conversation.channelDisplayName }}</span>
               </p>
               <p class="messge" v-if="conversation.lastMessage">
-                <!-- <div v-if="conversation.lastMessage" class="text-ellipsis"> -->
-                <span class="remind" style="color:red;" v-if="hasMessageAtMe">[有人提到我]</span>
+                <!-- <span class="remind" style="color:red;" v-if="hasMessageAtMe">[有人提到我]</span>
                 <span class="text" :title="conversation.lastMessage.messageForShow">
                   {{messageForShow }}
-                </span>
-                <!-- </div> -->
+                </span> -->
+                {{conversation.channelId }}
               </p>
               <!-- <p v-if="item.msgType == 0" class="message">{{item.content}}</p>
               <p v-if="item.msgType == 2" class="message">{{item.content}}</p>
@@ -68,6 +29,7 @@
             </div>
             <div class="primary--content">
               <p>{{date}}</p>
+
             </div>
           </div>
 
@@ -174,7 +136,6 @@ export default {
   },
   methods: {
     touchStart(e, index) {
-      console.log(index, "ssssssssssss")
       //  && this.itemIndex != index
       if (e.touches.length === 1) {
         //表示一只手指在触摸
@@ -214,6 +175,19 @@ export default {
       }
     },
     selectConversation() {
+      this.imSdk.openSession(this.$store.state.userInfo.nickname, 'd' + conversation.creatorId, conversation.channelName)
+ 
+      console.log(this.imSdk.maxCreateAt, this.imSdk.messageList, this.imSdk)
+      // this.$store.commit('selectTestFun',  );
+
+      setTimeout(() => {
+        this.$router.push({
+          name: 'chatRoom',
+          // query: {
+          //   questionDes: this.questionDes
+          // }
+        })
+      }, 1000);
       //点击好友与当前好友不相同
       // if (this.conversation.conversationID !== this.currentConversation.conversationID) {
       //     this.$store.dispatch(
@@ -221,14 +195,14 @@ export default {
       //         this.conversation.conversationID  //点击的好友id
       //     )
       // }
-      console.log(this.conversation.conversationID, "我的聊天用户的id")
-      this.$router.push({
-        name: 'chatRoom'
-      })
-      this.$store.dispatch(
-        'checkoutConversation',//切换会话
-        this.conversation.conversationID  //点击的好友id
-      )
+      // console.log(this.conversation.conversationID, "我的聊天用户的id")
+      // this.$router.push({
+      //   name: 'chatRoom'
+      // })
+      // this.$store.dispatch(
+      //   'checkoutConversation',//切换会话
+      //   this.conversation.conversationID  //点击的好友id
+      // )
     },
     deleteConversation(event) {
       // 停止冒泡，避免和点击会话的事件冲突

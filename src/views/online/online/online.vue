@@ -3,163 +3,32 @@
   <div class="inquiry-online">
     <Header post-title="我的咨询"> </Header>
     <!-- 用户信息 -->
-    <div class="user-describe">
+    <!-- <div class="user-describe">
       <div class="describe">
         <p>问题描述：{{frendInfo.questionDes}}</p>
         <p>既往病史：{{frendInfo.anamnesisDes}}</p>
       </div>
       <div class="content">
         <img v-for="(item,index) in frendInfo.post" :key="index" :src="item" alt @click="showViewer('@asset/images/1.png')">
-        <!-- <img :src="imgSrc[1]" alt>
-        <img :src="imgSrc[2]" alt> -->
+         
       </div>
       <router-link tag="p" to="/allRecord" class="item">
         <span>查看{{frendInfo.patientName}}的所有记录</span>
         <i class="iconfont icon-iconfontjiantou5"></i>
       </router-link>
-    </div>
+    </div> -->
     <!-- 聊天内容区域 -->
     <div class="inquiry-online-content" ref="chatContent" @click="toolType=''">
       <ul class="online-content-warp">
-        <li class="online-content-list right">
+
+        <li class="online-content-list right"  >
           <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
           <div class="online-content-list-text">
             <em></em>
-            <div></div>
+            <!-- JSON.parse(JSON.parse(JSON.stringify(message)).content.text -->
+            <div>ss</div>
           </div>
-          <div class="online-content-list-text">
-            <img alt style="width:100px;" @load="scrollBottom">
-          </div>
-        </li>
-        <li class="online-content-list right">
-          <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
-          <div class="online-content-list-text">
-            <em></em>
-            <div></div>
-          </div>
-          <div class="online-content-list-text">
-            <img alt style="width:100px;" @load="scrollBottom">
-          </div>
-        </li>
-        <li class="online-content-list right">
-          <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
-          <div class="online-content-list-text">
-            <em></em>
-            <div></div>
-          </div>
-          <div class="online-content-list-text">
-            <img alt style="width:100px;" @load="scrollBottom">
-          </div>
-        </li>
-        <li class="online-content-list right">
-          <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
-          <div class="online-content-list-text">
-            <em></em>
-            <div></div>
-          </div>
-          <div class="online-content-list-text">
-            <img alt style="width:100px;" @load="scrollBottom">
-          </div>
-        </li>
-        <li class="online-content-list right">
-          <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
-          <div class="online-content-list-text">
-            <em></em>
-            <div></div>
-          </div>
-          <div class="online-content-list-text">
-            <img alt style="width:100px;" @load="scrollBottom">
-          </div>
-        </li>
-        <li class="online-content-list right">
-          <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
-          <div class="online-content-list-text">
-            <em></em>
-            <div></div>
-          </div>
-          <div class="online-content-list-text">
-            <img alt style="width:100px;" @load="scrollBottom">
-          </div>
-        </li>
-        <li class="online-content-list right">
-          <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
-          <div class="online-content-list-text">
-            <em></em>
-            <div></div>
-          </div>
-          <div class="online-content-list-text">
-            <img alt style="width:100px;" @load="scrollBottom">
-          </div>
-        </li>
-        <li class="online-content-list right">
-          <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
-          <div class="online-content-list-text">
-            <em></em>
-            <div></div>
-          </div>
-          <div class="online-content-list-text">
-            <img alt style="width:100px;" @load="scrollBottom">
-          </div>
-        </li>
-        <li class="online-content-list right">
-          <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
-          <div class="online-content-list-text">
-            <em></em>
-            <div></div>
-          </div>
-          <div class="online-content-list-text">
-            <img alt style="width:100px;" @load="scrollBottom">
-          </div>
-        </li>
-        <li class="online-content-list right">
-          <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
-          <div class="online-content-list-text">
-            <em></em>
-            <div></div>
-          </div>
-          <div class="online-content-list-text">
-            <img alt style="width:100px;" @load="scrollBottom">
-          </div>
-        </li>
-        <li class="online-content-list right">
-          <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
-          <div class="online-content-list-text">
-            <em></em>
-            <div></div>
-          </div>
-          <div class="online-content-list-text">
-            <img alt style="width:100px;" @load="scrollBottom">
-          </div>
-        </li>
-        <li class="online-content-list right">
-          <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
-          <div class="online-content-list-text">
-            <em></em>
-            <div></div>
-          </div>
-          <div class="online-content-list-text">
-            <img alt style="width:100px;" @load="scrollBottom">
-          </div>
-        </li>
-        <li class="online-content-list right">
-          <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
-          <div class="online-content-list-text">
-            <em></em>
-            <div></div>
-          </div>
-          <div class="online-content-list-text">
-            <img alt style="width:100px;" @load="scrollBottom">
-          </div>
-        </li>
-        <li class="online-content-list right">
-          <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
-          <div class="online-content-list-text">
-            <em></em>
-            <div>最后一个</div>
-          </div>
-          <div class="online-content-list-text">
-            <img alt style="width:100px;" @load="scrollBottom">
-          </div>
+          
         </li>
       </ul>
     </div>
@@ -273,7 +142,7 @@ export default {
     this.$nextTick(function () {
       var ele = this.$refs['chatContent'];
       console.log(ele.scrollHeight, "内容的高度")
-     
+
       ele.scrollTop = 1000;
       console.log(ele.scrollTop, "执行滚动")
     });
@@ -494,7 +363,7 @@ export default {
     overflow: auto;
     background: #ededed;
     .online-content-warp {
-      padding: 400px 40px 40px;
+      padding: 10px 40px 40px;
     }
     .online-content-list {
       display: flex;

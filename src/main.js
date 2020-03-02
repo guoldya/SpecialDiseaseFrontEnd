@@ -16,6 +16,9 @@ import './assets/icon/tim.css'
 import Avatar from './components/avatar.vue'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import { ImSdk } from '@/im_sdk/leo_im_sdk'
+
+
 window.tim = tim
 window.TIM = TIM
 window.store = store
@@ -25,7 +28,7 @@ Vue.prototype.TIM = TIM
 Vue.prototype.$store = store
 Vue.component('avatar', Avatar)
 Vue.use(ElementUI);
-
+Vue.prototype.$imsdk=new ImSdk();
 
 import Header from './components/header/header.vue';
 import Address from './components/address/address.vue';

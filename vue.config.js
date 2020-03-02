@@ -47,7 +47,15 @@ module.exports = {
           // '^/api/sds': '/'
         }
       },
-      
+      '/im': {
+        target: 'http://192.168.0.22:2006',//张 hos
+        // target: 'http://192.168.0.61:8066',//然有钱 新接口
+        // target: 'http://192.168.0.122:8066',//周 新接口
+        changeOrigin: true, // 允许跨域
+        pathRewrite: {
+           '^/im': '/'
+        }
+      },
     },
   },
 }

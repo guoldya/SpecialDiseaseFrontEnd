@@ -1,38 +1,61 @@
 <template>
-  <div class="message-wrapper" :class="messagePosition">
-    <div v-if="currentConversationType === TIM.TYPES.CONV_C2C" class="c2c-layout" :class="messagePosition">
-      <div class="col-1" v-if="showAvatar">
-        <!-- 头像 -->
-        <avatar :src="avatar" />
-      </div>
-      <div class="col-2">
-        <!-- 消息主体 -->
-        <div class="content-wrapper">
-          <message-status-icon v-if="isMine" :message="message" />
-          <text-element v-if="message.type === TIM.TYPES.MSG_TEXT" :isMine="isMine" :payload="message.payload" :message="message" />
-          <image-element v-else-if="message.type === TIM.TYPES.MSG_IMAGE" :isMine="isMine" :payload="message.payload" :message="message" />
-          <file-element v-else-if="message.type === TIM.TYPES.MSG_FILE" :isMine="isMine" :payload="message.payload" :message="message" />
-          <sound-element v-else-if="message.type === TIM.TYPES.MSG_SOUND" :isMine="isMine" :payload="message.payload" :message="message" />
-          <group-tip-element v-else-if="message.type===TIM.TYPES.MSG_GRP_TIP" :payload="message.payload" />
-          <group-system-notice-element v-else-if="message.type === TIM.TYPES.MSG_GRP_SYS_NOTICE" :payload="message.payload" :message="message" />
-          <custom-element v-else-if="message.type === TIM.TYPES.MSG_CUSTOM" :isMine="isMine" :payload="message.payload" :message="message" />
-          <face-element v-else-if="message.type === TIM.TYPES.MSG_FACE" :isMine="isMine" :payload="message.payload" :message="message" />
-          <video-element v-else-if="message.type === TIM.TYPES.MSG_VIDEO" :isMine="isMine" :payload="message.payload" :message="message" />
-          <geo-element v-else-if="message.type === TIM.TYPES.MSG_GEO" :isMine="isMine" :payload="message.payload" :message="message" />
-          <span v-else>暂未支持的消息类型：{{message.type}}</span>
-          
-        </div>
-        <message-footer v-if="showMessageHeader" :message="message" />
 
-      </div>
-      <div class="col-3">
-        <!-- 消息状态 -->
+  <div class="online-content-warp">
+    <div v-if="aa.type=='text'" class="online-content-list " :class="message.senderId===$imsdk.user.id?'right':''">
+      <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
+      <div class="online-content-list-text">
+        <em></em>
+        <div>
+
+          <template v-for="item in reversedMessage">
+            <span v-if='item.name=="text"'>
+              {{item.text}}
+            </span>
+            <img v-if='item.name=="img"' :src="require(`@/static/faces/${item.text}`)" style="width:30px;height:30px" />
+          </template>
+        </div>
       </div>
     </div>
+    <div v-if="aa.type=='geo'" class="online-content-list outpation">
+      <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
+      <div class="online-content-list-text">
+        <em></em>
+        <div class="describe">
+          <p>初步诊断：高血压</p>
+        </div>
+        <router-link tag="p" to="/allRecord" class="item">
+          <span>查看详情</span>
+          <i class="iconfont icon-iconfontjiantou5"></i>
+        </router-link>
+      </div>
+    </div>
+    <div v-if="aa.type=='image'" class="online-content-list " :class="message.senderId===$imsdk.user.id?'right':''">
+      <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
+      <div class="online-content-list-text">
+        <em></em>
+        <div>
+          <img style="width:100px;" :src="'http://192.168.0.11:9999/net-medical/picture/'+aa.text" @click="showViewer('http://192.168.0.11:9999/net-medical/picture/'+aa.text)" alt>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="user-describe">
+      <div class="describe">
+        <p>初步诊断：高血压</p>
+      </div>
+      <router-link tag="p" to="/allRecord" class="item">
+        <span>查看详情</span>
+        <i class="iconfont icon-iconfontjiantou5"></i>
+      </router-link>
+    </div> -->
+
+    <!-- 图片显示器 -->
+    <md-image-viewer v-model="isViewerShow" :list="currentImg" :has-dots="false" :initial-index="0"></md-image-viewer>
   </div>
+
 </template>
 <script>
 import { mapState } from 'vuex'
+import emoji from '@/utils/emoji.js'
 import MessageStatusIcon from './message-status-icon.vue'
 import MessageFooter from './message-footer'
 import FileElement from './message-elements/file-element.vue'
@@ -45,12 +68,7 @@ import CustomElement from './message-elements/custom-element.vue'
 import GeoElement from './message-elements/geo-element.vue'
 export default {
   name: 'MessageItem',
-  props: {
-    message: {
-      type: Object,
-      required: true
-    }
-  },
+  props: ['message'],
   components: {
     MessageFooter,
     MessageStatusIcon,
@@ -62,129 +80,83 @@ export default {
     CustomElement,
     VideoElement,
     GeoElement,
+
   },
+
   data() {
     return {
+      emojiName: emoji.obj,
+      imSdk: this.$imsdk,
       renderDom: [],
-      // currentUserProfile:{
-      //     adminForbidType: "AdminForbid_Type_None",
-      //     allowType: "AllowType_Type_AllowAny",
-      //     avatar: "",
-      //     birthday: 0,
-      //     gender: "",
-      //     language: 0,
-      //     lastUpdatedTime: 1582729141394,
-      //     level: 0,
-      //     location: "",
-      //     messageSettings: 0,
-      //     nick: "",
-      //     profileCustomField: [],
-      //     role: 0,
-      //     selfSignature: "",
-      //     userID: "'user0'"
-      // },
-      // currentConversation: {
-      //     conversationID: "C2Cuser3",
-      //     lastMessage: {
-      //         fromAccount: "user3",
-      //         isRevoked: false,
-      //         lastSequence: 1144200001,
-      //         lastTime: 1582688664,
-      //         messageForShow: "fdg ",
-      //         payload: {text: "fdg "},
-      //         type: "TIMTextElem"
-      //     },
-      //     type: "C2C",
-      //     unreadCount: 0,
-      //     userProfile: {
-      //         adminForbidType: "AdminForbid_Type_None",
-      //         allowType: "AllowType_Type_AllowAny",
-      //         avatar: "",
-      //         birthday: 0,
-      //         gender: "",
-      //         language: 0,
-      //         lastUpdatedTime: 0,
-      //         level: 0,
-      //         location: "",
-      //         messageSettings: 0,
-      //         nick: "",
-      //         profileCustomField: [],
-      //         role: 0,
-      //         selfSignature: "",
-      //         userID: "user3"
-      //     },
-      //     _isInfoCompleted: true,
-      //     subType: "",
-      //     toAccount: "user3"
-      // }
+      currentImg: [], // 当前图片
+      isViewerShow: false, // 是否大图显示
+      clickViewer: false, // 是否点击的是图片，true点击，用于不让滚动条滚动到指定位置
+
+      aa: ''
     }
+  },
+  mounted() {
+    this.aa = JSON.parse(this.message.content);
+
   },
   computed: {
-    ...mapState({
-      currentConversation: state => state.conversation.currentConversation,
-      currentUserProfile: state => state.user.currentUserProfile
-    }),
-    // 是否显示头像，群提示消息不显示头像
-    showAvatar() {
-      if (this.currentConversation.type === 'C2C' && !this.message.isRevoked) { // C2C且没有撤回的消息
-        return true
-      } else if (this.currentConversation.type === 'GROUP' && !this.message.isRevoked) { // group且没有撤回的消息
-        return this.message.type !== this.TIM.TYPES.MSG_GRP_TIP
-      }
-      return false
-    },
-    avatar() {
-      if (this.currentConversation.type === 'C2C') {
-        return this.isMine
-          ? this.currentUserProfile.avatar
-          : this.currentConversation.userProfile.avatar
-      } else if (this.currentConversation.type === 'GROUP') {
-        return this.isMine
-          ? this.currentUserProfile.avatar
-          : this.message.avatar
-      } else {
-        return ''
-      }
-    },
-    currentConversationType() {
-      return this.currentConversation.type
-    },
-    isMine() {
-      // console.log(this.currentUserProfile, this.currentConversation);
-      return this.message.flow === 'out'
-    },
-    messagePosition() {
-      if (
-        ['TIMGroupTipElem', 'TIMGroupSystemNoticeElem'].includes(
-          this.message.type
-        )
-      ) {
-        return 'position-center'
-      }
-      if (this.message.isRevoked) { // 撤回消息
-        return 'position-center'
-      }
-      if (this.isMine) {
-        return 'position-right'
-      } else {
-        return 'position-left'
-      }
-    },
-    showMessageHeader() {
-      if (
-        ['TIMGroupTipElem', 'TIMGroupSystemNoticeElem'].includes(
-          this.message.type
-        )
-      ) {
-        return false
-      }
-      if (this.message.isRevoked) { // 撤回消息
-        return false
-      }
-      return true
+
+    reversedMessage: function () {
+      return this.renderTxt(this.aa.text)
     }
+
   },
   methods: {
+
+    renderTxt(txt = "") {
+      console.log(txt, "转换的函数")
+      let rnTxt = [];
+      let match = null;
+      const regex = /(\[.*?\])/g;
+      let start = 0;
+      let index = 0;
+      while ((match = regex.exec(txt))) {
+        index = match.index;
+        if (index > start) {
+          rnTxt.push(txt.substring(start, index));
+          rnTxt.push({
+            name: 'text',
+            text: txt.substring(start, index)
+          });
+        }
+        console.log(this.emojiName, "测试比爱情列表是否")
+        if (match[1] in this.emojiName) {
+
+          const v = this.emojiName[match[1]];
+          // rnTxt.push(this.emojiName(v));
+          rnTxt.push({
+            name: 'img',
+            text: v
+          });
+        } else {
+
+          // rnTxt.push(match[1]);
+          rnTxt.push({
+            name: 'text',
+            text: match[1]
+          });
+        }
+        start = index + match[1].length;
+      }
+      // rnTxt.push(txt.substring(start, txt.length));
+      rnTxt.push({
+        name: 'text',
+        text: txt.substring(start, txt.length)
+      });
+      // return rnTxt.toString().replace(/,/g, "");
+
+      return rnTxt
+    },
+    showViewer(index) {
+      this.isViewerShow = true;
+      this.clickViewer = true;
+      this.currentImg = [index];
+    },
     showGroupMemberProfile(event) {
       this.tim
         .getGroupMemberProfile({
@@ -200,61 +172,120 @@ export default {
   }
 }
 </script>
-<style lang="less" scoped>
-.message-wrapper {
-  margin: 20px 0;
-}
-.group-layout,
-.c2c-layout,
-.system-layout {
-  display: flex;
-  align-items: center;
-  .col-1 {
-    .avatar {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
-    }
-  }
-  .col-2 {
-    display: flex;
-    flex-direction: column;
-    // max-width 50% // 此设置可以自适应宽度，目前由bubble限制
-  }
-  .col-3 {
-    width: 30px;
-  }
-  &.position-left {
-    .col-2 {
-      align-items: flex-start;
-    }
-  }
-  &.position-right {
-    flex-direction: row-reverse;
+ 
 
-    .col-2 {
-      align-items: flex-end;
-    }
-  }
-  &.position-center {
-    justify-content: center;
+ <style lang="scss" scoped>
+.online-content-warp {
+  padding: 10px 24px 20px;
+}
+
+.describe {
+  padding: 20px 30px 10px;
+  border-bottom: 1px solid #f4f4f4;
+  line-height: 70px;
+  background: #48b6ff;
+  color: #fff;
+}
+.content {
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  img {
+    width: 180px;
+    height: 126px;
   }
 }
-.c2c-layout {
-  .col-2 {
-    .base {
-      margin-top: 3px;
+.item {
+  padding: 20px 30px 20px;
+  i {
+    float: right;
+    color: #1da1f3;
+  }
+}
+.online-content-list {
+  display: flex;
+  margin-bottom: 30px;
+  // position: relative;
+  .online-content-list-head {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+  }
+}
+.online-content-list-text {
+  padding: 20px 10px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #e4e4e4;
+  margin: 0 40px;
+  max-width: 500px;
+  white-space: normal;
+  word-break: break-all;
+  word-wrap: break-word;
+  line-height: 46px;
+  em {
+    position: relative;
+    float: left;
+    // margin-left: -30px;
+    margin-left: -20px;
+    margin-top: 2px;
+
+    display: block;
+    width: 0;
+    height: 0;
+    border-width: 20px 20px 20px 0;
+    border-style: solid;
+    border-color: transparent #e4e4e4 transparent transparent; /*透明 灰 透明 透明 */
+
+    &:before {
+      position: absolute;
+      content: "";
+      display: block;
+      width: 0;
+      height: 0;
+      border-width: 18px 18px 18px 0;
+      border-style: solid;
+      border-color: transparent #fff transparent transparent; /*透明 灰 透明 透明 */
+      top: -18px;
+      left: 4px;
     }
   }
 }
-.group-layout {
-  .col-2 {
-    .chat-bubble {
-      margin-top: 5px;
+
+.online-content-warp .right {
+  flex-direction: row-reverse;
+  .online-content-list-text {
+    background: #48b6ff;
+    border: 1px solid #48b6ff;
+    color: #fff;
+    em {
+      float: right;
+      margin-right: -30px;
+      border-width: 20px 0 20px 20px;
+      border-color: transparent transparent transparent #48b6ff;
+      &:before {
+        left: -22px;
+        border-width: 18px 0 18px 18px;
+        border-color: transparent transparent transparent #48b6ff;
+      }
+    }
+  }
+}
+
+.online-content-warp .outpation {
+  .online-content-list-text {
+    padding: 0;
+    width: 60%;
+  }
+  em {
+    border-width: 20px 20px 20px 0;
+    border-color: transparent #48b6ff transparent transparent;
+    &:before {
+      border-color: transparent #48b6ff transparent transparent;
     }
   }
 }
 </style>
+
  
  

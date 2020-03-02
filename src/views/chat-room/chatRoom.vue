@@ -1,39 +1,42 @@
 <template>
   <div refs='message-list'>
-    <Header :post-title="name"></Header>
-    <current-conversation />
+    <Header :post-title="$route.query.name"></Header>
+    <current-conversation :content="$store.state.test" />
   </div>
 </template>
 <script>
 import { mapGetters, mapState } from 'vuex'
 import CurrentConversation from '@/components/conversation/current-conversation'
 export default {
+  data() {
+    return {
+      imSdk: this.$imsdk,
+    }  },
   name: 'ChatRoom',
   components: {
     CurrentConversation
   },
   mounted() {
-    //  this.$nextTick(function () {
-    //     var ele = this.$refs['message-list'];
+    console.log(this.imSdk,"this.imSdk")
+    this.imSdk.createUserConnect('p' + 2, '123456', {
+      userConnectCallback: () => {
+        // 拿到消息列表之后的回调
+        this.imSdk.openSession(
+          this.$store.state.userInfo.nickname,
+          'd' + this.$route.query.id,
+          this.$route.query.name,
+          {
+            getMessageCallback: () => {
+              // 拿到消息列表之后的回调
+               
+            }
+          }
+        )
 
-    //   ele.scrollTop = 1000;
-    //   console.log(ele.scrollTop, "执行滚动aaaaaaaaaaaaa")
-    // });
-    console.log(this.currentMessageList, "消息记录chatRoom")
-    const message = this.tim.createTextMessage({
-      to: this.toAccount,
-      conversationType: 'C2C',
-      payload: { text: this.$route.query.questionDes },
+      }
     })
+
      
-    this.tim.sendMessage(message).catch(error => {
-      this.$store.commit('showMessage', {
-        type: 'error',
-        message: error.message
-      })
-      console.log(error.message)
-    })
-    this.$store.commit('pushCurrentMessageList', message)
   },
   computed: {
     ...mapState({

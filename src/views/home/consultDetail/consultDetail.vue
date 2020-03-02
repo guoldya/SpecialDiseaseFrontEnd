@@ -253,7 +253,7 @@ export default {
       // if (val.status == 0) return
       // this.basicDialog.open = true;
       this.$router.push({
-        path: "/aa",
+        path: "/pictureConsult",
         query: { name: this.doctorInfo.drName, id: this.doctorInfo.id, money: this.money, title: this.doctorInfo.title, type: this.basicDialog.type }
       });
     },

@@ -15,11 +15,9 @@
         </div>
         <div class="cardtopright" @click="updown(index)">
           <div>
-            <p>
-              <router-link v-if="item.status==3" :to="{ path: '/myorderinfo', query: { id: item.id }}" class="consult">
-                <span class="have">{{item.status|payTypeFilter}}</span>
-              </router-link>
-              <span v-else>{{item.status|payTypeFilter}}</span>
+            <p class="button">
+
+              <span>{{item.status|payTypeFilter}}</span>
               <!-- {{item.status|payTypeFilter}} -->
             </p>
             <p class="money">￥{{item.totalMoney|keepTwoNum}}</p>
@@ -49,8 +47,14 @@
 
       </div>
       <div class="lookmore" @click="orderinfo(item)">
-        <span>查看详情</span>
-        <span><img src="@/assets/images/icon_right.png" alt=""></span>
+        <span><label v-if="item.status!=3">查看详情</label>
+        </span>
+        <span>
+          <router-link v-if="item.status==3" :to="{ path: '/myorderinfo', query: { id: item.id }}" class="consult">
+            <span class="have">确认收货</span>
+          </router-link>
+          <img v-if="item.status!=3" src="@/assets/images/icon_right.png" alt="">
+        </span>
       </div>
     </div>
     <Null :loading-true="!loadingtrue&&waitPayData.length==0"></Null>
@@ -222,6 +226,10 @@ export default {
     }
     .cardtopright {
       text-align: right;
+      .button {
+        display: flex;
+        justify-content: space-between;
+      }
       img {
         width: 20px;
         margin-left: 20px;
@@ -271,20 +279,23 @@ export default {
   font-size: 26px;
   color: var(--primary--content);
   border-top: 1px solid #e5e5e5;
-
+  :last-child {
+    display: flex;
+    justify-content: space-between;
+  }
   img {
     width: 12px;
   }
 }
-.mycard .mycardtop p .have {
+.mycard .have {
   font-size: 26px;
-  color: #ffffff;
-  background: var(--primary);
+  color: var(--primary);
+  border: 1px solid var(--primary);
   border-radius: 40px;
-  line-height: 50px;
+  line-height: 40px;
   text-align: center;
-  right: 50px;
- 
+
   display: block;
+  padding: 0 12px;
 }
 </style>

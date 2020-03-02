@@ -15,7 +15,7 @@
             </p>
             <p class="time"> {{reportInfoData.createTime|lasttime}}</p>
           </div>
-          <div class="addImg nextImg" @click="acceptAdd()">
+          <div class="addImg nextImg" @click="acceptAdd()" v-if="reportInfoData.status!=1||reportInfoData.status!=2">
             <img src="@/assets/images/icon_more2@2x.png" alt="">
           </div>
         </div>

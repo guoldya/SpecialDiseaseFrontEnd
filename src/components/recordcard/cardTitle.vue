@@ -1,10 +1,9 @@
 <template>
   <div class="listData">
     <span class="title"><img src="@/assets/images/record1.png" alt=""> {{content.patientName}}</span>
-    <router-link v-if="content.status==0" :to="{ path: path, query: argn}" class="consult">
-      <span class="titleright have">{{content.status|outpationStatus}}</span>
-    </router-link>
-    <span v-else class="titleright">{{content.status|outpationStatus}}</span>
+   
+     
+    <span  class="titleright">{{content.status|outpationStatus}}</span>
   </div>
 </template>
 <script>

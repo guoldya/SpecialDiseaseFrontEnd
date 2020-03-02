@@ -153,8 +153,8 @@ axios.interceptors.response.use(function (res) {
         // router.replace('/control');
     } else if (res.data.code == 500) {
 
-             router.replace('/');
-
+              
+        router.replace('/judge');
         console.log(res.data.msg)
     } else if (res.data.code == 406) {
 

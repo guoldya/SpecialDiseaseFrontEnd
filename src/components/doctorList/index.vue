@@ -73,7 +73,7 @@ export default {
 /* .doctor-list {} */
 .doctor-list {
   position: relative;
-  margin-top: 20px;
+  margin-bottom: 20px;
   border-bottom: 1px solid #e0e0e0;
   background: #fff;
   width: 94%;

@@ -2,7 +2,7 @@
   <div class="recordcard">
     <cardTitle :content="content" :type="type" :path="path" :argn="argn"/>
     <cardContent :content="content" :type="type" :queryType="queryType" />
-    <cardBottom :argn="argn" :type="type" :path="path" v-show="isShow" />
+    <cardBottom  :content="content" :argn="argn" :type="type" :path="path" v-show="isShow" />
   </div>
 </template>
 <script>

@@ -29,20 +29,20 @@ export default {
     window.addEventListener("beforeunload", () => {
       sessionStorage.setItem("store", JSON.stringify(this.$store.state))
     })
-    
+
   },
   methods: {
     login() {
       this.tim.login({
-        userID: 'user'+this.$store.state.userInfo.patientId,// userID 用户ID（必须字母开头）
-        userSig: window.genTestUserSig('user'+this.$store.state.userInfo.patientId).userSig
+        userID: 'user' + this.$store.state.userInfo.patientId,// userID 用户ID（必须字母开头）
+        userSig: window.genTestUserSig('user' + this.$store.state.userInfo.patientId).userSig
       }).then(() => {
         this.$store.commit('toggleIsLogin', true)//已登录
         this.$store.commit('startComputeCurrent')//启动定时器设定当前时间
         this.$store.commit({//设定当前登录用户信息
           type: 'GET_USER_INFO',
-          userID: 'user'+this.$store.state.userInfo.patientId,
-          userSig: window.genTestUserSig('user'+this.$store.state.userInfo.patientId).userSig,
+          userID: 'user' + this.$store.state.userInfo.patientId,
+          userSig: window.genTestUserSig('user' + this.$store.state.userInfo.patientId).userSig,
           sdkAppID: window.genTestUserSig('').SDKAppID
         })
         this.$store.commit('showMessage', {
@@ -177,8 +177,11 @@ export default {
 </script>
 
  <style >
-*{font:'微软雅黑';
-letter-spacing: 2px;}
+* {
+  font-family: "微软雅黑";
+  letter-spacing: 2px;
+  font-weight: 400;
+}
 :root {
   /* 主题色 */
   --primary: #48b6ff;

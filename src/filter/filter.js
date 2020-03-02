@@ -59,7 +59,7 @@ const payTypeFilter = function (value) {
     } else if (value == 2) {
         return "已支付"
     } else if (value == 3) {
-        return "确认收货"
+        return "已发货"
     } else if (value == 4) {
         return "申请退货"
     } else if (value == 6) {

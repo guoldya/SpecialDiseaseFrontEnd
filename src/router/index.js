@@ -9,14 +9,14 @@ const departsearch = () => import(/* webpackChunkName: "home" */ "@/views/home/d
 const result = () => import(/* webpackChunkName: "home" */ "@/views/home/result/result.vue")
 const consultDetail = () => import(/* webpackChunkName: "home" */ "@/views/home/consultDetail/consultDetail.vue")
 const buyService = () => import(/* webpackChunkName: "home" */ "@/views/home/buyService/buyService.vue")
+const doctorlist = () => import(/* webpackChunkName: "home" */ "@/views/home/doctorlist/doctorlist.vue")
 const pictureConsult = () => import(/* webpackChunkName: "home" */ "@/views/home/pictureConsult/pictureConsult.vue")
-const conversation = () => import(/* webpackChunkName: "home" */ "@/views/conversation/conversation.vue")
-const chatRoom = () => import(/* webpackChunkName: "home" */ "@/views/chat-room/chatRoom.vue")
 
+ 
 //  在线问诊
 const online = () => import(/* webpackChunkName: "online" */ "@/views/online/online/online.vue")
-
-
+const chatRoom = () => import(/* webpackChunkName: "home" */ "@/views/chat-room/chatRoom.vue")
+const conversation = () => import(/* webpackChunkName: "home" */ "@/views/conversation/conversation.vue")
 // 个人中心
 const my = () => import(/* webpackChunkName: "my" */ "@/views/my/my/my.vue")
 const aa = () => import(/* webpackChunkName: "my" */ "@/views/my/aa/aa.vue")
@@ -106,6 +106,15 @@ export default new Router({
       title: '购买服务'
     }
   },
+  {
+    path: '/doctorlist',
+    name: 'doctorlist',
+    component: doctorlist,
+    meta: {
+      title: '医生列表'
+    }
+  },
+   
   {
     path: '/pictureConsult',
     name: 'pictureConsult',

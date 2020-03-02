@@ -29,6 +29,13 @@
         <img class="qiehuan" @click="switchCard(index)" src="@/assets/images/qiehuan.png">
       </div>
     </div>
+    <p class="doctorlisttitle">
+      <span>医生列表</span>
+      <span @click="$router.push({name:'doctorlist'})">更多<img src="@/assets/images/more.png" alt=""></span>
+    </p>
+    <div class="bg3">
+      <img src="@/assets/images/bg3.png" alt="">
+    </div>
     <doctorList v-for="(item, index) in listdata" :datas="item" :key="index"></doctorList>
     <!-- 底部 -->
     <Footer></Footer>
@@ -102,8 +109,8 @@ export default {
       console.log("ddddddddddddd")
       try {
         let res = await this.$axios.put(doctorlistURL, {
-         
-           patientId: data ? data : this.getInfo.id
+
+          patientId: data ? data : this.getInfo.id
         });
         if (res.data.code != 200) {
           throw Error(res.data.msg);
@@ -157,9 +164,9 @@ export default {
       if (!current) {
         current = this._cardlist[0]
       }
-     
+
       this.chooseId = current.id;
-        this.homeNumber(this.chooseId);
+      this.homeNumber(this.chooseId);
       let setInfo = JSON.stringify(current)
       sessionStorage.setItem('objInfo', setInfo)
     },
@@ -261,6 +268,42 @@ export default {
     border-radius: 5px;
     font-size: 17px;
     color: #fff;
+  }
+}
+.doctorlisttitle {
+  margin: 24px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 30px;
+  :first-child {
+    position: relative;
+    padding-left: 15px;
+  }
+  :first-child::before {
+    position: absolute;
+    z-index: 1;
+    content: "";
+    width: 6px;
+    height: 30px;
+    top: 3px;
+    left: 0px;
+    background: url("~@/assets/images/shuxian.png") no-repeat 100%;
+    background-size: cover;
+  }
+  :last-child {
+    color: #979797;
+    font-size: 28px;
+    position: relative;
+    img {
+      width: 30px;
+    }
+  }
+}
+.bg3 {
+  img {
+    width: 100%;
+    padding: 24px;
+    margin-top: -70px;
   }
 }
 </style>

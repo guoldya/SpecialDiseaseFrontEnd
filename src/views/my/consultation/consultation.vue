@@ -16,7 +16,7 @@
         <div class="header"><img src="@/assets/images/3.jpg" /></div>
         <div class="comment-right">
           <p class="introduce">
-            <span>内科</span>&nbsp;
+            <span>{{item.dept}}</span>&nbsp;
             <span class="name"> {{item.doctorName}} </span>&nbsp;
             <span>医师 </span>&nbsp;
 

@@ -118,7 +118,7 @@ export default {
             this.$toast.info('添加成功')
             this.isTijiao = true;
             this.accountId = res.data.data.accountId;
-           this.$store.dispatch('getCards', { update: true });
+            this.$store.dispatch('getCards', { update: true });
             if (this.$route.query.isnews) {
               this.basicDialog.open = true;
             } else {
@@ -150,5 +150,12 @@ export default {
 .cardblind .md-field {
   padding: 0px !important;
 }
-   
+.warnTip {
+  color: #f99c2e;
+  bottom: 0;
+  padding-top: 0.4rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.24rem;
+  margin-left: 0.34rem;
+}
 </style>

@@ -506,7 +506,7 @@ textarea {
     padding: 0 27px;
     background: #ccc;
     color: #fff;
-    width: 110px;
+    width: 115px;
     &.active {
       background: #1da1f3;
     }

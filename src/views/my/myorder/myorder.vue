@@ -1,29 +1,36 @@
  <template>
   <div class="margin55 outCarint">
     <Header post-title="我的订单"></Header>
-    <div class="mycard" v-if="waitPayData.length!=0" v-show="!loadingtrue" v-for="(item, index) in waitPayData">
+    <div class="mycard" v-if="waitPayData.length!=0" v-show="!loadingtrue" v-for="(item, index) in waitPayData" :key="index">
       <div class="mycardtop">
         <div class="cardtopleft">
           <div>
-            <img src="@/assets/images/dill13.png" alt="">
+            <img src="@/assets/images/dill13.png" alt="商品图片">
           </div>
           <div>
             <p>订单编号</p>
             <p class="orderno">{{item.orderCode}}</p>
+
           </div>
         </div>
         <div class="cardtopright" @click="updown(index)">
           <div>
-            <p>{{item.status|payTypeFilter}}</p>
+            <p>
+              <router-link v-if="item.status==3" :to="{ path: '/myorderinfo', query: { id: item.id }}" class="consult">
+                <span class="have">{{item.status|payTypeFilter}}</span>
+              </router-link>
+              <span v-else>{{item.status|payTypeFilter}}</span>
+              <!-- {{item.status|payTypeFilter}} -->
+            </p>
             <p class="money">￥{{item.totalMoney|keepTwoNum}}</p>
           </div>
-          <div>
+          <!-- <div>
             <img v-if="isSHOW==index" src="@/assets/images/icon_down.png" alt="">
             <img v-if="isSHOW!=index" src="@/assets/images/icon_up@2x.png" alt="">
-          </div>
+          </div> -->
         </div>
       </div>
-      <div v-show="isSHOW==index">
+      <div>
         <div class="mycardlist" v-for="(item2, index2) in item.orderDetailsList" :key="index2">
           <div class="mycardlistleft">
             <div class="img">
@@ -59,7 +66,7 @@
 </template>
  <script>
 let pay_list_url = 'bizOrder/selectPage'
- 
+
 export default {
   data() {
     return {
@@ -268,5 +275,16 @@ export default {
   img {
     width: 12px;
   }
+}
+.mycard .mycardtop p .have {
+  font-size: 26px;
+  color: #ffffff;
+  background: var(--primary);
+  border-radius: 40px;
+  line-height: 50px;
+  text-align: center;
+  right: 50px;
+ 
+  display: block;
 }
 </style>

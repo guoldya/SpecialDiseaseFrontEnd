@@ -5,13 +5,11 @@ import Router from 'vue-router'
 const home = () => import(/* webpackChunkName: "home" */ "@/views/home/home/home.vue")
 const index = () => import(/* webpackChunkName: "home" */ "@/views/home/judge/judge.vue")
 const addpeple = () => import(/* webpackChunkName: "home" */ "@/views/home/addpeple/addpeple.vue")
- 
 const departsearch = () => import(/* webpackChunkName: "home" */ "@/views/home/departsearch/departsearch.vue")
 const result = () => import(/* webpackChunkName: "home" */ "@/views/home/result/result.vue")
 const consultDetail = () => import(/* webpackChunkName: "home" */ "@/views/home/consultDetail/consultDetail.vue")
 const buyService = () => import(/* webpackChunkName: "home" */ "@/views/home/buyService/buyService.vue")
 const pictureConsult = () => import(/* webpackChunkName: "home" */ "@/views/home/pictureConsult/pictureConsult.vue")
-
 const conversation = () => import(/* webpackChunkName: "home" */ "@/views/conversation/conversation.vue")
 const chatRoom = () => import(/* webpackChunkName: "home" */ "@/views/chat-room/chatRoom.vue")
 
@@ -36,6 +34,7 @@ const outpationinfo = () => import(/* webpackChunkName: "my" */ "@/views/my/outp
 const payorder = () => import(/* webpackChunkName: "my" */ "@/views/my/payorder/payorder.vue")
 const mydoctor = () => import(/* webpackChunkName: "my" */ "@/views/my/mydoctor/mydoctor.vue")
 const valuation = () => import(/* webpackChunkName: "my" */ "@/views/my/valuation/valuation.vue")
+const logistics = () => import(/* webpackChunkName: "my" */ "@/views/my/logistics/logistics.vue")
 
 
 
@@ -196,6 +195,14 @@ export default new Router({
     component: myorderinfo,
     meta: {
       title: '订单详情'
+    }
+  },
+  {
+    path: '/logistics',
+    name: 'logistics',
+    component: logistics,
+    meta: {
+      title: '物流详情'
     }
   },
       {

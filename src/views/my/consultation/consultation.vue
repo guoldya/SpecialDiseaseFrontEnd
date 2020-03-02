@@ -26,9 +26,7 @@
           </p>
         </div>
       </div>
-
     </div>
-
     <!-- <div class="doctor-list">
       <div class="discrib">
         <p class="history">患者描述：全身把啦啦啦啦啦啦啦啦啦啦，既往史：啦能力，过敏史：灌灌灌灌帆帆帆帆</p>

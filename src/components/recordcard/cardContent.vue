@@ -1,27 +1,24 @@
 <template>
-  <div class="listDatatop recordcard-content">
+  <div class="listDatatop  ">
     <!-- 处方记录 -->
-    <template  >
-      <p class="parElem listData">
-        <span class="sonElem">就诊科室
-        </span>
-        <span>{{content.dept}}</span>
-      </p>
-      <p class="parElem listData">
-        <span class="sonElem">就诊医生</span>
-        <span>{{content.doctorName}}</span>
-      </p>
-      <p class="parElem listData">
-        <span class="sonElem">处方时间</span>
-        <span>{{content.recipeDate|lasttime}}</span>
-      </p>
-      <p class="parElem listData">
-        <span class="sonElem">临床诊断</span>
-        <span class="mu-secondary-text-color">{{content.diag}}</span>
-      </p>
-    </template>
-   
-    <!--  -->
+    <p>
+      <span class="sonElem">就诊科室
+      </span>
+      <span>{{content.dept}}</span>
+    </p>
+    <p>
+      <span class="sonElem">就诊医生</span>
+      <span>{{content.doctorName}}</span>
+    </p>
+    <p>
+      <span class="sonElem">处方时间</span>
+      <span>{{content.recipeDate|lasttime}}</span>
+    </p>
+    <p>
+      <span class="sonElem">临床诊断</span>
+      <span class="mu-secondary-text-color">{{content.diag}}</span>
+    </p>
+
   </div>
 </template>
 
@@ -62,39 +59,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
- .sonElem {
-  color: var(--primary--title);
-   
-  margin-right: 28px;
-}
 .listDatatop {
   padding: 24px;
   p {
-    line-height: 50px;
-  }
-}
-.recordcard-content {
-  padding: 14px 0;
-  .listData {
-    padding: 7px 24px;
     border-bottom: none;
-    color: #8E8E97;
+    line-height: 60px;
+    display: flex;
+    :first-child {
+      flex: 0 0 130px;
+      color: var(--primary--title);
+    }
     span {
-      padding: 0;
-      max-width: 70%;
+      color: var(--primary--content);
+      margin-right: 28px;
     }
-    .have {
-      font-size: 28px;
-      color: #ffffff;
-      float: right;
-      background: var(--primary);
-      border-radius: 40px;
-      letter-spacing: 1px;
-      width: 134px;
-      line-height: 60px;
-      text-align: center;
-      margin-top: 20px;
-    }
+    
   }
 }
 </style>

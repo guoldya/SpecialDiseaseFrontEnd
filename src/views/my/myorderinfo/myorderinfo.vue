@@ -123,7 +123,13 @@ export default {
       this.actDialog.open = true;
     },
 
-    
+    acceptAdd() {
+      let argu = { id: this.$route.query.id };
+      this.$router.push({
+        name: "logistics",
+        query: argu
+      });
+    },
     onActConfirm3() {
 
       this.actDialog.open = false;

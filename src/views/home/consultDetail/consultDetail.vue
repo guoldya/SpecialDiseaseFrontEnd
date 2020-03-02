@@ -247,17 +247,15 @@ export default {
         query: { name: this.doctorInfo.drName, id: this.doctorInfo.id, money: this.money, title: this.doctorInfo.title, type: this.basicDialog.type }
       });
 
-
-
-
     },
     // 咨询
     consult(val) {
-      if (val.status == 0) return
-      this.basicDialog.open = true;
-
-
-
+      // if (val.status == 0) return
+      // this.basicDialog.open = true;
+      this.$router.push({
+        path: "/aa",
+        query: { name: this.doctorInfo.drName, id: this.doctorInfo.id, money: this.money, title: this.doctorInfo.title, type: this.basicDialog.type }
+      });
     },
     async followDoctor() {
       try {
@@ -276,6 +274,8 @@ export default {
 
       }
     }
+
+    
   },
   components: {
     Dialog

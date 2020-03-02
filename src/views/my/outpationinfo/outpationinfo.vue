@@ -2,19 +2,18 @@
   <div class="margin55   outpationinfo">
     <Header post-title="处方详情"></Header>
     <div class="outpationcard">
+      <p class="title"><span>处方号：{{reportInfoData.code}}</span> </p>
       <div class="outpationcard-top">
-        <p>
+        <p class="userinfo">
           <span>姓名：{{reportInfoData.patientName}} </span>
           <span>性别：{{reportInfoData.sex}}</span>
-          <span>年龄：{{reportInfoData.age}}</span>
+          <span class="last">年龄：{{reportInfoData.age}}</span>
         </p>
-        <p>
+        <p class="userinfo">
           <span>科室：{{reportInfoData.dept}}</span>
           <span>费别：{{reportInfoData.feeType}}</span>
-
         </p>
         <p>
-          <span>处方号：{{reportInfoData.code}}</span>
           <span>门诊号：{{reportInfoData.clinicNo}}</span>
         </p>
         <p>
@@ -90,7 +89,7 @@
     <md-dialog title="提示" :closable="false" v-model="actDialog.open" :btns="actDialog.btns">
       是否确定记账
     </md-dialog>
-    <div style="padding:0.24rem"  v-show="this.$route.query.status==0"> 
+    <div style="padding:0.24rem" v-show="this.$route.query.status==0">
       <md-button type="primary" @click="tijiao" round style="margin-top:16px">处方确认记账</md-button>
     </div>
     <Loading v-show="loadingtrue"></Loading>
@@ -230,10 +229,27 @@ export default {
     font-size: 36px;
     margin-top: 40px;
   }
+  .title {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ededed;
+  }
   .outpationcard-top {
+    margin: 10px 0;
+    border-bottom: 1px solid #ededed;
+    padding-bottom: 20px;
     p {
       display: flex;
       justify-content: space-between;
+    }
+    .userinfo {
+       justify-content: flex-start;
+       :first-child{
+         flex:0 0 270px;
+       }
+  
+      .last{
+        margin-left: 100px;
+      }
     }
   }
 }
@@ -253,7 +269,7 @@ export default {
   }
 }
 .bottom {
-  border-top: 1px solid #979797;
+  border-top: 1px solid #ededed;
   p {
     line-height: 70px;
     display: flex;

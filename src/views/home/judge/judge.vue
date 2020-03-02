@@ -11,8 +11,8 @@ let appLoginlogin = 'wechat/receiveCode';
 
 export default {
   mounted() {
-    //   let str = location.href;
-    let str = "http://m.cq2win.com/nanchuan/?code=edd169b85704410aa5219512cb6f1f00&state=1#/"; //取得整个地址栏
+    let str = location.href;
+    //    let str = "http://m.cq2win.com/nanchuan/?code=edd169b85704410aa5219512cb6f1f00&state=1#/"; //取得整个地址栏
     let num = str.indexOf("?");
     str = str.substr(num + 1); //取得所有参数   stringvar.substr(start [, length ]
     let wechatCode;
@@ -64,7 +64,7 @@ export default {
     //     console.log(wechatCode, "我是页面渲染前")
   },
   methods: {
-   
+
     login() {
       this.tim.login({
         userID: 'user' + this.$store.state.userInfo.patientId,// userID 用户ID（必须字母开头）

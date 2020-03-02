@@ -177,6 +177,7 @@ export default {
 </script>
 
  <style >
+*{font:'宋体'}
 :root {
   /* 主题色 */
   --primary: #48b6ff;

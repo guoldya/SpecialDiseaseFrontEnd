@@ -20,7 +20,7 @@ export default {
     sessionStorage.setItem('wechatCode', wechatCode);
 
 
-    let url = appLoginlogin + '?wechatCode=' + 'code' + '&roleMark=' + '1';
+    let url = appLoginlogin + '?wechatCode=' + wechatCode+ '&roleMark=' + '1';
     if (this.$route.query.loginAgin) {
       url = appLoginlogin + '?accountId=' + this.$route.query.accountId;
     }

@@ -6,7 +6,6 @@
       <div class="online-content-list-text">
         <em></em>
         <div>
-
           <template v-for="item in reversedMessage">
             <span v-if='item.name=="text"'>
               {{item.text}}
@@ -38,15 +37,7 @@
         </div>
       </div>
     </div>
-    <!-- <div class="user-describe">
-      <div class="describe">
-        <p>初步诊断：高血压</p>
-      </div>
-      <router-link tag="p" to="/allRecord" class="item">
-        <span>查看详情</span>
-        <i class="iconfont icon-iconfontjiantou5"></i>
-      </router-link>
-    </div> -->
+     
 
     <!-- 图片显示器 -->
     <md-image-viewer v-model="isViewerShow" :list="currentImg" :has-dots="false" :initial-index="0"></md-image-viewer>

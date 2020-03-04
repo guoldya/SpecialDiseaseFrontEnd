@@ -44,7 +44,7 @@
           <p class="info">3、为保疫情期间一线减轻，生效不退换。</p>
         </div>
 
-        <md-agree :disabled="false" size="sm">
+        <md-agree v-model="agreeConf.checked" :disabled="agreeConf.disabled" :size="agreeConf.size" @change="onChange(agreeConf.name, agreeConf.checked, $event)">
           同意
           <a>《重庆市门特在线问诊用户协议》</a>
         </md-agree>
@@ -70,23 +70,12 @@ export default {
       isloading: true, // 是否显示loading
       questionDes: '',
       // 咨询弹窗
-      basicDialog: {
-        open: false,
+      agreeConf: {
         checked: true,
-        title: "",
-        content: '',
-        price: '',
-        type: null, // 咨询弹窗类型 type 1 图文 2 电话 3视频
-        btns: [
-          {
-            text: "取消申请",
-            handler: this.onBasicCancel
-          },
-          {
-            text: "申请咨询",
-            handler: this.onConfirm
-          }
-        ]
+        name: 'agree0',
+        size: 'md',
+        disabled: false,
+        introduction: '选中状态',
       },
     };
   },
@@ -126,18 +115,24 @@ export default {
   },
 
   methods: {
-
+    onChange(name, checked) {
+      console.log(`agree name = ${name} is ${checked ? 'checked' : 'unchecked'}`)
+    },
     // 取消按钮
     onCancel() {
       this.basicDialog.open = false;
     },
     // 点击申请咨询按钮
     onConfirm() {
+
       if (this.questionDes.replace(/\s*/g, '').length == 0) {
         this.$toast.info("请输入问题")
         return
       }
-
+      if (!this.agreeConf.checked) {
+        this.$toast.info("请勾选协议")
+        return
+      }
       let msg = {
         type: 'text',
         text: this.questionDes,

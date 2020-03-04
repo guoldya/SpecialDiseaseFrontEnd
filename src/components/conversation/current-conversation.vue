@@ -7,9 +7,9 @@
           <md-button type="link" @click="$store.dispatch('getMessageList', currentConversation.conversationID)">查看更多</md-button>
         </div>
         <div class="no-more" v-else>没有更多了</div> -->
-        <message-item v-for="message in imSdk.messageList" :content='content' :key="message.ID" :message="message" />
+        <message-item v-for="message in imSdk.messageList" :key="message.ID" :message="message" />
       </div>
-      <!-- <div v-show="isShowScrollButtomTips" class="newMessageTips" @click="scrollMessageListToButtom">回到最新位置</div> -->
+      <div v-show="isShowScrollButtomTips" class="newMessageTips" @click="scrollMessageListToButtom">回到最新位置</div>
     </div>
     <div class="footer">
       <message-send-box />
@@ -40,7 +40,14 @@ export default {
     }
   },
   mounted() {
-
+    console.log(this.imSdk.messageList,"我的聊天列表")
+    // if(this.imSdk.messageList){
+    //    this.onScroll()
+    // }
+    this.scrollMessageListToButtom()
+    setTimeout(() => {
+      this.onScroll()
+    }, 500)
     this.onScroll()
 
   },
@@ -110,7 +117,23 @@ export default {
       });
     },
     // 如果滚到底部就保持在底部，否则提示是否要滚到底部
+    // 直接滚到底部
+    scrollMessageListToButtom() {
 
+      this.$nextTick(function () {
+        let messageListNode = this.$refs['message-list']
+        if (!messageListNode) {
+          return
+        }
+        messageListNode.scrollTop = messageListNode.scrollHeight
+        console.log(messageListNode.scrollHeight, "直接的滚动")
+        this.preScrollHeight = messageListNode.scrollHeight
+        this.isShowScrollButtomTips = false
+      });
+
+
+
+    },
     showMore() {
       this.showConversationProfile = !this.showConversationProfile
     },

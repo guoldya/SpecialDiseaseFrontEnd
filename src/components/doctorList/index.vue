@@ -1,6 +1,7 @@
 <!--医生信息列表组件 -->
 <template>
   <div class="doctor-list">
+    <router-link :to="{ path: '/consultDetail', query: { id: datas.id }}" class="consult">
     <div class="header"><img src="@/assets/images/3.jpg" /></div>
     <div class="comment-right">
       <p class="introduce">
@@ -18,12 +19,25 @@
         <span style=" margin-right: 20px;">咨询数：<span class="num">{{datas.diagnosisNum||'12'}}</span></span>&nbsp;
         <span>平均回复时长：<span class="num">{{datas.replyTime||'0'}}</span> 分</span>&nbsp;
       </p>
-      <p class="price">￥{{datas.minPrice|keepTwoNum}}
-        <router-link :to="{ path: '/consultDetail', query: { id: datas.id }}" class="consult">立即咨询</router-link>
-        <router-link v-show="false" to="/pictureConsult">免费咨询</router-link>
-      </p>
+      <div class="price">
+        <div class="dotType">
+              <div class="dottextff">
+                <img src="@/assets/conversationImg/freeText.png" />免费
+              </div>
+              <div class="dotdhff">
+                <img src="@/assets/conversationImg/offlineVoice.png" />暂无
+              </div>
+              <div class="dotvideoff">
+                <img src="@/assets/conversationImg/offlineVideo.png" />暂无
+              </div>
+            </div>
+        <!-- ￥{{datas.minPrice|keepTwoNum}} -->
+        <!-- <router-link :to="{ path: '/consultDetail', query: { id: datas.id }}" class="consult">立即咨询</router-link>
+        <router-link v-show="false" to="/pictureConsult">免费咨询</router-link> -->
+      </div>
       <!-- <em>搜查</em> -->
     </div>
+    </router-link>
   </div>
 </template>
 <script>
@@ -186,6 +200,37 @@ export default {
 
 .doctor-list:last-child {
   border: none;
+}
+.dotType {
+  border-top: 1px solid #fcfcfc;
+  // height: 80px;
+  display: flex;
+  align-items: center;
+  // margin-top: 12px;
+  justify-content: space-between;
+}
+.dotType div {
+  width: 33.3333%;
+  font-size: 12px;
+}
+.dottextff {
+  color: var(--primary--secondary);
+  text-align: left;
+}
+.dotdhff {
+  color: var(--primary--content);
+  text-align: center;
+}
+.dotvideoff {
+  color: var(--primary--content);
+  text-align: right;
+}
+.dotType img {
+  width: 32px;
+  height: 32px;
+  position: relative;
+  top: 3px;
+  margin-right: 5px;
 }
 </style>
 

@@ -31,7 +31,7 @@
     </div>
     <p class="doctorlisttitle">
       <span>医生列表</span>
-      <span @click="$router.push({name:'doctorlist'})">更多<img src="@/assets/images/more.png" alt=""></span>
+      <!-- <span @click="$router.push({name:'doctorlist'})">更多<img src="@/assets/images/more.png" alt=""></span> -->
     </p>
     <div class="bg3">
       <img src="@/assets/images/bg3.png" alt="">

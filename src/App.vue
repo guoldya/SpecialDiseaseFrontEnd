@@ -204,6 +204,7 @@ export default {
 :root {
   /* 主题色 */
   --primary: #48b6ff;
+  --primary--secondary: #30C57E;
   /* 内容字体颜色 5A5A5A*/
   --primary--content: #8b8b8b;
   --primary--right: #8b8b8b;
@@ -270,13 +271,13 @@ body {
   color: var(--primary--content);
   margin-left: 39%;
 }
-.conversionCard {
-    margin-top: 35px;
+.conversationCard {
+    margin: 26px 24px 24px;
     box-shadow: 0 2px 8px 0 rgba(0,0,0,0.16);
     background-color: white;
     border-radius: 8px;
     list-style-type: none;
-    padding: 14px 17px 2px 2px;
+    padding: 20px 24px 4px;
     
 }
 .disFlex {

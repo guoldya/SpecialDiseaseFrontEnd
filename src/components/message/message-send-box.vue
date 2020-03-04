@@ -1,105 +1,46 @@
 <template>
-  <!-- <div id="message-send-box-wrapper" :style="focus ? {'backgroundColor': 'white'} : {}">
-    <div class="send-header-bar">
-      <el-popover placement="top" width="400" trigger="click">
-        <div class="emojis">
-          <div v-for="item in emojiName" class="emoji" :key="item" @click="chooseEmoji(item)">
-            <img :src="emojiUrl + emojiMap[item]" style="width:30px;height:30px" />
-          </div>
-        </div>
-        <i class="iconfont icon-smile" slot="reference" title="发表情"></i>
-      </el-popover>
-      <i class="iconfont icon-tupian" title="发图片" @click="handleSendImageClick"></i>
-      <i class="iconfont icon-wenjian" title="发文件" @click="handleSendFileClick"></i> -->
-  <!--<i class="iconfont icon-diaocha" title="小调查" @click="surveyDialogVisible = true"></i>-->
-  <!-- <i class="el-icon-video-camera" v-if="currentConversationType === 'C2C'&& toAccount !== userID" title="视频通话" @click="videoCall"></i>
-    </div> -->
-  <!-- <div class="bottom">
-      <textarea ref="text-input" rows="4" resize="false" v-model="messageContent" class="text-input" @focus="focus = true" @blur="focus = false" @keydown.enter.exact.prevent="handleEnter" @keyup.ctrl.enter.prevent.exact="handleLine"> -->
-  <!--@keydown.up.stop="handleUp"-->
-  <!--@keydown.down.stop="handleDown"-->
-  <!-- </textarea>
-      <div class="btn-send" @click="sendTextMessage">
-        <div class="tim-icon-send"></div>
-      </div>
-    </div>
-    <input type="file" id="imagePicker" ref="imagePicker" accept=".jpg, .jpeg, .png, .gif" @change="sendImage" style="display:none" />
-    <input type="file" id="filePicker" ref="filePicker" @change="sendFile" style="display:none" />
-  </div> -->
-
   <!-- 聊天工具栏 -->
   <div class="inquiry-online-tool">
     <div class="inquiry-online-tool-voice">
-
-      <!-- <div contenteditable="true" class="input" ref="inputModel"></div> -->
       <div contenteditable="true" class="input" @input="changeVal" ref="inputModel"></div>
-      <!-- <textarea ref="text-input" rows="4" resize="false" v-model="messageContent" class="text-input" @focus="focus = true" @blur="focus = false" @keydown.enter.exact.prevent="handleEnter" @keyup.ctrl.enter.prevent.exact="handleLine"> </textarea> -->
       <span class="send" @click="sendTextMessage" :class="messageContent ? 'active' : ''">发送</span>
     </div>
     <div class="inquiry-online-tool-detail">
-      <span>
-        <!-- <input class="upload-img" ref="uploadImg" type="file" @change="upload" accept="image/*"> -->
-        <input class="upload-img" type="file" id="imagePicker" ref="imagePicker" accept=".jpg, .jpeg, .png, .gif" @change="sendImage" style="display:none" />
+      <span @click="tool('img')">
+        <input class="upload-img" ref="uploadImg" type="file" @change="upload" accept="image/*">
         <i class="iconfont icon-tupian"></i>
       </span>
       <span @click="tool('emoji')" :class="toolType == 'emoji' ? 'active' :''">
         <i class="iconfont icon-biaoqing1"></i>
       </span>
-
-      <!-- <el-popover placement="top" width="400" trigger="click">
-        <div class="emojis">
-          <div v-for="item in emojiName" class="emoji" :key="item" @click="chooseEmoji(item)">
-            <img :src="emojiUrl + emojiMap[item]" style="width:30px;height:30px" />
-          </div>
-        </div>
-        <i class="iconfont icon-smile" slot="reference" title="发表情"></i>
-      </el-popover> -->
       <span>
         <i class="iconfont icon-shipin"></i>
       </span>
-
     </div>
     <div class="emoji-list" v-if="toolType == 'emoji'">
       <ul>
-        <li v-for="(item,index) in emojiName" :key="index" @click="emojiAdd(item)">
-          <img :src="emojiUrl + emojiMap[item]" style="width:30px;height:30px" />
+        <li v-for="(item,index) in emojiName" :key="index" @click="emojiAdd(index)">
+          <img :src="require(`@/static/faces/${item}`)"   />
+          <!-- <img :src="emojiUrl + emojiMap[item]" style="width:30px;height:30px" /> -->
         </li>
       </ul>
     </div>
   </div>
 </template>
-
 <script>
 import { mapGetters, mapState } from 'vuex'
-// import {
-//   Form,
-//   FormItem,
-//   Input,
-//   Dialog,
-//   Popover,
-//   RadioGroup,
-//   Radio,
-//   Tooltip,
-//   Rate
-// } from 'element-ui'
-import { emojiMap, emojiName, emojiUrl } from '../../utils/emojiMap'
+import emoji from '@/utils/emoji.js'
+
 
 export default {
   name: 'message-send-box',
   props: ['scrollMessageListToButtom'],
   components: {
-    // ElInput: Input,
-    // ElForm: Form,
-    // ElFormItem: FormItem,
-    // ElDialog: Dialog,
-    // ElPopover: Popover,
-    // ElRadioGroup: RadioGroup,
-    // ElRadio: Radio,
-    // ElTooltip: Tooltip,
-    // ElRate: Rate
+
   },
   data() {
     return {
+      imSdk: this.$imsdk,
       toolType: '',
       colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
       messageContent: '',
@@ -114,9 +55,7 @@ export default {
       rate: 5, // 评分
       suggestion: '', // 建议
       file: '',
-      emojiMap: emojiMap,
-      emojiName: emojiName,
-      emojiUrl: emojiUrl,
+      emojiName: emoji.obj,
       showAtGroupMember: false,
       atUserID: '',
       focus: false,
@@ -146,19 +85,44 @@ export default {
     })
   },
   mounted() {
-    // this.$refs['text-input'].addEventListener('paste', this.handlePaste)
-    this.$bus.$on('reEditMessage', this.reEditMessage)
-    console.log(this.currentConversationType, "放呱呱呱呱呱呱")
+
+    console.log(this.emojiMap)
   },
   beforeDestroy() {
     // this.$refs['text-input'].removeEventListener('paste', this.handlePaste)
   },
   methods: {
-    // 添加消息
-    emojiAdd(val) {
-      this.$refs.inputModel.innerHTML = this.inputValue + val;
-      this.inputValue = this.inputValue + val;
+
+    async upload() {
+      try {
+        var formData = new FormData();
+        var file = this.$refs.uploadImg.files[0];
+        formData.append("file", file);
+        // console.log(this.$refs.uploadImg.files,"图片文件")
+
+      } catch (error) {
+        console.log(error);
+      }
+
+
+      try {
+        var formData = new FormData();
+        var file = this.$refs.uploadImg.files[0];
+        formData.append("file", file);
+        let res = await this.$axios.post('upload/file', formData);
+        if (res.data.code != 200) {
+          throw Error(res.data.msg);
+        }
+        let msg = {
+          type: 'image',
+          text: res.data.rows[0].fileName
+        }
+        return this.imSdk.send(msg)
+      } catch (error) {
+        console.log(error.message);
+      }
     },
+
     tool(val) {
       // 重复点击相同的则视为取消选择
       if (this.toolType == val) {
@@ -246,7 +210,6 @@ export default {
       this.messageContent = this.$refs.inputModel.innerHTML;
     },
     sendTextMessage() {
-
       if (
         this.messageContent === '' ||
         this.messageContent.trim().length === 0
@@ -258,22 +221,42 @@ export default {
         })
         return
       }
-      const message = this.tim.createTextMessage({
-        to: this.toAccount,
-        conversationType: this.currentConversationType,
-        payload: { text: this.messageContent }
-      })
-      this.$store.commit('pushCurrentMessageList', message)
-      console.log(this.currentMessageList, "点击发送按钮")
-      this.$bus.$emit('scroll-bottom')
-      this.tim.sendMessage(message).catch(error => {
-        this.$store.commit('showMessage', {
-          type: 'error',
-          message: error.message
-        })
-      })
+      let msg = {
+        type: 'text',
+        text: this.messageContent
+      }
+      this.imSdk.send(msg)
       this.messageContent = ''
       this.$refs.inputModel.innerHTML = ''
+
+    },
+    // 添加消息
+    emojiAdd(val) {
+      this.$refs.inputModel.innerHTML = this.messageContent + val;
+       this.messageContent = this.messageContent + val;
+    },
+    
+    sendImage() {
+      // const message = this.tim.createImageMessage({
+      //   to: this.toAccount,
+      //   conversationType: this.currentConversationType,
+      //   payload: {
+      //     file: document.getElementById('imagePicker') // 或者用event.target
+      //   },
+      //   onProgress: percent => {
+      //     this.$set(message, 'progress', percent) // 手动给message 实例加个响应式属性: progress
+      //   }
+      // })
+      // this.$store.commit('pushCurrentMessageList', message)
+      // this.tim.sendMessage(message).then(() => {
+      //   this.$refs.imagePicker.value = null
+      // }).catch(imError => {
+      //   this.$store.commit('showMessage', {
+      //     message: imError.message,
+      //     type: 'error'
+      //   })
+      // })
+
     },
     // sendCustomMessage() {
     //   if (
@@ -355,27 +338,7 @@ export default {
     videoCall() {
       this.$bus.$emit('video-call')
     },
-    sendImage() {
-      const message = this.tim.createImageMessage({
-        to: this.toAccount,
-        conversationType: this.currentConversationType,
-        payload: {
-          file: document.getElementById('imagePicker') // 或者用event.target
-        },
-        onProgress: percent => {
-          this.$set(message, 'progress', percent) // 手动给message 实例加个响应式属性: progress
-        }
-      })
-      this.$store.commit('pushCurrentMessageList', message)
-      this.tim.sendMessage(message).then(() => {
-        this.$refs.imagePicker.value = null
-      }).catch(imError => {
-        this.$store.commit('showMessage', {
-          message: imError.message,
-          type: 'error'
-        })
-      })
-    },
+
     sendFile() {
       const message = this.tim.createFileMessage({
         to: this.toAccount,
@@ -584,7 +547,7 @@ textarea {
 .emoji-list {
   display: flex;
   flex-wrap: wrap;
-  padding: 20px;
+  padding: 12px;
   overflow-y: scroll;
   height: 300px;
   ul {
@@ -593,6 +556,10 @@ textarea {
   }
   li {
     margin: 10px;
+    img{
+      width: 60px;
+      height: 60px;
+    }
   }
 }
 </style>

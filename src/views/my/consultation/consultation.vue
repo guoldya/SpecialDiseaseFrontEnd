@@ -19,7 +19,6 @@
             <span>{{item.dept}}</span>&nbsp;
             <span class="name"> {{item.doctorName}} </span>&nbsp;
             <span>医师 </span>&nbsp;
-
           </p>
           <p class="colo13">
             医生正在了解你的病情

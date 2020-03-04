@@ -130,7 +130,6 @@ export default {
     }),
   },
   created() {
-    console.log(this._selectAdress, "ssssssssssss")
     if (!this._selectAdress.receiver) {
       this.$axios.put(appshippingAddressaddressList, {}).then((res) => {
         this.loadingtrue = false;

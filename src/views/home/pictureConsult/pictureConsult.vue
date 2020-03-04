@@ -37,54 +37,45 @@
         <span>(症状表现、检查/用药和希望获得的帮助)</span>
       </p>
       <textarea maxlength="500" v-model="questionDes"></textarea>
+      <div class="md-dialog">
+        <div class="ways">
+          <p class="info">1、咨询服务可提供相关建议。</p>
+          <p class="info">2、仅为复诊患者提供诊疗服务。</p>
+          <p class="info">3、为保疫情期间一线减轻，生效不退换。</p>
+        </div>
+
+        <md-agree v-model="agreeConf.checked" :disabled="agreeConf.disabled" :size="agreeConf.size" @change="onChange(agreeConf.name, agreeConf.checked, $event)">
+          同意
+          <a>《重庆市门特在线问诊用户协议》</a>
+        </md-agree>
+      </div>
     </div>
+
     <div style="padding:0.24rem">
-      <md-button type="primary" @click="handleConfirm( )" round style="margin-top:16px">提交问题</md-button>
+      <md-button type="primary" @click="onConfirm( )" round style="margin-top:16px">提交问题</md-button>
     </div>
     <!-- 咨询弹窗 -->
-    <md-dialog :title="basicDialog.title" :closable="true" v-model="basicDialog.open" :btns="basicDialog.btns">
 
-      <p>咨询师-{{ doctorInfo.drName}}</p>
-      <div class="ways">
-        <p class="info">1、咨询服务可提供相关建议。</p>
-        <p class="info">2、仅为复诊患者提供诊疗服务。</p>
-        <p class="info">3、为保疫情期间一线减轻，生效不退换。</p>
-      </div>
-
-      <md-agree v-model="basicDialog.checked" :disabled="false" size="sm">
-        同意
-        <a>《重庆市门特在线问诊用户协议》</a>
-      </md-agree>
-    </md-dialog>
   </div>
 </template>
  <script>
 const onlineDoctorDetailUrl = "sysDoctor/selectDetail";
+
 import { mapGetters, mapState } from 'vuex'
 export default {
   data() {
     return {
+      imSdk: this.$imsdk,
       doctorInfo: '',
       isloading: true, // 是否显示loading
       questionDes: '',
       // 咨询弹窗
-      basicDialog: {
-        open: false,
+      agreeConf: {
         checked: true,
-        title: "",
-        content: '',
-        price: '',
-        type: null, // 咨询弹窗类型 type 1 图文 2 电话 3视频
-        btns: [
-          {
-            text: "取消申请",
-            handler: this.onBasicCancel
-          },
-          {
-            text: "申请咨询",
-            handler: this.onConfirm
-          }
-        ]
+        name: 'agree0',
+        size: 'md',
+        disabled: false,
+        introduction: '选中状态',
       },
     };
   },
@@ -100,52 +91,97 @@ export default {
   },
   mounted() {
     this.init();
+    // 注册用户
+    this.imSdk.registerUser('p' + 2, this.$store.state.userInfo.nickname, () => {
+      this.imSdk.createUserConnect('p' + 2, '123456', {
+        userConnectCallback: () => {
+          // 拿到消息列表之后的回调
+          this.imSdk.openSession(
+            this.$store.state.userInfo.nickname,
+            'd' + this.$route.query.id,
+            this.$route.query.name,
+            {
+              getMessageCallback: () => {
+                console.log(this.imSdk.maxCreateAt, this.imSdk.messageList, { ...this.imSdk }, this.imSdk, "拿到消息列表之后的回调")
+                this.$store.commit('selectTestFun', this.imSdk.messageList);
+                console.log(this.$store.state.test, "缓存的消息")
+              }
+            }
+          )
+
+        }
+      })
+    })
   },
 
   methods: {
-
+    onChange(name, checked) {
+      console.log(`agree name = ${name} is ${checked ? 'checked' : 'unchecked'}`)
+    },
     // 取消按钮
     onCancel() {
       this.basicDialog.open = false;
     },
     // 点击申请咨询按钮
     onConfirm() {
-      if (!this.basicDialog.checked) {
-        this.$toast.info("请同意用户协议");
+
+      if (this.questionDes.replace(/\s*/g, '').length == 0) {
+        this.$toast.info("请输入问题")
         return
       }
-      this.basicDialog.open = false;
-      console.log(this.toAccount, " toAccount")
-      if (this.userID !== '@TIM#SYSTEM') {
-        console.log(" 执行这里")
-        // 查找医生是否在线
-        // this.$store.dispatch('checkoutConversation', `C2C${this.userID}`)
-
-        let test = `C2Cuser` + this.$route.query.id;
-        console.log(test, "sssssssss")
-        this.$store.dispatch('checkoutConversation', test).then(() => {
-          console.log(this.currentMessageList, "提交问题")
-          setTimeout(() => {
-            this.$router.push({
-              name: 'chatRoom',
-              query: {
-                questionDes: this.questionDes
-              }
-            })
-          }, 1000);
-
-        }).catch(() => {
-          this.$store.commit('showMessage', {
-            message: '没有找到该用户',
-            type: 'warning'
-          })
-        })
-      } else {
-        this.$store.commit('showMessage', {
-          message: '没有找到该用户',
-          type: 'warning'
-        })
+      if (!this.agreeConf.checked) {
+        this.$toast.info("请勾选协议")
+        return
       }
+      let msg = {
+        type: 'text',
+        text: this.questionDes,
+      }
+
+      this.imSdk.send(msg)
+
+      // this.$store.commit('selectTestFun',  );
+
+      setTimeout(() => {
+        this.$router.push({
+          name: 'chatRoom',
+          query: {
+            id: this.$route.query.id,
+            name: this.$route.query.name
+          }
+        })
+      }, 1000);
+
+      // if (this.userID !== '@TIM#SYSTEM') {
+      //   console.log(" 执行这里")
+      //   // 查找医生是否在线
+      //   // this.$store.dispatch('checkoutConversation', `C2C${this.userID}`)
+
+      //   let test = `C2Cuser` + this.$route.query.id;
+      //   console.log(test, "sssssssss")
+      //   this.$store.dispatch('checkoutConversation', test).then(() => {
+      //     console.log(this.currentMessageList, "提交问题")
+      //     setTimeout(() => {
+      //       this.$router.push({
+      //         name: 'chatRoom',
+      //         query: {
+      //           questionDes: this.questionDes
+      //         }
+      //       })
+      //     }, 1000);
+
+      //   }).catch(() => {
+      //     this.$store.commit('showMessage', {
+      //       message: '没有找到该用户',
+      //       type: 'warning'
+      //     })
+      //   })
+      // } else {
+      //   this.$store.commit('showMessage', {
+      //     message: '没有找到该用户',
+      //     type: 'warning'
+      //   })
+      // }
 
     },
     // 初始化
@@ -270,29 +306,25 @@ export default {
   }
 }
 .md-dialog {
-  /deep/ .md-dialog-body {
-    padding: 0.52rem 30px 0.2rem;
+  p {
+    text-align: center;
+    color: #000;
+    line-height: 50px;
+  }
+  .money {
+    color: #ff9b00;
+  }
+  .ways {
     p {
-      text-align: center;
-      color: #000;
-      line-height: 50px;
+      color: #999;
+      text-align: left;
+      font-size: 24px;
     }
-    .money {
-      color: #ff9b00;
-    }
-    .ways {
-      p {
-        color: #999;
-        text-align: left;
-        text-indent: 30px;
-        font-size: 24px;
-      }
-    }
-    .md-agree {
-      /deep/ .md-agree-content {
-        color: #999;
-        font-size: 24px;
-      }
+  }
+  .md-agree {
+    /deep/ .md-agree-content {
+      color: #999;
+      font-size: 24px;
     }
   }
 }

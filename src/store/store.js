@@ -21,7 +21,8 @@ export default new Vuex.Store({
 
         current: Date.now(), // 当前时间
         intervalID: 0,
-        message: undefined
+        message: undefined,
+        test:''
     },
     getters: {
         hidden(state) {
@@ -36,6 +37,9 @@ export default new Vuex.Store({
     mutations: {
         selectAdressFun: (state, n) => {
             state.selectAdress = n;
+        },
+        selectTestFun: (state, n) => {
+            state.test = n;
         },
         SET_USERINFO: (state, n) => {
             state.userInfo = n;

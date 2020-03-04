@@ -69,7 +69,6 @@ export default {
     }),
   },
   created() {
-    console.log(this._cardlist, "sssssssssssssss", this._cardlist.length)
   },
   async mounted() {
     // await this.$store.dispatch('getCards', { update: true });

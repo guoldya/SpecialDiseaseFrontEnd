@@ -273,7 +273,6 @@ export default {
         // return { id: x.id, feeType: x.name, }
       })
       this.parm.list = aaa;
-      console.log(this.parm, "ssssssssssssssssss")
       this.$toast.loading("提交中...")
       this.isTijiao = false;
       this.$axios.put(saveResult, this.parm).then(res => {

@@ -5,37 +5,54 @@
       <div class="right"><a @click="$store.dispatch('logout')" slot="right" class="title-right">logout</a> </div>
     </div>
     <!-- <Header post-title="我的咨询"> -->
-      <!-- <a @click="$store.dispatch('logout')" slot="right" class="title-right">退出</a> -->
+    <!-- <a @click="$store.dispatch('logout')" slot="right" class="title-right">退出</a> -->
     <!-- </Header> -->
-    <conversation-list />
+    <conversation-list :imSdk='imSdk' />
     <!-- 底部 -->
     <Footer></Footer>
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 import ConversationList from '@/components/conversation/conversation-list'
+import { ImSdk } from '@/im_sdk/leo_im_sdk'
 // 患者3 医生0
 export default {
   name: 'Conversation',
   components: {
     ConversationList
   },
+  data() {
+    return {
+      imSdk: new ImSdk()
+    }
+
+  },
+
   mounted() {
-    this.login();
-    this.initListener()
+    // this.login();
+    // this.initListener()
+    // 注册用户
+    // this.imSdk.registerUser('p' + this.$store.state.userInfo.patientId, this.$store.state.userInfo.nickname, () => {
+    //   //  登录
+    //   console.log("登录")
+    //   this.imSdk.createUserConnect('p' + this.$store.state.userInfo.patientId, '123456')
+    // })
+    this.imSdk.createUserConnect('111', '123456')
+    console.log(this.imSdk,"我是一个小青龙  我在聊天列表父页面")
   },
   methods: {
     login() {
       this.tim.login({
-        userID: 'user'+this.$store.state.userInfo.patientId,// userID 用户ID（必须字母开头）
-        userSig: window.genTestUserSig('user'+this.$store.state.userInfo.patientId).userSig
+        userID: 'user' + this.$store.state.userInfo.patientId,// userID 用户ID（必须字母开头）
+        userSig: window.genTestUserSig('user' + this.$store.state.userInfo.patientId).userSig
       }).then(() => {
         this.$store.commit('toggleIsLogin', true)//已登录
         this.$store.commit('startComputeCurrent')//启动定时器设定当前时间
         this.$store.commit({//设定当前登录用户信息
           type: 'GET_USER_INFO',
-          userID: 'user'+this.$store.state.userInfo.patientId,
-          userSig: window.genTestUserSig('user'+this.$store.state.userInfo.patientId).userSig,
+          userID: 'user' + this.$store.state.userInfo.patientId,
+          userSig: window.genTestUserSig('user' + this.$store.state.userInfo.patientId).userSig,
           sdkAppID: window.genTestUserSig('').SDKAppID
         })
         // this.$store.commit('showMessage', {

@@ -1,32 +1,35 @@
 <template>
   <div class="list-container">
     <div class="scroll-container">
-      <conversation-item :conversation="item" :index="index" v-for="(item,index) in conversationList" :key="item.conversationID" />
+      <conversation-item :conversation="item"  :imSdk="imSdk"  :index="index" v-for="(item,index) in imSdk.userChannelList" :key="item.conversationID" />
     </div>
   </div>
 </template>
 <script>
 import ConversationItem from './conversation-item'
 import { mapState } from 'vuex'
+import { ImSdk } from '@/im_sdk/leo_im_sdk'
 export default {
   name: 'ConversationList',
   components: { ConversationItem },
+  props: [ 'imSdk'],
   data() {
     return {
-
+      
     }
   },
   computed: {
-    ...mapState({
-      conversationList: state => state.conversation.conversationList,
-      currentConversation: state => state.conversation.currentConversation
-    })
+    // ...mapState({
+    //   conversationList: state => state.conversation.conversationList,
+    //   currentConversation: state => state.conversation.currentConversation
+    // })
   },
   mounted() {
-    window.addEventListener('keydown', this.handleKeydown)
+   
+    // window.addEventListener('keydown', this.handleKeydown)
   },
   destroyed() {
-    window.removeEventListener('keydown', this.handleKeydown)
+    // window.removeEventListener('keydown', this.handleKeydown)
   },
   methods: {
     handleRefresh() {
@@ -54,13 +57,13 @@ export default {
     handleConfirm() {
       if (this.userID !== '@TIM#SYSTEM') {
         this.$store.dispatch('checkoutConversation', `C2C${this.userID}`).then(() => {
-            this.showDialog = false
-          }).catch(() => {
-            this.$store.commit('showMessage', {
-              message: '没有找到该用户',
-              type: 'warning'
-            })
+          this.showDialog = false
+        }).catch(() => {
+          this.$store.commit('showMessage', {
+            message: '没有找到该用户',
+            type: 'warning'
           })
+        })
       } else {
         this.$store.commit('showMessage', {
           message: '没有找到该用户',
@@ -89,24 +92,24 @@ export default {
     checkoutPrev(currentIndex) {
       this.isCheckouting = true
       this.$store.dispatch(
-          'checkoutConversation',
-          this.conversationList[currentIndex - 1].conversationID
-        ).then(() => {
-          this.isCheckouting = false
-        }).catch(() => {
-          this.isCheckouting = false
-        })
+        'checkoutConversation',
+        this.conversationList[currentIndex - 1].conversationID
+      ).then(() => {
+        this.isCheckouting = false
+      }).catch(() => {
+        this.isCheckouting = false
+      })
     },
     checkoutNext(currentIndex) {
       this.isCheckouting = true
       this.$store.dispatch(
-          'checkoutConversation',
-          this.conversationList[currentIndex + 1].conversationID
-        ).then(() => {
-          this.isCheckouting = false
-        }).catch(() => {
-          this.isCheckouting = false
-        })
+        'checkoutConversation',
+        this.conversationList[currentIndex + 1].conversationID
+      ).then(() => {
+        this.isCheckouting = false
+      }).catch(() => {
+        this.isCheckouting = false
+      })
     },
   }
 }

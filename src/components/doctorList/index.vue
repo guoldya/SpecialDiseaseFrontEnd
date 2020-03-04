@@ -19,8 +19,9 @@
         <span>平均回复时长：<span class="num">{{datas.replyTime||'0'}}</span> 分</span>&nbsp;
       </p>
       <p class="price">￥{{datas.minPrice|keepTwoNum}}
-        <router-link :to="{ path: '/consultDetail', query: { id: datas.id }}" class="consult">立即咨询</router-link>
-        <router-link v-show="false" to="/pictureConsult">免费咨询</router-link>
+        <router-link v-if="datas.status==2" :to="{ path: '/consultDetail', query: { id: datas.id }}" class="gray">咨询结束</router-link>
+        <router-link v-else :to="{ path: '/chatRoom', query: { id: datas.id ,name:datas.drName}}" >咨询中</router-link>
+        <!-- <router-link v-show="false" to="/pictureConsult">免费咨询</router-link> -->
       </p>
       <!-- <em>搜查</em> -->
     </div>
@@ -118,7 +119,6 @@ export default {
   font-size: 17px;
   font-weight: 400;
   color: #626262;
-   
 }
 .doctor-list .name {
   font-size: 32px;
@@ -180,6 +180,11 @@ export default {
   .consult {
     color: #fff;
     background: var(--primary);
+    font-size: 23px;
+  }
+  .gray {
+    color:var(--primary--content);
+    border: 1px solid var(--primary--content);
     font-size: 23px;
   }
 }

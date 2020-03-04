@@ -17,8 +17,8 @@ export default {
     CurrentConversation
   },
   mounted() {
-    console.log(this.imSdk,"this.imSdk")
-    this.imSdk.createUserConnect('p' + 2, '123456', {
+    
+    this.imSdk.createUserConnect('p' + JSON.parse(this.$store.state.accountInfo).id, '123456', {
       userConnectCallback: () => {
         // 拿到消息列表之后的回调
         this.imSdk.openSession(
@@ -28,7 +28,7 @@ export default {
           {
             getMessageCallback: () => {
               // 拿到消息列表之后的回调
-               
+
             }
           }
         )
@@ -36,7 +36,7 @@ export default {
       }
     })
 
-     
+
   },
   computed: {
     ...mapState({

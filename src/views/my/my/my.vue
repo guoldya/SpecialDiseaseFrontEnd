@@ -93,7 +93,7 @@
 
     </section>
     <!-- 底部 -->
-    <Footer :foot-number="$store.state.homeList"></Footer>
+    <Footer  ></Footer>
   </div>
 </template>
 <script>

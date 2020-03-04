@@ -19,8 +19,8 @@
     </div>
     <div class="emoji-list" v-if="toolType == 'emoji'">
       <ul>
-        <li v-for="(item,index) in emojiName" :key="index" @click="emojiAdd(index)">
-          <img :src="require(`@/static/faces/${item}`)"   />
+        <li v-for="(item,index) in emojiName" :key="index" @click="getPos(item)">
+          <img :src="require(`@/static/faces/${item}`)" />
           <!-- <img :src="emojiUrl + emojiMap[item]" style="width:30px;height:30px" /> -->
         </li>
       </ul>
@@ -85,7 +85,7 @@ export default {
     })
   },
   mounted() {
-
+    this.$refs.inputModel.focus()
     console.log(this.emojiMap)
   },
   beforeDestroy() {
@@ -124,6 +124,7 @@ export default {
     },
 
     tool(val) {
+       this.$refs.inputModel.focus()
       // 重复点击相同的则视为取消选择
       if (this.toolType == val) {
         this.toolType = "";
@@ -167,45 +168,7 @@ export default {
         this.sendTextMessage()
       }
     },
-    handleLine() {
-      this.messageContent += '\n'
-    },
-    handlePaste(e) {
-      let clipboardData = e.clipboardData
-      let file
-      if (
-        clipboardData &&
-        clipboardData.files &&
-        clipboardData.files.length > 0
-      ) {
-        file = clipboardData.files[0]
-      }
 
-      if (typeof file === 'undefined') {
-        return
-      }
-      // 1. 创建消息实例，接口返回的实例可以上屏
-      let message = this.tim.createImageMessage({
-        to: this.toAccount,
-        conversationType: this.currentConversationType,
-        payload: {
-          file: file
-        },
-        onProgress: percent => {
-          this.$set(message, 'progress', percent) // 手动给message 实例加个响应式属性: progress
-        }
-      })
-      this.$store.commit('pushCurrentMessageList', message)
-
-      // 2. 发送消息
-      let promise = this.tim.sendMessage(message)
-      promise.catch(error => {
-        this.$store.commit('showMessage', {
-          type: 'error',
-          message: error.message
-        })
-      })
-    },
     changeVal(val) {
       this.messageContent = this.$refs.inputModel.innerHTML;
     },
@@ -233,9 +196,28 @@ export default {
     // 添加消息
     emojiAdd(val) {
       this.$refs.inputModel.innerHTML = this.messageContent + val;
-       this.messageContent = this.messageContent + val;
+      this.messageContent = this.messageContent + val;
     },
-    
+
+    getPos(v) {
+      let sel = window.getSelection()
+      if (sel.rangeCount > 0) {
+        let range = sel.getRangeAt(0);//找到焦点位置
+        var img = new Image();
+        img.src = require('@/static/faces/' + v);
+        img.style = 'width:24px;height:24px'
+        let frag = document.createDocumentFragment();//创建一个空白的文档片段，便于之后插入dom树
+        let lastNode = frag.appendChild(img);
+        range.insertNode(frag);//设置选择范围的内容为插入的内容
+        let contentRange = range.cloneRange();//克隆选区
+        contentRange.setStartAfter(lastNode);//设置光标位置为插入内容的末尾
+        contentRange.collapse(true);//移动光标位置到末尾
+        sel.removeAllRanges();//移出所有选区
+        sel.addRange(contentRange);//添加修改后的选区
+        this.isPopupShow = false;
+      }
+    },
+
     sendImage() {
       // const message = this.tim.createImageMessage({
       //   to: this.toAccount,
@@ -556,7 +538,7 @@ textarea {
   }
   li {
     margin: 10px;
-    img{
+    img {
       width: 60px;
       height: 60px;
     }

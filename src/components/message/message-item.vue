@@ -6,12 +6,13 @@
       <div class="online-content-list-text">
         <em></em>
         <div>
-          <template v-for="item in reversedMessage">
+          <span v-html="aa.text"></span>
+          <!-- <template v-for="item in reversedMessage">
             <span v-if='item.name=="text"'>
               {{item.text}}
             </span>
             <img v-if='item.name=="img"' :src="require(`@/static/faces/${item.text}`)" style="width:30px;height:30px" />
-          </template>
+          </template> -->
         </div>
       </div>
     </div>
@@ -37,7 +38,6 @@
         </div>
       </div>
     </div>
-     
 
     <!-- 图片显示器 -->
     <md-image-viewer v-model="isViewerShow" :list="currentImg" :has-dots="false" :initial-index="0"></md-image-viewer>

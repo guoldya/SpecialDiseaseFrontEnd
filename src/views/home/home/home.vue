@@ -21,16 +21,14 @@
         <p class="name">{{item.name}}
           <span class="code">{{item.code}}</span>
         </p>
-        <!-- <p>{{item.code}}</p> -->
         <p class="dise">{{item.diseaseName}}</p>
         <p class="dise">{{item.idCard}}</p>
-        <!-- <p @click="switchCard(index)">切换门特患者</p> -->
         <img class="qiehuan" @click="switchCard(index)" src="@/assets/images/qiehuan.png">
       </div>
     </div>
     <p class="doctorlisttitle">
       <span>医生列表</span>
-      <span @click="$router.push({name:'doctorlist'})">更多<img src="@/assets/images/more.png" alt=""></span>
+      <!-- <span @click="$router.push({name:'doctorlist'})">更多<img src="@/assets/images/more.png" alt=""></span> -->
     </p>
     <div class="bg3">
       <img src="@/assets/images/bg3.png" alt="">
@@ -85,8 +83,8 @@ export default {
       }
       this.chooseId = this._cardlist[0].id;
       let setInfo = JSON.stringify(this._cardlist[0])
-      sessionStorage.setItem('objInfo', setInfo)
-      this.$store.commit('accountInfoFun', objInfo)//已登录
+      sessionStorage.setItem('objInfo',JSON.parse(setInfo)  )
+      this.$store.commit('accountInfoFun', this._cardlist[0])//已登录
     }
     this.homeNumber(this.chooseId);
 
@@ -168,7 +166,7 @@ export default {
       this.homeNumber(this.chooseId);
       let setInfo = JSON.stringify(current)
       sessionStorage.setItem('objInfo', setInfo)
-      this.$store.commit('accountInfoFun', setInfo)//已登录
+      this.$store.commit('accountInfoFun', JSON.parse(current_))//已登录
     },
 
     addpeple() {

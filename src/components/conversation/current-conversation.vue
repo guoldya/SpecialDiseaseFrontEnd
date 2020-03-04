@@ -40,14 +40,14 @@ export default {
     }
   },
   mounted() {
-    console.log(this.imSdk.messageList,"我的聊天列表")
+    
     // if(this.imSdk.messageList){
     //    this.onScroll()
     // }
     this.scrollMessageListToButtom()
     setTimeout(() => {
       this.onScroll()
-    }, 500)
+    }, 2000)
     this.onScroll()
 
   },

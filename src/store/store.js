@@ -7,18 +7,19 @@ import user from './modules/user'
 import video from './modules/video'
 import group from './modules/group'
 import { Toast } from 'mand-mobile'
-
+import VuexPersistence from 'vuex-persist'
 
 
 Vue.use(Vuex);
+const vuexLocal = new VuexPersistence({
+    storage: window.localStorage
+  })
 export default new Vuex.Store({
     state: {
         selectAdress: '',
         feeActiveId: '',
-        userInfo: {
-              nickname:'默认'
-        },
-
+        userInfo:'',
+        accountInfo:'',
         current: Date.now(), // 当前时间
         intervalID: 0,
         message: undefined,
@@ -47,7 +48,10 @@ export default new Vuex.Store({
         feeActiveFun: (state, n) => {
             state.feeActiveId = n;
         },
-
+         
+        accountInfoFun: (state, n) => {
+            state.accountInfo = n;
+        },
         startComputeCurrent(state) {//启动定时器设定当前时间
             state.intervalID = setInterval(() => {
                 state.current = Date.now()
@@ -82,6 +86,7 @@ export default new Vuex.Store({
         user,
         video,
         group
-    }
+    },
+    plugins: [vuexLocal.plugin]
 })
 

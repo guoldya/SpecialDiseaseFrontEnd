@@ -198,6 +198,7 @@ export default {
   },
   mounted() {
     this.init();
+    
   },
   methods: {
     // 初始化

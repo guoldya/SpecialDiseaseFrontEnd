@@ -91,20 +91,19 @@ export default {
   },
   mounted() {
     this.init();
+     
     // 注册用户
-    this.imSdk.registerUser('p' + 2, this.$store.state.userInfo.nickname, () => {
+    this.imSdk.registerUser('p' + 2, this.$store.state.accountInfo.name, () => {
       this.imSdk.createUserConnect('p' + 2, '123456', {
         userConnectCallback: () => {
           // 拿到消息列表之后的回调
           this.imSdk.openSession(
-            this.$store.state.userInfo.nickname,
+            this.$store.state.accountInfo.name,
             'd' + this.$route.query.id,
             this.$route.query.name,
             {
               getMessageCallback: () => {
-                console.log(this.imSdk.maxCreateAt, this.imSdk.messageList, { ...this.imSdk }, this.imSdk, "拿到消息列表之后的回调")
                 this.$store.commit('selectTestFun', this.imSdk.messageList);
-                console.log(this.$store.state.test, "缓存的消息")
               }
             }
           )

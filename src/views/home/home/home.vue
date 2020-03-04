@@ -18,7 +18,6 @@
     <!-- <div class="homePage" v-if=" _cardlist.length!=0"> -->
     <div class="homePage" v-if=" _cardlist.length!=0">
       <div class="cardhome" v-for="(item, index) in  _cardlist" v-if="item.id==chooseId" :key="'cardlist' + index">
-
         <p class="name">{{item.name}}
           <span class="code">{{item.code}}</span>
         </p>
@@ -68,14 +67,14 @@ export default {
       // _accountinfo: state => state.my.accountinfo,
     }),
   },
-  created() {
-  },
+
   async mounted() {
     // await this.$store.dispatch('getCards', { update: true });
     await this.$store.dispatch('getCards', { update: true });
     // await this.$store.dispatch('getDepart', { update: true });
 
     this.getInfo = JSON.parse(sessionStorage.getItem('objInfo'));
+
     if (this.getInfo) {
       if (this.getInfo.id) {
         this.chooseId = this.getInfo.id;
@@ -87,6 +86,7 @@ export default {
       this.chooseId = this._cardlist[0].id;
       let setInfo = JSON.stringify(this._cardlist[0])
       sessionStorage.setItem('objInfo', setInfo)
+      this.$store.commit('accountInfoFun', objInfo)//已登录
     }
     this.homeNumber(this.chooseId);
 
@@ -168,6 +168,7 @@ export default {
       this.homeNumber(this.chooseId);
       let setInfo = JSON.stringify(current)
       sessionStorage.setItem('objInfo', setInfo)
+      this.$store.commit('accountInfoFun', setInfo)//已登录
     },
 
     addpeple() {

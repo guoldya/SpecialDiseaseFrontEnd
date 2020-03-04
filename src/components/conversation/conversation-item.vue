@@ -46,13 +46,13 @@
             <!-- <p style="color: rgb(180, 179, 185);">华西第二医院</p> -->
             <div class="dotType">
               <div class="dottextff">
-                <img src="@/assets/conversionImg/onlineText.png" />免费
+                <img src="@/assets/conversionImg/onlineText.png" />30.00元
               </div>
               <div class="dotdhff">
-                <img src="@/assets/conversionImg/offlineVoice.png" />暂无
+                <img src="@/assets/conversionImg/offlineVideo.png" />30.00元
               </div>
               <div class="dotvideoff">
-                <img src="@/assets/conversionImg/offlineVideo.png" />暂无
+                <img src="@/assets/conversionImg/offlineVoice.png" />30.00元
               </div>
             </div>
           </div>
@@ -165,10 +165,7 @@ export default {
   },
   methods: {
     touchStart(e, index) {
-<<<<<<< HEAD
       console.log(index, "ssssssssssss");
-=======
->>>>>>> 4c633df5a86361c6f56a113a2578e0b4fa5aea69
       //  && this.itemIndex != index
       if (e.touches.length === 1) {
         //表示一只手指在触摸
@@ -211,19 +208,6 @@ export default {
       }
     },
     selectConversation() {
-      this.imSdk.openSession(this.$store.state.userInfo.nickname, 'd' + conversation.creatorId, conversation.channelName)
- 
-      console.log(this.imSdk.maxCreateAt, this.imSdk.messageList, this.imSdk)
-      // this.$store.commit('selectTestFun',  );
-
-      setTimeout(() => {
-        this.$router.push({
-          name: 'chatRoom',
-          // query: {
-          //   questionDes: this.questionDes
-          // }
-        })
-      }, 1000);
       //点击好友与当前好友不相同
       // if (this.conversation.conversationID !== this.currentConversation.conversationID) {
       //     this.$store.dispatch(
@@ -231,7 +215,6 @@ export default {
       //         this.conversation.conversationID  //点击的好友id
       //     )
       // }
-<<<<<<< HEAD
       console.log(this.conversation.conversationID, "我的聊天用户的id");
       this.$router.push({
         name: "chatRoom"
@@ -240,16 +223,6 @@ export default {
         "checkoutConversation", //切换会话
         this.conversation.conversationID //点击的好友id
       );
-=======
-      // console.log(this.conversation.conversationID, "我的聊天用户的id")
-      // this.$router.push({
-      //   name: 'chatRoom'
-      // })
-      // this.$store.dispatch(
-      //   'checkoutConversation',//切换会话
-      //   this.conversation.conversationID  //点击的好友id
-      // )
->>>>>>> 4c633df5a86361c6f56a113a2578e0b4fa5aea69
     },
     deleteConversation(event) {
       // 停止冒泡，避免和点击会话的事件冲突

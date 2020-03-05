@@ -285,9 +285,17 @@ body {
   justify-content: space-between;
 }
 /* 分割线加文字 */
-.system-normal-message .content {
-  position: relative;
-  display: block;
+.message-item{
+  margin: 0 12px;
+}
+.system-normal-message .content span {
+    position: relative;
+    display: inline-block;
+    background-color: #f8f8f8;
+    padding: 0 .1rem;
+    left: 50%;
+    -webkit-transform: translate(-50%);
+    transform: translate(-50%);
 }
 .system-message .content,
 .system-normal-message .content {
@@ -296,14 +304,12 @@ body {
   font-size: 0.13rem;
   padding: 0.04rem 0.24rem;
 }
-.system-normal-message .content:before {
-  top: 0.12rem;
-  width: 100%;
+.system-normal-message .content {
+  position: relative;
+  display: block;
 }
-.system-message .content:before,
-.system-normal-message .content:before {
-  left: 0;
-}
+
+
 .system-message .content:after,
 .system-message .content:before,
 .system-normal-message .content:after,
@@ -313,6 +319,31 @@ body {
   top: 0.14rem;
   width: 0.2rem;
   border-top: 0.01rem solid #adb5bd;
+}
+.system-normal-message .content:before {
+  /* top: 0.12rem; */
+  width: 100%;
+}
+.system-message .content:before,
+.system-normal-message .content:before {
+  left: 0;
+}
+.system-message, .system-normal-message{
+  position: relative;
+  margin: 0 24px 16px 24px;
+}
+.message-item {
+    margin-bottom: .15rem;
+}
+.message-datetime.show {
+    display: block;
+}
+.message-datetime {
+    display: none;
+    padding: .1rem .15rem;
+    color: #999baa;
+    text-align: center;
+    font-size: .14rem;
 }
 /* 分割线 */
 .card-divider-horizontal {

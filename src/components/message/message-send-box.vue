@@ -3,7 +3,7 @@
   <div class="inquiry-online-tool">
     <div class="inquiry-online-tool-voice">
       <div contenteditable="true" class="input" @input="changeVal" ref="inputModel"></div>
-      <span class="send" @click="sendTextMessage" :class="messageContent ? 'active' : ''">发送</span>
+      <span class="send" @click="sendTextMessage" :class="aaa ? 'active' : ''">发送</span>
     </div>
     <div class="inquiry-online-tool-detail">
       <span @click="tool('img')">
@@ -55,6 +55,7 @@ export default {
       rate: 5, // 评分
       suggestion: '', // 建议
       file: '',
+      aaa: false,
       emojiName: emoji.obj,
       showAtGroupMember: false,
       atUserID: '',
@@ -144,13 +145,29 @@ export default {
 
     changeVal(val) {
       this.messageContent = this.$refs.inputModel.innerHTML;
+      if (this.messageContent) { this.aaa = true } else {
+        this.aaa = false
+      }
     },
     sendTextMessage() {
+      console.log(this.$refs.inputModel.innerHTML, "ssssssssss")
+      // if (
+      //   this.messageContent === '' ||
+      //   this.messageContent.trim().length === 0
+      // ) {
+      //   this.messageContent = ''
+      //   this.$store.commit('showMessage', {
+      //     message: '不能发送空消息哦！',
+      //     type: 'info'
+      //   })
+      //   return
+      // }
+
       if (
-        this.messageContent === '' ||
-        this.messageContent.trim().length === 0
+        this.$refs.inputModel.innerHTML === '' ||
+        this.$refs.inputModel.innerHTML.trim().length === 0
       ) {
-        this.messageContent = ''
+        this.$refs.inputModel.innerHTML = ''
         this.$store.commit('showMessage', {
           message: '不能发送空消息哦！',
           type: 'info'
@@ -159,11 +176,14 @@ export default {
       }
       let msg = {
         type: 'text',
-        text: this.messageContent
+        text: this.$refs.inputModel.innerHTML
       }
       this.imSdk.send(msg)
       this.messageContent = ''
       this.$refs.inputModel.innerHTML = ''
+      this.aaa = false;
+      this.toolType=false;
+      this.$refs.inputModel.focus()
       setTimeout(() => {
         this.$emit('fatherMethod');
       }, 300)
@@ -181,7 +201,7 @@ export default {
         let range = sel.getRangeAt(0);//找到焦点位置
         var img = new Image();
         img.src = require('@/static/faces/' + v);
-        img.style = 'width:24px;height:24px'
+        img.style = 'width:24px;height:24px;position: relative; top: 5px;'
         let frag = document.createDocumentFragment();//创建一个空白的文档片段，便于之后插入dom树
         let lastNode = frag.appendChild(img);
         range.insertNode(frag);//设置选择范围的内容为插入的内容
@@ -191,6 +211,12 @@ export default {
         sel.removeAllRanges();//移出所有选区
         sel.addRange(contentRange);//添加修改后的选区
         this.isPopupShow = false;
+      }
+
+      if (this.$refs.inputModel.innerHTML) {
+        this.aaa = true
+      } else {
+        this.aaa = false
       }
     },
 

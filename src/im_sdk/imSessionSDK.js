@@ -10,6 +10,9 @@ export class ImSessionSDK {
         if (this.IMData.selectedChannelId === undefined || this.IMData.selectedChannelId == null) {
             return false
         }
+
+        this.IMData.maxCreateAt = 0
+        this.IMData.messageList = []
         this.initIMClient()
             //返回true不代表绝对会话连接成功
 

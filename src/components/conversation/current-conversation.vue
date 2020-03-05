@@ -43,7 +43,16 @@ export default {
     this.onScroll()
 
   },
+  updated() {
+    this.onScroll()
+    setTimeout(() => {
+      this.onScroll()
+    }, 300)
+    // 1. 系统会话隐藏右侧资料组件
+    // 2. 没有当前会话时，隐藏右侧资料组件。
+    //    背景：退出群组/删除会话时，会出现一处空白区域
 
+  },
 
   methods: {
     fatherMethod() {

@@ -1,27 +1,12 @@
 <template>
   <div class="selectMedicine margin55">
     <Header post-title="咨询记录" :isBackTo='true'></Header>
-    
     <ul class="content" v-show="show && !loadingtrue">
-      <!-- <Recordcard v-for="(item,i) in drugsList.drugs" :content="item" :type="4" :key="i"></Recordcard> -->
-      <conversation-item
-        :conversation="item"
-        :index="index"
-        v-for="(item,index) in drugsList.drugs"
-        :key="item.conversationID"
-      />
-      <md-icon
-        v-if="!loadingtrue && busy"
-        name="spinner"
-        size="lg"
-        style="-webkit-filter:invert(1)"
-      ></md-icon>
+      <conversation-item v-if="drugsList.drugs.length!=0" :conversation="item" :index="index" v-for="(item,index) in drugsList.drugs" :key="item.conversationID" />
+      <Null :loading-true="drugsList.drugs.length==0"></Null>
+      <md-icon v-if="!loadingtrue && busy" name="spinner" size="lg" style="-webkit-filter:invert(1)"></md-icon>
       <div class="nomore" v-if="!loadingtrue && (drugsList.nowPage == pages || pages == 0)">没有更多数据了</div>
-      <div
-        v-infinite-scroll="loadMore"
-        infinite-scroll-disabled="busy"
-        infinite-scroll-distance="10"
-      ></div>
+      <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"></div>
     </ul>
     <Loading v-if="loadingtrue"></Loading>
     <Footer></Footer>
@@ -37,6 +22,8 @@ export default {
   components: { ConversationItem },
   data() {
     return {
+      chooseId: '',
+      imSdk: this.$imsdk,
       show: true,
       pages: 1,
       loadingtrue: true,
@@ -50,17 +37,43 @@ export default {
   },
   mounted() {
     this.selectDrugsList();
+
+    if (typeof (this.$store.state.accountInfo) == 'string') {
+      this.chooseId = JSON.parse(this.$store.state.accountInfo).id;
+    } else {
+      this.chooseId = this.$store.state.accountInfo.id;
+    }
+    this.imSdk.createUserConnect(
+      "p" + this.chooseId,
+      "123456",
+      {
+        userConnectCallback: () => {
+          // 拿到消息列表之后的回调
+          // this.imSdk.openSession(
+          //   this.$store.state.userInfo.nickname,
+          //   "d" + this.$route.query.id,
+          //   this.$route.query.name,
+          //   {
+          //     getMessageCallback: () => {
+          //       // 拿到消息列表之后的回调
+          //     }
+          //   }
+          // );
+        }
+      }
+    );
+    console.log(this.imSdk, "imSdkimSdk")
   },
 
   methods: {
     async selectDrugsList() {
       if (!this.busy) this.loadingtrue = true;
-
       this.$axios
         .put(selectDrugs, {
           pageSize: 20,
           status: 2,
-          pageNumber: this.current
+          patientId: this.chooseId,
+          pageNumber: this.current,
         })
         .then(res => {
           if (res.data.code == "200") {
@@ -74,16 +87,16 @@ export default {
             if (!this.busy) this.loadingtrue = false;
             this.busy = false;
 
-            console.log(this.drugsList.drugs, " this.drugsList.drugs");
+
           } else {
             this.$toast.info(res.data.msg);
           }
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log(err);
         });
     },
-    loadMore: function() {
+    loadMore: function () {
       if (this.loadingtrue) return false;
       if (this.drugsList.nowPage == this.pages) return false;
       this.busy = true;

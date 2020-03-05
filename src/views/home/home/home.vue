@@ -17,7 +17,7 @@
     </div>
     <!-- <div class="homePage" v-if=" _cardlist.length!=0"> -->
     <div class="homePage" v-if=" _cardlist.length!=0">
-      <div class="cardhome" v-for="(item, index) in  _cardlist" v-if="item.id==chooseId" :key="'cardlist' + index">
+      <div class="cardhome" v-for="(item, index) in  _cardlist"  :key="'cardlist' + index">
         <p class="name">{{item.name}}
           <span class="code">{{item.code}}</span>
         </p>

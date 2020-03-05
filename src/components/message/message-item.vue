@@ -7,7 +7,6 @@
         <em></em>
         <div>
           <span v-html="aa.text"></span>
-
         </div>
       </div>
     </div>
@@ -18,7 +17,7 @@
         <div class="describe">
           <p>初步诊断：{{aa.description}}</p>
         </div>
-        <router-link tag="p" :to="{ path: '/outpationinfo', query: { id: aa.id}}" class="item">
+        <router-link tag="p" :to="{ path: '/outpationinfo', query: { id: aa.recipeId}}" class="item">
           <span>查看详情</span>
           <i class="iconfont icon-iconfontjiantou5"></i>
         </router-link>

@@ -2,17 +2,9 @@
   <div class="margin55">
     <Header post-title="管理门特患者"></Header>
     <div>
-      <!-- <div class="mentecard"  v-for="(item,index) in cardlist" :key="index"  >
-        <div class="mentecardtitlt">
-          <p>
-            <span>{{item.name}}</span>
-            <span>{{item.sex}}</span>
-            <span>{{item.age}}</span>
-          </p>
-        </div>
-      </div> -->
+
       <div v-if="cardlist.length!=0">
-        <div class="mentecard" v-for="(item,index) in cardlist" :key="index">
+        <div class="mentecard" v-for="(item,index) in cardlist" :key="index" @click="unblind(item)">
           <div class="mentecardtitlt">
             <p>
               <span class="name">{{item.name}}</span>
@@ -32,20 +24,7 @@
           <p class="nullTEXT">暂无门特患者</p>
         </div>
       </div>
-      <!-- <ul v-show="!loadingtrue&&cardlist.length!=0">
-        <li v-for="(item,index) in cardlist" :key="index" class="margin14">
-          <div class="homeCard">
-            <div class="homeCardText">
-              <div class="homeCardTextLeft" @click="unblind(item)">
-                <p class="patientName"> .name}} </p>
-                <p>{{item.idCard}}</p>
-              </div>
 
-            </div>
-          </div>
-        </li>
-        <Loading v-show="loadingtrue"></Loading>
-      </ul> -->
       <Loading v-show="loadingtrue"></Loading>
 
       <div class="bindcardwarn">
@@ -89,16 +68,16 @@ export default {
   },
 
   mounted() {
-    if (this._cardlist) {
-      if (this._cardlist.length == 0) {
-        return
-      }
-      this.link2 = this._cardlist[0].cardNo;
-    }
+
 
   },
   methods: {
-
+    unblind(data) {
+      this.$router.push({
+        name: 'unblind',
+        query: { id: data.id }
+      });
+    },
     addpeple() {
       this.$router.push({
         name: 'addpeple',

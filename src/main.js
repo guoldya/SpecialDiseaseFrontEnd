@@ -8,25 +8,20 @@ import store from './store/store';
 import infiniteScroll from 'vue-infinite-scroll';
 import filters from './filter/filter';
 import router from './router'
-
-import tim from './tim'
-import TIM from 'tim-js-sdk'
+ 
 import './assets/icon/iconfont.css'
-import './assets/icon/tim.css'
-import Avatar from './components/avatar.vue'
+ 
+ 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import { ImSdk } from '@/im_sdk/leo_im_sdk'
 
-
-// window.tim = tim
-// window.TIM = TIM
+ 
 window.store = store
 Vue.prototype.$bus = new Vue() // event Bus 用于无关系组件间的通信。
-// Vue.prototype.tim = tim
-// Vue.prototype.TIM = TIM
+ 
 Vue.prototype.$store = store
-Vue.component('avatar', Avatar)
+ 
 Vue.use(ElementUI);
 Vue.prototype.$imsdk=new ImSdk();
 

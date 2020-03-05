@@ -21,10 +21,8 @@
         <p class="name">{{item.name}}
           <span class="code">{{item.code}}</span>
         </p>
-        <!-- <p>{{item.code}}</p> -->
         <p class="dise">{{item.diseaseName}}</p>
         <p class="dise">{{item.idCard}}</p>
-        <!-- <p @click="switchCard(index)">切换门特患者</p> -->
         <img class="qiehuan" @click="switchCard(index)" src="@/assets/images/qiehuan.png">
       </div>
     </div>
@@ -73,11 +71,11 @@ export default {
     await this.$store.dispatch('getCards', { update: true });
     // await this.$store.dispatch('getDepart', { update: true });
 
-    this.getInfo = JSON.parse(sessionStorage.getItem('objInfo'));
+    
 
-    if (this.getInfo) {
-      if (this.getInfo.id) {
-        this.chooseId = this.getInfo.id;
+    if (this.$store.state.accountInfo) {
+      if (this.$store.state.accountInfo.id) {
+        this.chooseId =this.$store.state.accountInfo.id;
       }
     } else {
       if (this._cardlist.length == 0) {
@@ -85,8 +83,8 @@ export default {
       }
       this.chooseId = this._cardlist[0].id;
       let setInfo = JSON.stringify(this._cardlist[0])
-      sessionStorage.setItem('objInfo', setInfo)
-      this.$store.commit('accountInfoFun', objInfo)//已登录
+      sessionStorage.setItem('objInfo',JSON.parse(setInfo)  )
+      this.$store.commit('accountInfoFun', this._cardlist[0])//已登录
     }
     this.homeNumber(this.chooseId);
 
@@ -109,7 +107,7 @@ export default {
       try {
         let res = await this.$axios.put(doctorlistURL, {
 
-          patientId: data ? data : this.getInfo.id
+          patientId: data ? data : JSON.parse(this.$store.state.accountInfo).id
         });
         if (res.data.code != 200) {
           throw Error(res.data.msg);
@@ -168,7 +166,7 @@ export default {
       this.homeNumber(this.chooseId);
       let setInfo = JSON.stringify(current)
       sessionStorage.setItem('objInfo', setInfo)
-      this.$store.commit('accountInfoFun', setInfo)//已登录
+      this.$store.commit('accountInfoFun', JSON.parse(current_))//已登录
     },
 
     addpeple() {

@@ -19,7 +19,7 @@ const chatRoom = () => import(/* webpackChunkName: "home" */ "@/views/chat-room/
 const conversation = () => import(/* webpackChunkName: "home" */ "@/views/conversation/conversation.vue")
 // 个人中心
 const my = () => import(/* webpackChunkName: "my" */ "@/views/my/my/my.vue")
-const aa = () => import(/* webpackChunkName: "my" */ "@/views/my/aa/aa.vue")
+ 
 const adress = () => import(/* webpackChunkName: "my" */ "@/views/adress/adress.vue")
 const adressinfo = () => import(/* webpackChunkName: "my" */ "@/views/adressinfo/adressinfo.vue")
 const acctest = () => import(/* webpackChunkName: "my" */ "@/views/my/acctest/acctest.vue")
@@ -172,14 +172,7 @@ export default new Router({
       title: '地址详情'
     }
   },
-  {
-    path: '/aa',
-    name: 'aa',
-    component: aa,
-    meta: {
-      title: 'ces'
-    }
-  },
+  
    
   {
     path: '/idcardlist',

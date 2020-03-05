@@ -17,8 +17,8 @@ export default {
     CurrentConversation
   },
   mounted() {
-    console.log(this.imSdk,"this.imSdk")
-    this.imSdk.createUserConnect('p' + 2, '123456', {
+    
+    this.imSdk.createUserConnect('p' + JSON.parse(this.$store.state.accountInfo).id, '123456', {
       userConnectCallback: () => {
         // 拿到消息列表之后的回调
         this.imSdk.openSession(
@@ -28,7 +28,7 @@ export default {
           {
             getMessageCallback: () => {
               // 拿到消息列表之后的回调
-               
+
             }
           }
         )
@@ -36,27 +36,11 @@ export default {
       }
     })
 
-     
+
   },
   computed: {
-    ...mapState({
-      currentConversation: state => state.conversation.currentConversation,
-      currentUnreadCount: state => state.conversation.currentConversation.unreadCount,
-      currentMessageList: state => state.conversation.currentMessageList,
-      isCompleted: state => state.conversation.isCompleted,
-    }),
-    ...mapGetters(['toAccount', 'hidden']),
-    name() {
-      if (this.currentConversation.type === 'C2C') {
-        console.log(this.currentConversation)
-        return this.currentConversation.userProfile.nick || this.toAccount
-      } else if (this.currentConversation.type === 'GROUP') {
-        return this.currentConversation.groupProfile.name || this.toAccount
-      } else if (this.currentConversation.conversationID === '@TIM#SYSTEM') {
-        return '系统通知'
-      }
-      return this.toAccount
-    },
+ 
+   
   }
 }
 </script>

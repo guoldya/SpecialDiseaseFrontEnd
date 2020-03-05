@@ -60,7 +60,7 @@
 </template>
  <script>
 const onlineDoctorDetailUrl = "sysDoctor/selectDetail";
-
+const insertOrUpdate = 'bizConsultRecord/addRecord'
 import { mapGetters, mapState } from 'vuex'
 export default {
   data() {
@@ -91,10 +91,10 @@ export default {
   },
   mounted() {
     this.init();
-     
+ 
     // 注册用户
-    this.imSdk.registerUser('p' + 2, this.$store.state.accountInfo.name, () => {
-      this.imSdk.createUserConnect('p' + 2, '123456', {
+    this.imSdk.registerUser('p' + JSON.parse(this.$store.state.accountInfo).id, this.$store.state.accountInfo.name, () => {
+      this.imSdk.createUserConnect('p' + JSON.parse(this.$store.state.accountInfo).id, '123456', {
         userConnectCallback: () => {
           // 拿到消息列表之后的回调
           this.imSdk.openSession(
@@ -132,6 +132,22 @@ export default {
         this.$toast.info("请勾选协议")
         return
       }
+
+      let data = {};
+      data.doctorId = Number(this.$route.query.id);
+      data.question = this.questionDes;
+      data.patientId = JSON.parse(this.$store.state.accountInfo).id;
+      data.status = 0;
+      this.$axios.post(insertOrUpdate, data).then((res) => {
+        if (res.data.code == '200') {
+          this.$toast.info("提交成功");
+
+        } else {
+          this.$toast.info(res.data.msg)
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
       let msg = {
         type: 'text',
         text: this.questionDes,
@@ -151,36 +167,7 @@ export default {
         })
       }, 1000);
 
-      // if (this.userID !== '@TIM#SYSTEM') {
-      //   console.log(" 执行这里")
-      //   // 查找医生是否在线
-      //   // this.$store.dispatch('checkoutConversation', `C2C${this.userID}`)
 
-      //   let test = `C2Cuser` + this.$route.query.id;
-      //   console.log(test, "sssssssss")
-      //   this.$store.dispatch('checkoutConversation', test).then(() => {
-      //     console.log(this.currentMessageList, "提交问题")
-      //     setTimeout(() => {
-      //       this.$router.push({
-      //         name: 'chatRoom',
-      //         query: {
-      //           questionDes: this.questionDes
-      //         }
-      //       })
-      //     }, 1000);
-
-      //   }).catch(() => {
-      //     this.$store.commit('showMessage', {
-      //       message: '没有找到该用户',
-      //       type: 'warning'
-      //     })
-      //   })
-      // } else {
-      //   this.$store.commit('showMessage', {
-      //     message: '没有找到该用户',
-      //     type: 'warning'
-      //   })
-      // }
 
     },
     // 初始化

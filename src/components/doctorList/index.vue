@@ -2,41 +2,67 @@
 <template>
   <div class="doctor-list">
     <router-link :to="{ path: '/consultDetail', query: { id: datas.id }}" class="consult">
-    <div class="header"><img src="@/assets/images/3.jpg" /></div>
-    <div class="comment-right">
-      <p class="introduce">
-        <span class="name">{{datas.drName}}</span>&nbsp;
-        <span class="education">{{datas.education}}</span>&nbsp;
-        <span class="education">{{datas.deptName}}</span>&nbsp;
-      </p>
-      <p class="colo3">
-        <span class="picture" :class="datas.allowType<1||!datas.allowType ?'noOpen' :''">图文</span>&nbsp;
-        <span class="picture picture1" :class="datas.allowType<2||!datas.allowType ?'noOpen' :''">门特在线</span>&nbsp;
-        <span class="picture picture2" :class="datas.allowType<3||!datas.allowType ?'noOpen' :''">视频</span>&nbsp;
-      </p>
-      <p class="content">擅长：{{datas.expertField}}</p>
-      <p class="colo3">
-        <span style=" margin-right: 20px;">咨询数：<span class="num">{{datas.diagnosisNum||'12'}}</span></span>&nbsp;
-        <span>平均回复时长：<span class="num">{{datas.replyTime||'0'}}</span> 分</span>&nbsp;
-      </p>
-      <div class="price">
-        <div class="dotType">
-              <div class="dottextff">
-                <img src="@/assets/conversationImg/freeText.png" />免费
-              </div>
-              <div class="dotdhff">
-                <img src="@/assets/conversationImg/offlineVoice.png" />暂无
-              </div>
-              <div class="dotvideoff">
-                <img src="@/assets/conversationImg/offlineVideo.png" />暂无
-              </div>
-            </div>
-        <!-- ￥{{datas.minPrice|keepTwoNum}} -->
-        <!-- <router-link :to="{ path: '/consultDetail', query: { id: datas.id }}" class="consult">立即咨询</router-link>
-        <router-link v-show="false" to="/pictureConsult">免费咨询</router-link> -->
+      <div class="header">
+        <img src="@/assets/images/3.jpg" />
       </div>
-      <!-- <em>搜查</em> -->
-    </div>
+      <div class="comment-right">
+        <p class="introduce">
+          <span class="name">{{datas.drName}}</span>&nbsp;
+          <span class="education">{{datas.education}}</span>&nbsp;
+          <span class="education">{{datas.deptName}}</span>&nbsp;
+        </p>
+        <p class="colo3">
+          <span class="picture" :class="datas.allowType<1||!datas.allowType ?'noOpen' :''">图文</span>&nbsp;
+          <span
+            class="picture picture1"
+            :class="datas.allowType<2||!datas.allowType ?'noOpen' :''"
+          >门特在线</span>&nbsp;
+          <span
+            class="picture picture2"
+            :class="datas.allowType<3||!datas.allowType ?'noOpen' :''"
+          >视频</span>&nbsp;
+        </p>
+        <p class="content">擅长：{{datas.expertField}}</p>
+        <p class="colo3">
+          <span style=" margin-right: 20px;">
+            咨询数：
+            <span class="num">{{datas.diagnosisNum||'12'}}</span>
+          </span>&nbsp;
+          <span>
+            平均回复时长：
+            <span class="num">{{datas.replyTime||'0'}}</span> 分
+          </span>&nbsp;
+        </p>
+
+        <div class="price">
+          <div class="dotType">
+            <div class="dottextff">
+              <router-link
+                v-if="datas.status==2"
+                :to="{ path: '/consultDetail', query: { id: datas.id }}"
+              >
+                <img src="@/assets/conversationImg/freeText.png" />免费
+              </router-link>
+              <router-link
+                v-else
+                :to="{ path: '/chatRoom', query: { id: datas.id ,name:datas.drName}}"
+              >
+                <img src="@/assets/conversationImg/freeText.png" />咨询中
+              </router-link>
+            </div>
+            <div class="dotdhff">
+              <img src="@/assets/conversationImg/offlineVoice.png" />暂无
+            </div>
+            <div class="dotvideoff">
+              <img src="@/assets/conversationImg/offlineVideo.png" />暂无
+            </div>
+          </div>
+          <!-- ￥{{datas.minPrice|keepTwoNum}} -->
+          <!-- <router-link :to="{ path: '/consultDetail', query: { id: datas.id }}" class="consult">立即咨询</router-link>
+          <router-link v-show="false" to="/pictureConsult">免费咨询</router-link>-->
+        </div>
+        <!-- <em>搜查</em> -->
+      </div>
     </router-link>
   </div>
 </template>
@@ -80,7 +106,7 @@ export default {
   //     return msg;
   //   }
   // },
-  props: ['datas']
+  props: ["datas"]
 };
 </script>
 <style scoped lang="scss">
@@ -132,7 +158,6 @@ export default {
   font-size: 17px;
   font-weight: 400;
   color: #626262;
-   
 }
 .doctor-list .name {
   font-size: 32px;
@@ -179,23 +204,6 @@ export default {
   letter-spacing: 1px;
   overflow: hidden;
   margin-top: 10px;
-  a {
-    font-size: 26px;
-    float: right;
-    display: inline-block;
-    height: 45px;
-    line-height: 45px;
-    padding: 0 20px;
-    border: 1px solid var(--primary);
-    border-radius: 30px;
-    margin-left: 30px;
-    color: var(--primary);
-  }
-  .consult {
-    color: #fff;
-    background: var(--primary);
-    font-size: 23px;
-  }
 }
 
 .doctor-list:last-child {

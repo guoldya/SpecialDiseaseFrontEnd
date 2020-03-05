@@ -6,12 +6,8 @@
       <div class="online-content-list-text">
         <em></em>
         <div>
-          <template v-for="item in reversedMessage">
-            <span v-if='item.name=="text"'>
-              {{item.text}}
-            </span>
-            <img v-if='item.name=="img"' :src="require(`@/static/faces/${item.text}`)" style="width:30px;height:30px" />
-          </template>
+          <span v-html="aa.text"></span>
+
         </div>
       </div>
     </div>
@@ -20,9 +16,9 @@
       <div class="online-content-list-text">
         <em></em>
         <div class="describe">
-          <p>初步诊断：高血压</p>
+          <p>初步诊断：{{aa.description}}</p>
         </div>
-        <router-link tag="p" to="/allRecord" class="item">
+        <router-link tag="p" :to="{ path: '/outpationinfo', query: { id: aa.id}}" class="item">
           <span>查看详情</span>
           <i class="iconfont icon-iconfontjiantou5"></i>
         </router-link>
@@ -37,7 +33,6 @@
         </div>
       </div>
     </div>
-     
 
     <!-- 图片显示器 -->
     <md-image-viewer v-model="isViewerShow" :list="currentImg" :has-dots="false" :initial-index="0"></md-image-viewer>
@@ -47,32 +42,11 @@
 <script>
 import { mapState } from 'vuex'
 import emoji from '@/utils/emoji.js'
-import MessageStatusIcon from './message-status-icon.vue'
-import MessageFooter from './message-footer'
-import FileElement from './message-elements/file-element.vue'
-import FaceElement from './message-elements/face-element.vue'
-import ImageElement from './message-elements/image-element.vue'
-import TextElement from './message-elements/text-element.vue'
-import SoundElement from './message-elements/sound-element.vue'
-import VideoElement from './message-elements/video-element.vue'
-import CustomElement from './message-elements/custom-element.vue'
-import GeoElement from './message-elements/geo-element.vue'
+
 export default {
   name: 'MessageItem',
   props: ['message'],
-  components: {
-    MessageFooter,
-    MessageStatusIcon,
-    FileElement,
-    FaceElement,
-    ImageElement,
-    TextElement,
-    SoundElement,
-    CustomElement,
-    VideoElement,
-    GeoElement,
 
-  },
 
   data() {
     return {
@@ -92,74 +66,17 @@ export default {
   },
   computed: {
 
-    reversedMessage: function () {
-      return this.renderTxt(this.aa.text)
-    }
 
   },
   methods: {
 
-    renderTxt(txt = "") {
-      console.log(txt, "转换的函数")
-      let rnTxt = [];
-      let match = null;
-      const regex = /(\[.*?\])/g;
-      let start = 0;
-      let index = 0;
-      while ((match = regex.exec(txt))) {
-        index = match.index;
-        if (index > start) {
-          rnTxt.push(txt.substring(start, index));
-          rnTxt.push({
-            name: 'text',
-            text: txt.substring(start, index)
-          });
-        }
-        console.log(this.emojiName, "测试比爱情列表是否")
-        if (match[1] in this.emojiName) {
 
-          const v = this.emojiName[match[1]];
-          // rnTxt.push(this.emojiName(v));
-          rnTxt.push({
-            name: 'img',
-            text: v
-          });
-        } else {
-
-          // rnTxt.push(match[1]);
-          rnTxt.push({
-            name: 'text',
-            text: match[1]
-          });
-        }
-        start = index + match[1].length;
-      }
-      // rnTxt.push(txt.substring(start, txt.length));
-      rnTxt.push({
-        name: 'text',
-        text: txt.substring(start, txt.length)
-      });
-      // return rnTxt.toString().replace(/,/g, "");
-
-      return rnTxt
-    },
     showViewer(index) {
       this.isViewerShow = true;
       this.clickViewer = true;
       this.currentImg = [index];
     },
-    showGroupMemberProfile(event) {
-      this.tim
-        .getGroupMemberProfile({
-          groupID: this.message.to,
-          userIDList: [this.message.from]
-        })
-        .then(({ data: { memberList } }) => {
-          if (memberList[0]) {
-            this.$bus.$emit('showMemberProfile', { event, member: memberList[0] })
-          }
-        })
-    }
+
   }
 }
 </script>

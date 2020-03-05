@@ -8,25 +8,20 @@ import store from './store/store';
 import infiniteScroll from 'vue-infinite-scroll';
 import filters from './filter/filter';
 import router from './router'
-
-import tim from './tim'
-import TIM from 'tim-js-sdk'
+ 
 import './assets/icon/iconfont.css'
-import './assets/icon/tim.css'
-import Avatar from './components/avatar.vue'
+ 
+ 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import { ImSdk } from '@/im_sdk/leo_im_sdk'
 
-
-window.tim = tim
-window.TIM = TIM
+ 
 window.store = store
 Vue.prototype.$bus = new Vue() // event Bus 用于无关系组件间的通信。
-Vue.prototype.tim = tim
-Vue.prototype.TIM = TIM
+ 
 Vue.prototype.$store = store
-Vue.component('avatar', Avatar)
+ 
 Vue.use(ElementUI);
 Vue.prototype.$imsdk=new ImSdk();
 
@@ -110,19 +105,20 @@ router.beforeEach((to, from, next) => {
 axios.interceptors.request.use(function (config) {
     let url = config.url;
     // 如果是登陆
-    // if (localStorage.getItem("token7")) {
-    //     // config.headers.TOKEN = localStorage.getItem("token7");
-    //     // config.headers.UUID = localStorage.getItem("UUID7");
+    if (sessionStorage.getItem("token7")) {
+         config.headers.Authorization = sessionStorage.getItem("token7");
+        // config.headers.UUID = localStorage.getItem("UUID7");
 
 
-    //     config.headers.Authorization = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7XCJtb2JpbGVcIjpcIjE4OTk2MTI4NzkxXCIsXCJuaWNrbmFtZVwiOlwi5Zmr5oGL44CCZmxvd2VyXCIsXCJpZFwiOjE4OX0iLCJqdGkiOiIxZjgxODhkZC01ZTk2LTQwZjUtODIxNC00YjFmMDg2MjQ3MWQiLCJpYXQiOjE1NjE2MDM4NzYsImV4cCI6MTU2NDE5NTg3Nn0.Tff9tLESvE7f0QgjiTsp4K1mdgpS8ZUUnrsc07aUFgU";
-    // } else {
-    //     if (url.indexOf("/appLogin/login") > -1 || (url.indexOf("appLoginlogin") > -1)) {
-    //         config.headers.Authorization = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7XCJtb2JpbGVcIjpcIjE4OTk2MTI4NzkxXCIsXCJuaWNrbmFtZVwiOlwi5Zmr5oGL44CCZmxvd2VyXCIsXCJpZFwiOjE4OX0iLCJqdGkiOiIxZjgxODhkZC01ZTk2LTQwZjUtODIxNC00YjFmMDg2MjQ3MWQiLCJpYXQiOjE1NjE2MDM4NzYsImV4cCI6MTU2NDE5NTg3Nn0.Tff9tLESvE7f0QgjiTsp4K1mdgpS8ZUUnrsc07aUFgU";
-    //     } else {
-    //         config.headers.Authorization = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7XCJtb2JpbGVcIjpcIjE4OTk2MTI4NzkxXCIsXCJuaWNrbmFtZVwiOlwi5Zmr5oGL44CCZmxvd2VyXCIsXCJpZFwiOjE4OX0iLCJqdGkiOiIxZjgxODhkZC01ZTk2LTQwZjUtODIxNC00YjFmMDg2MjQ3MWQiLCJpYXQiOjE1NjE2MDM4NzYsImV4cCI6MTU2NDE5NTg3Nn0.Tff9tLESvE7f0QgjiTsp4K1mdgpS8ZUUnrsc07aUFgU";
-    //     };
-    // }
+        // config.headers.Authorization = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7XCJtb2JpbGVcIjpcIjE4OTk2MTI4NzkxXCIsXCJuaWNrbmFtZVwiOlwi5Zmr5oGL44CCZmxvd2VyXCIsXCJpZFwiOjE4OX0iLCJqdGkiOiIxZjgxODhkZC01ZTk2LTQwZjUtODIxNC00YjFmMDg2MjQ3MWQiLCJpYXQiOjE1NjE2MDM4NzYsImV4cCI6MTU2NDE5NTg3Nn0.Tff9tLESvE7f0QgjiTsp4K1mdgpS8ZUUnrsc07aUFgU";
+    } else {
+        if (url.indexOf("wechat/receiveCode") > -1 || (url.indexOf("appLoginlogin") > -1)) {
+            // config.headers.Authorization = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7XCJtb2JpbGVcIjpcIjE4OTk2MTI4NzkxXCIsXCJuaWNrbmFtZVwiOlwi5Zmr5oGL44CCZmxvd2VyXCIsXCJpZFwiOjE4OX0iLCJqdGkiOiIxZjgxODhkZC01ZTk2LTQwZjUtODIxNC00YjFmMDg2MjQ3MWQiLCJpYXQiOjE1NjE2MDM4NzYsImV4cCI6MTU2NDE5NTg3Nn0.Tff9tLESvE7f0QgjiTsp4K1mdgpS8ZUUnrsc07aUFgU";
+            config.headers.Authorization = ""
+        } else {
+            config.headers.Authorization = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7XCJtb2JpbGVcIjpcIjE4OTk2MTI4NzkxXCIsXCJuaWNrbmFtZVwiOlwi5Zmr5oGL44CCZmxvd2VyXCIsXCJpZFwiOjE4OX0iLCJqdGkiOiIxZjgxODhkZC01ZTk2LTQwZjUtODIxNC00YjFmMDg2MjQ3MWQiLCJpYXQiOjE1NjE2MDM4NzYsImV4cCI6MTU2NDE5NTg3Nn0.Tff9tLESvE7f0QgjiTsp4K1mdgpS8ZUUnrsc07aUFgU";
+        };
+    }
     return config;
 }, function (err) {
     return Promise.reject(err);
@@ -157,7 +153,7 @@ axios.interceptors.response.use(function (res) {
     } else if (res.data.code == 500) {
 
               
-        router.replace('/judge');
+        // router.replace('/judge');
         console.log(res.data.msg)
     } else if (res.data.code == 406) {
 

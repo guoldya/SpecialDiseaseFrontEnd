@@ -94,16 +94,6 @@ export default {
   methods: {
 
     async upload() {
-      try {
-        var formData = new FormData();
-        var file = this.$refs.uploadImg.files[0];
-        formData.append("file", file);
-        // console.log(this.$refs.uploadImg.files,"图片文件")
-
-      } catch (error) {
-        console.log(error);
-      }
-
 
       try {
         var formData = new FormData();
@@ -124,7 +114,7 @@ export default {
     },
 
     tool(val) {
-       this.$refs.inputModel.focus()
+      this.$refs.inputModel.focus()
       // 重复点击相同的则视为取消选择
       if (this.toolType == val) {
         this.toolType = "";
@@ -143,24 +133,7 @@ export default {
       this.messageContent += this.atUserID + ' '
       this.showAtGroupMember = false
     },
-    // handleUp() {
-    //   const index = this.memberList.findIndex(
-    //     member => member.userID === this.atUserID
-    //   )
-    //   if (index - 1 < 0) {
-    //     return
-    //   }
-    //   this.atUserID = this.memberList[index - 1].userID
-    // },
-    // handleDown() {
-    //   const index = this.memberList.findIndex(
-    //     member => member.userID === this.atUserID
-    //   )
-    //   if (index + 1 >= this.memberList.length) {
-    //     return
-    //   }
-    //   this.atUserID = this.memberList[index + 1].userID
-    // },
+
     handleEnter() {
       if (this.showAtGroupMember) {
         this.handleSelectAtUser()
@@ -191,6 +164,9 @@ export default {
       this.imSdk.send(msg)
       this.messageContent = ''
       this.$refs.inputModel.innerHTML = ''
+      setTimeout(() => {
+        this.$emit('fatherMethod');
+      }, 300)
 
     },
     // 添加消息

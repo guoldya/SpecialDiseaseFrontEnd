@@ -8,7 +8,7 @@
       <div v-show="isShowScrollButtomTips" class="newMessageTips" @click="scrollMessageListToButtom">回到最新位置</div>
     </div>
     <div class="footer">
-      <message-send-box />
+      <message-send-box @fatherMethod="fatherMethod" />
     </div>
 
   </div>
@@ -17,7 +17,7 @@
 import { mapGetters, mapState } from 'vuex'
 import MessageItem from '../message/message-item'
 import MessageSendBox from '../message/message-send-box'
- 
+
 export default {
   name: 'CurrentConversation',
   components: {
@@ -35,75 +35,29 @@ export default {
     }
   },
   mounted() {
-     
+
     this.scrollMessageListToButtom()
     setTimeout(() => {
       this.onScroll()
-    }, 2000)
+    }, 300)
     this.onScroll()
 
   },
 
 
   methods: {
-
-    renderTxt(txt = "") {
-      let rnTxt = [];
-      let match = null;
-      const regex = /(\[.*?\])/g;
-      let start = 0;
-      let index = 0;
-      while ((match = regex.exec(txt))) {
-        index = match.index;
-        if (index > start) {
-          rnTxt.push(txt.substring(start, index));
-          rnTxt.push({
-            name: 'text',
-            text: txt.substring(start, index)
-          });
-        }
-        if (match[1] in emoji.obj) {
-          const v = emoji.obj[match[1]];
-          // rnTxt.push(this.customEmoji(v));
-          rnTxt.push({
-            name: 'img',
-            text: v
-          });
-        } else {
-          // rnTxt.push(match[1]);
-          rnTxt.push({
-            name: 'text',
-            text: match[1]
-          });
-        }
-        start = index + match[1].length;
-      }
-      // rnTxt.push(txt.substring(start, txt.length));
-      rnTxt.push({
-        name: 'text',
-        text: txt.substring(start, txt.length)
-      });
-      // return rnTxt.toString().replace(/,/g, "");
-      console.log(rnTxt)
-      return rnTxt
+    fatherMethod() {
+      this.onScroll()
+      this.scrollMessageListToButtom()
     },
 
+
     onScroll() {
-      // console.log('执行滚动')
-      // let messageListNode = this.$refs['message-list']
-      // if (!messageListNode) {
-      //   return
-      // }
-      // if (this.preScrollHeight - messageListNode.clientHeight - scrollTop < 20) {
-      //   this.isShowScrollButtomTips = false
-      // }
-      // var scrollDom = document.getElementById('ID');
-      //     scrollDom.scrollTop = scrollDom.scrollHeight
+      console.log('执行滚动1111')
       this.$nextTick(function () {
         var ele = this.$refs['message-list'];
-        // var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-        //   var scrollTop = documentElement.scrollTop || document.body.scrollTop
-        ele.scrollTop = 1000;
+        ele.scrollTop = ele.scrollHeight;
+        console.log(ele.scrollHeight, "高度")
       });
     },
     // 如果滚到底部就保持在底部，否则提示是否要滚到底部

@@ -67,6 +67,7 @@ export default {
     return {
       imSdk: this.$imsdk,
       doctorInfo: '',
+      chooseId: '',
       isloading: true, // 是否显示loading
       questionDes: '',
       // 咨询弹窗
@@ -91,10 +92,14 @@ export default {
   },
   mounted() {
     this.init();
- 
+    if (typeof (this.$store.state.accountInfo) == 'string') {
+      this.chooseId = JSON.parse(this.$store.state.accountInfo).id;
+    } else {
+      this.chooseId =  this.$store.state.accountInfo.id;
+    }
     // 注册用户
-    this.imSdk.registerUser('p' + JSON.parse(this.$store.state.accountInfo).id, this.$store.state.accountInfo.name, () => {
-      this.imSdk.createUserConnect('p' + JSON.parse(this.$store.state.accountInfo).id, '123456', {
+    this.imSdk.registerUser('p' + this.chooseId, this.$store.state.accountInfo.name, () => {
+      this.imSdk.createUserConnect('p' + this.chooseId, '123456', {
         userConnectCallback: () => {
           // 拿到消息列表之后的回调
           this.imSdk.openSession(
@@ -111,6 +116,7 @@ export default {
         }
       })
     })
+    
   },
 
   methods: {
@@ -136,7 +142,7 @@ export default {
       let data = {};
       data.doctorId = Number(this.$route.query.id);
       data.question = this.questionDes;
-      data.patientId = JSON.parse(this.$store.state.accountInfo).id;
+      data.patientId = this.chooseId;
       data.status = 0;
       this.$axios.post(insertOrUpdate, data).then((res) => {
         if (res.data.code == '200') {

@@ -49,7 +49,6 @@ export default {
           if (!this.busy) this.loadingtrue = false;
           this.busy = false;
 
-          console.log(this.drugsList.drugs, " this.drugsList.drugs")
         } else {
           this.$toast.info(res.data.msg);
         }

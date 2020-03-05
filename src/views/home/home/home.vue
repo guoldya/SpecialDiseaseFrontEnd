@@ -21,6 +21,7 @@
         <p class="name">{{item.name}}
           <span class="code">{{item.code}}</span>
         </p>
+        
         <p class="dise">{{item.diseaseName}}</p>
         <p class="dise">{{item.idCard}}</p>
         <img class="qiehuan" @click="switchCard(index)" src="@/assets/images/qiehuan.png">
@@ -71,19 +72,23 @@ export default {
     await this.$store.dispatch('getCards', { update: true });
     // await this.$store.dispatch('getDepart', { update: true });
 
-    this.getInfo = JSON.parse(sessionStorage.getItem('objInfo'));
+    console.log(typeof (this.$store.state.accountInfo), this.$store.state.accountInfo.id, "ssssssssss")
 
-    if (this.getInfo) {
-      if (this.getInfo.id) {
-        this.chooseId = this.getInfo.id;
+    if (this.$store.state.accountInfo) {
+      if (typeof (this.$store.state.accountInfo) == 'string') {
+        this.chooseId = JSON.parse(this.$store.state.accountInfo).id;
+      } else {
+        this.chooseId = this.$store.state.accountInfo.id;
       }
+       
     } else {
       if (this._cardlist.length == 0) {
         return
       }
       this.chooseId = this._cardlist[0].id;
-      let setInfo = JSON.stringify(this._cardlist[0])
-      sessionStorage.setItem('objInfo',JSON.parse(setInfo)  )
+      // let setInfo = JSON.stringify(this._cardlist[0])
+      // sessionStorage.setItem('objInfo', JSON.parse(setInfo))
+      console.log(this.chooseId, "ddddddddddd")
       this.$store.commit('accountInfoFun', this._cardlist[0])//已登录
     }
     this.homeNumber(this.chooseId);
@@ -107,7 +112,7 @@ export default {
       try {
         let res = await this.$axios.put(doctorlistURL, {
 
-          patientId: data ? data : this.getInfo.id
+          patientId: data ? data : JSON.parse(this.$store.state.accountInfo).id
         });
         if (res.data.code != 200) {
           throw Error(res.data.msg);
@@ -164,9 +169,9 @@ export default {
 
       this.chooseId = current.id;
       this.homeNumber(this.chooseId);
-      let setInfo = JSON.stringify(current)
-      sessionStorage.setItem('objInfo', setInfo)
-      this.$store.commit('accountInfoFun', JSON.parse(current_))//已登录
+      // let setInfo = JSON.stringify(current)
+      // sessionStorage.setItem('objInfo', setInfo)
+      this.$store.commit('accountInfoFun', current)//已登录
     },
 
     addpeple() {

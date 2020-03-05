@@ -3,10 +3,6 @@
 
     <div class="content" ref="message-list">
       <div class="message-list" @scroll="this.onScroll">
-        <!-- <div class="more" v-if="!isCompleted">
-          <md-button type="link" @click="$store.dispatch('getMessageList', currentConversation.conversationID)">查看更多</md-button>
-        </div>
-        <div class="no-more" v-else>没有更多了</div> -->
         <message-item v-for="message in imSdk.messageList" :key="message.ID" :message="message" />
       </div>
       <div v-show="isShowScrollButtomTips" class="newMessageTips" @click="scrollMessageListToButtom">回到最新位置</div>
@@ -21,13 +17,12 @@
 import { mapGetters, mapState } from 'vuex'
 import MessageItem from '../message/message-item'
 import MessageSendBox from '../message/message-send-box'
-import ConversationList from '@/components/conversation/conversation-list'
+ 
 export default {
   name: 'CurrentConversation',
   components: {
     MessageSendBox,
     MessageItem,
-    // ConversationProfile
   },
   props: ['content'],
   data() {
@@ -40,10 +35,7 @@ export default {
     }
   },
   mounted() {
-    
-    // if(this.imSdk.messageList){
-    //    this.onScroll()
-    // }
+     
     this.scrollMessageListToButtom()
     setTimeout(() => {
       this.onScroll()
@@ -109,11 +101,9 @@ export default {
       //     scrollDom.scrollTop = scrollDom.scrollHeight
       this.$nextTick(function () {
         var ele = this.$refs['message-list'];
-        console.log(ele.scrollHeight, "内容的高度")
         // var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
         //   var scrollTop = documentElement.scrollTop || document.body.scrollTop
         ele.scrollTop = 1000;
-        console.log(ele.scrollTop, "执行滚动")
       });
     },
     // 如果滚到底部就保持在底部，否则提示是否要滚到底部
@@ -126,7 +116,6 @@ export default {
           return
         }
         messageListNode.scrollTop = messageListNode.scrollHeight
-        console.log(messageListNode.scrollHeight, "直接的滚动")
         this.preScrollHeight = messageListNode.scrollHeight
         this.isShowScrollButtomTips = false
       });

@@ -2,10 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import home from './home';
 
-import conversation from './modules/conversation'
-import user from './modules/user'
-import video from './modules/video'
-import group from './modules/group'
+ 
+ 
 import { Toast } from 'mand-mobile'
 import VuexPersistence from 'vuex-persist'
 
@@ -82,10 +80,7 @@ export default new Vuex.Store({
     modules: {
         home,
 
-        conversation,
-        user,
-        video,
-        group
+       
     },
     plugins: [vuexLocal.plugin]
 })

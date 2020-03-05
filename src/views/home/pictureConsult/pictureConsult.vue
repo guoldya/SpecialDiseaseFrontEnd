@@ -93,8 +93,8 @@ export default {
     this.init();
  
     // 注册用户
-    this.imSdk.registerUser('p' + JSON.parse(this.$store.state.accountInfo).id, this.$store.state.accountInfo.name, () => {
-      this.imSdk.createUserConnect('p' + JSON.parse(this.$store.state.accountInfo).id, '123456', {
+    this.imSdk.registerUser('p' + this.$store.state.accountInfo.id, this.$store.state.accountInfo.name, () => {
+      this.imSdk.createUserConnect('p' + this.$store.state.accountInfo.id, '123456', {
         userConnectCallback: () => {
           // 拿到消息列表之后的回调
           this.imSdk.openSession(
@@ -136,7 +136,7 @@ export default {
       let data = {};
       data.doctorId = Number(this.$route.query.id);
       data.question = this.questionDes;
-      data.patientId = JSON.parse(this.$store.state.accountInfo).id;
+      data.patientId = this.$store.state.accountInfo.id;
       data.status = 0;
       this.$axios.post(insertOrUpdate, data).then((res) => {
         if (res.data.code == '200') {

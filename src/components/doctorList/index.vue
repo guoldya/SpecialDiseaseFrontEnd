@@ -41,7 +41,8 @@
                 v-if="datas.status==2"
                 :to="{ path: '/consultDetail', query: { id: datas.id }}"
               >
-                <img src="@/assets/conversationImg/freeText.png" />免费
+                <img src="@/assets/conversationImg/freeText.png" />
+                <span>免费</span>
               </router-link>
               <router-link
                 v-else
@@ -221,8 +222,8 @@ export default {
   width: 33.3333%;
   font-size: 12px;
 }
-.dottextff {
-  color: var(--primary--secondary);
+.dotType .dottextff a span {
+  color: var(--primary--secondary) ;
   text-align: left;
 }
 .dotdhff {

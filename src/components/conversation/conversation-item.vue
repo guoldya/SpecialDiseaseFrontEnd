@@ -11,54 +11,23 @@
       <div class="online-item">
         <div class="header">
           <!-- <avatar :src="avatar" :type="conversation.type" /> -->
-          <span
-            v-if="showUnreadCount"
-          >{{conversation.unreadCount > 99 ? '99+' : conversation.unreadCount}}</span>
+         <img src="@/assets/conversationImg/onlineText.png" />
         </div>
         <div class="content">
           <div class="row-1">
             <div class="name">
               <div class="text-ellipsis">
-                <span
-                  :title="conversation.userProfile.nick || conversation.userProfile.userID"
-                  v-if="conversation.type ===  TIM.TYPES.CONV_C2C"
-                >{{conversation.userProfile.nick || conversation.userProfile.userID}}</span>
-                <span v-else-if="conversation.type === TIM.TYPES.CONV_SYSTEM">系统通知</span>
-                <!--<span title="冉有钱">冉有钱</span>-->
+                <span>冉有钱</span>
               </div>
             </div>
-            <div class="unread-count">
-              <span
-                class="badge"
-                v-if="showUnreadCount"
-              >{{conversation.unreadCount > 99 ? '99+' : conversation.unreadCount}}</span>
-              <!--<span class="badge">-->
-              <!--6-->
-              <!--</span>-->
-            </div>
           </div>
-          <div class="row-2">
-            <div class="summary">
-              <div v-if="conversation.lastMessage" class="text-ellipsis">
-                <span class="remind" style="color:red;" v-if="hasMessageAtMe">[有人提到我]</span>
-                <span
-                  class="text"
-                  :title="conversation.lastMessage.messageForShow"
-                >{{messageForShow}}</span>
-              </div>
-              <!--<div class="text-ellipsis">-->
-              <!--<span class="text" title="你好">-->
-              <!--你好-->
-              <!--</span>-->
-              <!--</div>-->
-            </div>
-          </div>
+           
         </div>
       </div>
       <div class="dotType">
         <!---->
         <div class="dottextff">
-          <img src="@/assets/conversationImg/onlineText.png" />图文问诊
+          <img src="@/assets/conversationImg/freeText.png" />图文问诊
         </div>
        
         
@@ -115,113 +84,6 @@ export default {
   color: var(--primary--content);
   border: 0.01rem solid var(--primary--line);
  }
-// .conversation-item-container {
-//   padding: 15px 20px;
-//   cursor: pointer;
-//   /*overflow: hidden;*/
-//   transition: 0.2s;
-//   background: #fff;
-//   border-bottom: 1px solid #ededed;
-//   &:hover {
-//     background: #404953;
-
-//     .close-btn {
-//       right: 3px;
-//     }
-//   }
-// }
-
-// .close-btn {
-//   position: absolute;
-//   right: -25px;
-//   top: 103px;
-//   color: #76828c;
-//   transition: all 0.2s ease;
-
-//   &:hover {
-//     color: #f35f5f;
-//   }
-// }
-
-// .warp {
-//   display: flex;
-// }
-
-// .avatar {
-//   width: 100px;
-//   height: 100px;
-//   margin-right: 20px;
-//   border-radius: 50%;
-//   flex-shrink: 0;
-// }
-
-// .content22 {
-//   flex: 1;
-//   height: 155px;
-//   /*overflow: hidden;*/
-//   border-bottom: 1px solid red;
-  
-// }
-
-// .choose {
-//   background-color: #404953;
-// }
-
-// .context-menu-button {
-//   padding: 10px;
-//   border: 2px solid #2d8cf0;
-//   border-radius: 8px;
-// }
-// .move .content-cell-body-tool {
-//   width: 150px;
-//   background: red;
-//   color: #fff;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// }
-</style>
-<style lang="scss" scoped>
-.content22 {
-  height: 140px;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  border-bottom: 1px solid #ededed;
-  &.hidden {
-    overflow-y: hidden;
-  }
-  .content-cell {
-    .content-cell-body {
-      height: 133px;
-      width: 120%;
-      background: #ffffff;
-      display: flex;
-      transition: transform 0.25s;
-      &.move {
-        transform: translateX(-16.67%);
-      }
-      img {
-        width: 78px;
-        height: 78px;
-        margin: 29px 27px 26px 0;
-      }
-      .content-cell-body-content {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        box-sizing: border-box;
-      }
-      .content-cell-body-tool {
-        width: 150px;
-        background: red;
-        color: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
-  }
-}
 .row-1 {
     display: flex;
     line-height: 50px;
@@ -255,30 +117,6 @@ export default {
       }
     }
   }
-
-  .row-2 {
-    display: flex;
-    font-size: 26px;
-    padding-top: 3px;
-
-    .summary {
-      flex: 1;
-      overflow: hidden;
-      min-width: 0;
-      color: #555262;
-      font-size: 24px;
-      .remind {
-        color: #f35f5f;
-      }
-    }
-
-    .date {
-      padding-left: 10px;
-      flex-shrink: 0;
-      text-align: right;
-      color: #76828c;
-    }
-  }
 .online-item {
   display: flex;
   // padding-left: 30px;
@@ -309,93 +147,6 @@ export default {
       right: -10px;
     }
   }
-  .content1 {
-    flex: 1;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: space-between;
-    line-height: 30px;
-    p {
-      width: 100%;
-    }
-    .doctorname {
-      font-size: 32px;
-    }
-    .messge {
-      color: #979797;
-      .text {
-        width: 300px;
-        line-height: 30px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-        display: block;
-      }
-    }
-    .content-info {
-      height: 36px;
-      overflow: hidden;
-      width: 500px;
-      text-overflow: ellipsis; /*文字隐藏后添加省略号*/
-      white-space: nowrap; /*强制不换行*/
-    }
-    .tips {
-      display: inline-block;
-      height: 36px;
-      line-height: 38px;
-      border-radius: 8px;
-      padding: 0 10px;
-      margin-left: 20px;
-    }
-    .blue {
-      border: 1px solid #1da1f3;
-      color: #1da1f3;
-    }
-    .green {
-      border: 1px solid #53c272;
-      color: #53c272;
-    }
-    .cyan-blue {
-      border: 1px solid #31c3c2;
-      color: #31c3c2;
-    }
-    .yellow {
-      border: 1px solid #fdae5d;
-      color: #fdae5d;
-    }
-    .message {
-      color: #979797;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      width: 480px;
-    }
-  }
-  .primary--content {
-    // flex: 1;
-    width: 200px;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: space-between;
-    justify-content: flex-end;
-    span {
-      width: 90px;
-      height: 36px;
-      line-height: 38px;
-      font-size: 24px;
-      text-align: center;
-      background: #ffb155;
-      color: #ffffff;
-      border-top-right-radius: 16px;
-      border-bottom-left-radius: 16px;
-      &.active {
-        background: #149cf1;
-      }
-      &.active1 {
-        background: #979797;
-      }
-    }
-  }
 }
 .dotType {
   border-top: 1px solid #fcfcfc;
@@ -410,7 +161,7 @@ export default {
   font-size: 12px;
 }
 .dottextff {
-  color: var(--primary);
+  color: var(--primary--secondary);
   text-align: left;
 }
 .dotdhff {

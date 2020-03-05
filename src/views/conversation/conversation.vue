@@ -1,16 +1,7 @@
 <template>
-  <!-- <div>
-    <conversation-item
-      :conversation="item"
-      :index="index"
-      v-for="(item,index) in conversationList"
-      :key="item.conversationID"
-    />
-  </div>-->
-
   <div class="selectMedicine margin55">
-    <Header post-title="咨询记录"></Header>
-
+    <Header post-title="咨询记录" :isBackTo='true'></Header>
+    
     <ul class="content" v-show="show && !loadingtrue">
       <!-- <Recordcard v-for="(item,i) in drugsList.drugs" :content="item" :type="4" :key="i"></Recordcard> -->
       <conversation-item
@@ -33,6 +24,7 @@
       ></div>
     </ul>
     <Loading v-if="loadingtrue"></Loading>
+    <Footer></Footer>
   </div>
 </template>
 <script>

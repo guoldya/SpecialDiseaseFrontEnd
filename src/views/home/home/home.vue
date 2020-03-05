@@ -71,11 +71,11 @@ export default {
     await this.$store.dispatch('getCards', { update: true });
     // await this.$store.dispatch('getDepart', { update: true });
 
-    this.getInfo = JSON.parse(sessionStorage.getItem('objInfo'));
+    
 
-    if (this.getInfo) {
-      if (this.getInfo.id) {
-        this.chooseId = this.getInfo.id;
+    if (this.$store.state.accountInfo) {
+      if (this.$store.state.accountInfo.id) {
+        this.chooseId =this.$store.state.accountInfo.id;
       }
     } else {
       if (this._cardlist.length == 0) {
@@ -107,7 +107,7 @@ export default {
       try {
         let res = await this.$axios.put(doctorlistURL, {
 
-          patientId: data ? data : this.getInfo.id
+          patientId: data ? data : JSON.parse(this.$store.state.accountInfo).id
         });
         if (res.data.code != 200) {
           throw Error(res.data.msg);

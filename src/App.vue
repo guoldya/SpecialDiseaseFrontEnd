@@ -49,6 +49,7 @@ export default {
 :root {
   /* 主题色 */
   --primary: #48b6ff;
+  --primary--secondary: #30C57E;
   /* 内容字体颜色 5A5A5A*/
   --primary--content: #8b8b8b;
   --primary--right: #8b8b8b;
@@ -115,13 +116,13 @@ body {
   color: var(--primary--content);
   margin-left: 39%;
 }
-.conversionCard {
-    margin-top: 35px;
+.conversationCard {
+    margin: 26px 24px 24px;
     box-shadow: 0 2px 8px 0 rgba(0,0,0,0.16);
     background-color: white;
     border-radius: 8px;
     list-style-type: none;
-    padding: 14px 17px 2px 2px;
+    padding: 20px 24px 4px;
     
 }
 .disFlex {
@@ -129,9 +130,17 @@ body {
   justify-content: space-between;
 }
 /* 分割线加文字 */
-.system-normal-message .content {
-  position: relative;
-  display: block;
+.message-item{
+  margin: 0 12px;
+}
+.system-normal-message .content span {
+    position: relative;
+    display: inline-block;
+    background-color: #f8f8f8;
+    padding: 0 .1rem;
+    left: 50%;
+    -webkit-transform: translate(-50%);
+    transform: translate(-50%);
 }
 .system-message .content,
 .system-normal-message .content {
@@ -140,14 +149,12 @@ body {
   font-size: 0.13rem;
   padding: 0.04rem 0.24rem;
 }
-.system-normal-message .content:before {
-  top: 0.12rem;
-  width: 100%;
+.system-normal-message .content {
+  position: relative;
+  display: block;
 }
-.system-message .content:before,
-.system-normal-message .content:before {
-  left: 0;
-}
+
+
 .system-message .content:after,
 .system-message .content:before,
 .system-normal-message .content:after,
@@ -157,6 +164,31 @@ body {
   top: 0.14rem;
   width: 0.2rem;
   border-top: 0.01rem solid #adb5bd;
+}
+.system-normal-message .content:before {
+  /* top: 0.12rem; */
+  width: 100%;
+}
+.system-message .content:before,
+.system-normal-message .content:before {
+  left: 0;
+}
+.system-message, .system-normal-message{
+  position: relative;
+  margin: 0 24px 16px 24px;
+}
+.message-item {
+    margin-bottom: .15rem;
+}
+.message-datetime.show {
+    display: block;
+}
+.message-datetime {
+    display: none;
+    padding: .1rem .15rem;
+    color: #999baa;
+    text-align: center;
+    font-size: .14rem;
 }
 /* 分割线 */
 .card-divider-horizontal {

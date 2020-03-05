@@ -13,7 +13,7 @@
         <span class="aui-tabBar-item-icon">
           <img :src="'/conversation' === $route.path ? tabBarImgArr[1].selected : tabBarImgArr[1].normal" alt="消息中心">
         </span>
-        <span :class="{on: '/conversation' === $route.path}">在线咨询</span>
+        <span :class="{on: '/conversation' === $route.path}">咨询历史</span>
       </a>
       <a href="javascript:;" class="aui-tabBar-item aui-tabBar-item-active" @click="switchTo('/my')">
         <span class="aui-tabBar-item-icon">

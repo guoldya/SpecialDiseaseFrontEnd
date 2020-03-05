@@ -1,6 +1,6 @@
 <template>
   <div class="navigation">
-    <i class="icon-iconfontjiantou" @click="$router.go(-1)">
+    <i v-if="!isBackTo" class="icon-iconfontjiantou" @click="$router.go(-1)">
       <img src="@/assets/images/icon_back.png">
     </i>
     <div class="navigation-content">
@@ -19,7 +19,7 @@ export default {
       active:[""],
     }
   },
-  props: ['postTitle','titleRight'],
+  props: ['postTitle','titleRight','isBackTo'],
   created() {
 
   },

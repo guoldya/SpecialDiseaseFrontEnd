@@ -10,7 +10,8 @@ import CurrentConversation from "@/components/conversation/current-conversation"
 export default {
   data() {
     return {
-      imSdk: this.$imsdk
+      imSdk: this.$imsdk,
+      chooseId: '',
     };
   },
   name: "ChatRoom",
@@ -18,8 +19,13 @@ export default {
     CurrentConversation
   },
   mounted() {
+    if (typeof (this.$store.state.accountInfo) == 'string') {
+      this.chooseId = JSON.parse(this.$store.state.accountInfo).id;
+    } else {
+      this.chooseId = this.$store.state.accountInfo.id;
+    }
     this.imSdk.createUserConnect(
-      "p" + this.$store.state.accountInfo.id,
+      "p" + this.chooseId,
       "123456",
       {
         userConnectCallback: () => {

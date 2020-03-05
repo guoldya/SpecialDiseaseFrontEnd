@@ -25,6 +25,7 @@ const adressinfo = () => import(/* webpackChunkName: "my" */ "@/views/adressinfo
 const acctest = () => import(/* webpackChunkName: "my" */ "@/views/my/acctest/acctest.vue")
 const acctestinfo = () => import(/* webpackChunkName: "my" */ "@/views/my/acctestinfo/acctestinfo.vue")
 const idcardlist = () => import(/* webpackChunkName: "my" */ "@/views/my/idcardlist/idcardlist.vue")
+const unblind = () => import(/* webpackChunkName: "my" */ "@/views/my/unblind/unblind.vue")
 const consultation = () => import(/* webpackChunkName: "my" */ "@/views/my/consultation/consultation.vue")
 const myorder = () => import(/* webpackChunkName: "my" */ "@/views/my/myorder/myorder.vue")
 const myorderinfo = () => import(/* webpackChunkName: "my" */ "@/views/my/myorderinfo/myorderinfo.vue")
@@ -172,14 +173,21 @@ export default new Router({
       title: '地址详情'
     }
   },
-  
    
+  {
+    path: '/unblind',
+    name: 'unblind',
+    component: unblind,
+    meta: {
+      title: '患者信息'
+    }
+  },
   {
     path: '/idcardlist',
     name: 'idcardlist',
     component: idcardlist,
     meta: {
-      title: '患者信息'
+      title: '患者列表'
     }
   },
 

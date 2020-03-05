@@ -24,6 +24,7 @@
 
 import { InputItem, Field } from 'mand-mobile'
 let insertOrUpdatePatient = "sysPatientBinding/insertOrUpdate";
+import { mapState } from 'vuex';
 export default {
   data() {
     return {
@@ -83,7 +84,12 @@ export default {
     [InputItem.name]: InputItem,
     [Field.name]: Field,
   },
+  computed: {
+    ...mapState({
+      _cardlist: state => state.home.cardList,
+    }),
 
+  },
   methods: {
     showSelector() {
       this.isSelectorShow = true
@@ -118,6 +124,7 @@ export default {
             this.$toast.info('添加成功')
             this.isTijiao = true;
             this.accountId = res.data.data.accountId;
+
             this.$store.dispatch('getCards', { update: true });
             if (this.$route.query.isnews) {
               this.basicDialog.open = true;
@@ -126,9 +133,11 @@ export default {
             }
           } else {
             this.$toast.info(res.data.msg)
+            this.isTijiao = true;
           }
         }).catch(function (err) {
           console.log(err);
+          this.isTijiao = true;
         });
 
 

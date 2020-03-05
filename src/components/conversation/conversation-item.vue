@@ -1,17 +1,16 @@
 <template>
-   
-  <div class="con tent22"  >
+
+  <div class="con tent22">
     <div class="conversationCard">
       <div class="disFlex">
         <span>2020-12-12</span>
         <span class="online" :class="1?'online':'complete'">{{1?'咨询中':'已结束'}}</span>
       </div>
       <div class="card-divider card-divider-horizontal"></div>
-
       <div class="online-item">
         <div class="header">
           <!-- <avatar :src="avatar" :type="conversation.type" /> -->
-         <img src="@/assets/conversationImg/onlineText.png" />
+          <img src="@/assets/conversationImg/onlineText.png" />
         </div>
         <div class="content">
           <div class="row-1">
@@ -21,7 +20,7 @@
               </div>
             </div>
           </div>
-           
+
         </div>
       </div>
       <div class="dotType">
@@ -29,42 +28,37 @@
         <div class="dottextff">
           <img src="@/assets/conversationImg/freeText.png" />图文问诊
         </div>
-       
-        
-      <p class="consult " :class="1?'online-consult':'complete-consult'">咨询详情</p>
-      
+        <p class="consult " :class="1?'online-consult':'complete-consult'">咨询详情</p>
       </div>
     </div>
-
-     
   </div>
 </template>
 <script>
 import { mapGetters, mapState } from "vuex";
- 
+
 
 export default {
   name: "conversation-item",
   props: ["conversation"],
   data() {
     return {
-       
+
     };
   },
- 
+
   mounted() {
-    
+
   },
   methods: {
-    
+
   },
   watch: {
-    
+
   }
 };
 </script>
  <style lang="less" scoped>
- .conversationCard .consult{
+.conversationCard .consult {
   font-size: 0.26rem;
   float: right;
   display: inline-block;
@@ -73,50 +67,50 @@ export default {
   padding: 0 0.2rem;
   border-radius: 0.3rem;
   margin-left: 0.3rem;
- }
- .online-consult{
+}
+.online-consult {
   background: var(--primary);
   color: #fff;
   border: 0.01rem solid var(--primary);
- }
- .complete-consult{
+}
+.complete-consult {
   background: var(--primary--line);
   color: var(--primary--content);
   border: 0.01rem solid var(--primary--line);
- }
+}
 .row-1 {
-    display: flex;
-    line-height: 50px;
+  display: flex;
+  line-height: 50px;
 
-    .name {
-      color: #23212e;
-      flex: 1;
-      min-width: 0px;
-      font-size: 32px;
-    }
+  .name {
+    color: #23212e;
+    flex: 1;
+    min-width: 0px;
+    font-size: 32px;
+  }
 
-    .unread-count {
-      padding-left: 10px;
-      flex-shrink: 0;
-      color: #76828c;
-      font-size: 14px;
+  .unread-count {
+    padding-left: 10px;
+    flex-shrink: 0;
+    color: #76828c;
+    font-size: 14px;
 
-      .badge {
-        vertical-align: bottom;
-        background-color: #f35f5f;
-        border-radius: 15px;
-        color: #fff;
-        display: inline-block;
-        font-size: 30px;
-        height: 30px;
-        max-width: 30px;
-        line-height: 30px;
-        padding: 0 6px;
-        text-align: center;
-        white-space: nowrap;
-      }
+    .badge {
+      vertical-align: bottom;
+      background-color: #f35f5f;
+      border-radius: 15px;
+      color: #fff;
+      display: inline-block;
+      font-size: 30px;
+      height: 30px;
+      max-width: 30px;
+      line-height: 30px;
+      padding: 0 6px;
+      text-align: center;
+      white-space: nowrap;
     }
   }
+}
 .online-item {
   display: flex;
   // padding-left: 30px;
@@ -179,11 +173,10 @@ export default {
   top: 3px;
   margin-right: 5px;
 }
-.online{
-  color: var(--primary)
+.online {
+  color: var(--primary);
 }
-.complete{
-  color: var(--primary--right)
+.complete {
+  color: var(--primary--right);
 }
-
 </style>

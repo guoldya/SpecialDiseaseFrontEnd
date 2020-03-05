@@ -1,7 +1,7 @@
 <template>
   <div class="unblind margin55">
     <Header post-title="就诊卡详情"></Header>
-     
+
     <div class="flatCard" style="margin-top:10px">
       <div class="cardText login-box">
         <div class="content">
@@ -18,7 +18,6 @@
         </div>
       </div>
     </div>
-    
 
     <md-button type="primary" round class="margin16" @click="unBlind">解除绑定</md-button>
 
@@ -26,7 +25,7 @@
 </template>
 <script type="text/babel">
 import { mapState } from 'vuex';
-let appbizPatientCarduntie = "/api/hos/bizPatientCard/untie";
+let appbizPatientCarduntie = "sysPatientBinding/unBind";
 let cardDetail = "/api/hos/bizPatientCard/read/detail";
 export default {
   data() {
@@ -38,6 +37,7 @@ export default {
       createTime: '',
       mobile: '',
       cardinfo: '',
+      chooseId: '',
     };
   },
   computed: {
@@ -68,6 +68,12 @@ export default {
   },
   mounted() {
     this.$store.dispatch('getCards', { update: true });
+
+    if (typeof (this.$store.state.accountInfo) == 'string') {
+      this.chooseId = JSON.parse(this.$store.state.accountInfo).id;
+    } else {
+      this.chooseId = this.$store.state.accountInfo.id;
+    }
   },
   methods: {
     unBlind() {
@@ -78,24 +84,41 @@ export default {
         cancelText: '取消',
         onConfirm: () => {
           this.$axios.post(appbizPatientCarduntie, {
-            id: this.$route.query.id * 1,
-            patientName: this.patientName,
-            cardNo: this.cardNo,
-            mobile: this.mobile,
-            idCard: this.idCard,
-            createTime: this.createTime,
+            patientId: this.$route.query.id * 1,
+
           }).then(res => {
             if (res.data.code == '200') {
+              console.log(res.data.data.isEmpty, "res.data.data.isEmptyres.data.data.isEmpty")
 
-              this.$store.dispatch('getCards', { update: true }).then(res => {
-                if (this.$route.query.id * 1 == JSON.parse(sessionStorage.getItem('objInfo')).id) {
-                  let setInfo = JSON.stringify(this._cardlist[0])
-                  sessionStorage.setItem('objInfo', setInfo)
-                }
+              // isEmpty     0不为空 不跳转     1为空跳转绑定页
+              console.log("ww选中wwwww", this.$route.query.id, this.chooseId)
+              if (res.data.data.isEmpty == 0) {
+
+                this.$store.dispatch('getCards', { update: true }).then(res => {
+                  this.$store.commit('accountInfoFun', '')
+                  console.log("wwwa重新赋值wwww", this.$route.query.id, this.chooseId, this._cardlist[0])
+                  if (this.$route.query.id * 1 == this.chooseId) {
+                    this.$store.commit('accountInfoFun', this._cardlist[0])
+                  }
+                });
+
+                this.$toast.info("解绑成功")
+                setTimeout(() => {
+                  this.$router.go(-1);
+                }, 1000);
+
+              } else if (res.data.data.isEmpty == 1) {
+
+                this.$store.dispatch('getCards', { update: true }).then(res => {
+                  this.$store.commit('accountInfoFun', '')
+                });
+                this.$router.replace({
+                  name: 'addpeple',
+                  query: { isnews: 1 }
+                });
               }
 
-              );
-              this.$router.go(-1);
+
             } else {
               this.$toast.info(res.data.msg)
             }
@@ -112,5 +135,4 @@ export default {
 };
 </script>
  <style scoped>
- 
 </style>

@@ -52,7 +52,7 @@
     </div>
 
     <div style="padding:0.24rem">
-      <md-button type="primary" @click="onConfirm( )" round style="margin-top:16px">提交问题</md-button>
+      <md-button type="primary" @click="onConfirm( )"  :inactive="!isShow" round style="margin-top:16px">提交问题</md-button>
     </div>
     <!-- 咨询弹窗 -->
 
@@ -70,6 +70,7 @@ export default {
       chooseId: '',
       isloading: true, // 是否显示loading
       questionDes: '',
+      isShow: true,
       // 咨询弹窗
       agreeConf: {
         checked: true,
@@ -95,7 +96,7 @@ export default {
     if (typeof (this.$store.state.accountInfo) == 'string') {
       this.chooseId = JSON.parse(this.$store.state.accountInfo).id;
     } else {
-      this.chooseId =  this.$store.state.accountInfo.id;
+      this.chooseId = this.$store.state.accountInfo.id;
     }
     // 注册用户
     this.imSdk.registerUser('p' + this.chooseId, this.$store.state.accountInfo.name, () => {
@@ -116,7 +117,7 @@ export default {
         }
       })
     })
-    
+
   },
 
   methods: {
@@ -129,13 +130,15 @@ export default {
     },
     // 点击申请咨询按钮
     onConfirm() {
-
+      this.isShow = false;
       if (this.questionDes.replace(/\s*/g, '').length == 0) {
         this.$toast.info("请输入问题")
+        this.isShow = true;
         return
       }
       if (!this.agreeConf.checked) {
         this.$toast.info("请勾选协议")
+        this.isShow = true;
         return
       }
 
@@ -147,18 +150,19 @@ export default {
       this.$axios.post(insertOrUpdate, data).then((res) => {
         if (res.data.code == '200') {
           this.$toast.info("提交成功");
-
+          this.isShow = false;
         } else {
+          this.isShow = true;
           this.$toast.info(res.data.msg)
         }
       }).catch(function (err) {
         console.log(err);
       });
       let msg = {
-        type: 'text',
+        type: 'questionDes',
         text: this.questionDes,
       }
-
+      this.isShow = false;
       this.imSdk.send(msg)
 
       // this.$store.commit('selectTestFun',  );
@@ -172,7 +176,7 @@ export default {
           }
         })
       }, 1000);
-
+      this.isShow = true;
 
 
     },

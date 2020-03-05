@@ -125,7 +125,11 @@ export default {
             this.isTijiao = true;
             this.accountId = res.data.data.accountId;
 
-            this.$store.dispatch('getCards', { update: true });
+            this.$store.dispatch('getCards', { update: true }).then(res => {
+              if (!this.$store.state.accountInfo) {
+                this.$store.commit('accountInfoFun', this._cardlist[0])
+              }
+            });
             if (this.$route.query.isnews) {
               this.basicDialog.open = true;
             } else {

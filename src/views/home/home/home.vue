@@ -17,7 +17,7 @@
     </div>
     <!-- <div class="homePage" v-if=" _cardlist.length!=0"> -->
     <div class="homePage" v-if=" _cardlist.length!=0">
-      <div class="cardhome" v-for="(item, index) in  _cardlist"  :key="'cardlist' + index">
+      <div class="cardhome" v-for="(item, index) in  _cardlist"  v-if="item.id==chooseId"  :key="'cardlist' + index">
         <p class="name">{{item.name}}
           <span class="code">{{item.code}}</span>
         </p>
@@ -88,7 +88,7 @@ export default {
       this.chooseId = this._cardlist[0].id;
       // let setInfo = JSON.stringify(this._cardlist[0])
       // sessionStorage.setItem('objInfo', JSON.parse(setInfo))
-      console.log(this.chooseId, "ddddddddddd")
+      
       this.$store.commit('accountInfoFun', this._cardlist[0])//已登录
     }
     this.homeNumber(this.chooseId);
@@ -112,7 +112,7 @@ export default {
       try {
         let res = await this.$axios.put(doctorlistURL, {
 
-          patientId: data ? data : JSON.parse(this.$store.state.accountInfo).id
+          patientId: data ? data : this.chooseId
         });
         if (res.data.code != 200) {
           throw Error(res.data.msg);

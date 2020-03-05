@@ -8,7 +8,7 @@
       <div v-show="isShowScrollButtomTips" class="newMessageTips" @click="scrollMessageListToButtom">回到最新位置</div>
     </div>
     <div class="footer">
-      <message-send-box @fatherMethod="fatherMethod" />
+      <message-send-box @fatherMethod="fatherMethod" v-if="isShow" />
     </div>
 
   </div>
@@ -32,6 +32,7 @@ export default {
       preScrollHeight: 0,
       showConversationProfile: false,
       timeout: '',
+      isShow: true,
     }
   },
   mounted() {
@@ -44,6 +45,12 @@ export default {
 
   },
   updated() {
+
+    console.log(this.imSdk.messageList[this.imSdk.messageList.length - 1], "77777777777")
+
+    if (JSON.parse(this.imSdk.messageList[this.imSdk.messageList.length - 1].content).close) {
+      this.isShow = false;
+    }
     this.onScroll()
     setTimeout(() => {
       this.onScroll()

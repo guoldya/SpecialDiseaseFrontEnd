@@ -2,6 +2,24 @@
 
   <div class="online-content-warp">
     <div v-if="aa.type=='text'" class="online-content-list " :class="message.senderId===$imsdk.user.id?'right':''">
+      <template v-if="!aa.close">
+        <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
+        <div class="online-content-list-text">
+          <em></em>
+          <div>
+            <span v-html="aa.text"></span>
+          </div>
+        </div>
+      </template>
+      <template v-else>
+        <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
+        <div class="online-content-list-text">
+          <span>聊天结束</span>
+        </div>
+      </template>
+    </div>
+
+    <div v-if="aa.type=='questionDes'" class="online-content-list " :class="message.senderId===$imsdk.user.id?'right':''">
       <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
       <div class="online-content-list-text">
         <em></em>
@@ -9,7 +27,9 @@
           <span v-html="aa.text"></span>
         </div>
       </div>
+
     </div>
+
     <div v-if="aa.type=='geo'" class="online-content-list outpation">
       <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
       <div class="online-content-list-text">

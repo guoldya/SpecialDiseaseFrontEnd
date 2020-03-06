@@ -63,6 +63,7 @@ export class ImSdk {
                 toUsername: toUsername,
             }
             this.restFulApi.createChannel(channel, (data) => {
+                console.log(data,"d打开会话")
                 this.userChannel = data
                 this.selectedChannelId = data.channelId
                 this.imSessionSDK.init({ getMessageCallback })

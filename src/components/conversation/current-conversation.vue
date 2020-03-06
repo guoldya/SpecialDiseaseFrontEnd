@@ -34,9 +34,12 @@ export default {
       isShow: true,
     }
   },
-  computed:{
-    showSendBox(){
-      if(this.imSdk && this.imSdk.messageList.length){
+  computed: {
+    showSendBox() {
+      if (this.imSdk && this.imSdk.messageList.length) {
+        if (this.$route.query.status == 2) {
+          return false
+        }
         let len = this.imSdk.messageList.length;
         return !JSON.parse(this.imSdk.messageList[len - 1].content).close
       }
@@ -63,12 +66,12 @@ export default {
 
         }
       }
-     
+
     }
 
- this.onScroll()
+    this.onScroll()
 
-    
+
 
   },
 

@@ -10,7 +10,7 @@
           </div>
         </div>
       </template>
-      <template v-if="aa.close">
+      <template v-if="aa.close||$route.query.status==2">
         <div class="message-item system-tips-message message-state--8 normal-style">
           <div class="message-datetime show">{{aa.date}}</div>
           <div class="message-inner">
@@ -79,7 +79,7 @@
             <div class="body">
               <div class="template-message-content">
                 <div class="title">病情描述：</div>
-                <span>线下确诊疾病为：{{aa.text}}。</span>
+                <span>{{aa.text}}</span>
               </div>
               <!-- <div class="imgs">
                 <ul class="image-list">
@@ -309,7 +309,7 @@ export default {
     background-color: transparent;
     &:before {
       content: "";
-      background-color: #48b6ff ;
+      background-color: #48b6ff;
     }
   }
 }

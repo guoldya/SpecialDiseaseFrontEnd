@@ -46,6 +46,7 @@ export class ImSessionSDK {
         const limit = 20
         listMessage(this.IMData.selectedChannelId, this.IMData.maxCreateAt, limit)
             .then(response => {
+                console.log(response,"ssssssddddddss")
                 this.IMData.hasMoreMessage = response.data.length === 20
                 if (response.data.length > 0) {
                     this.IMData.messageList = [...response.data.reverse(), ...this.IMData.messageList]

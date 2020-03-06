@@ -1,6 +1,6 @@
 <!--医生信息列表组件 -->
 <template>
-  <div class="doctor-list"> 
+  <div class="doctor-list">
     <router-link :to="{ path: datas.status==2?'/consultDetail':'/chatRoom', query: { id: datas.id ,name:datas.drName}}" class="consult">
       <div class="header">
         <img src="@/assets/images/3.jpg" />
@@ -31,7 +31,7 @@
         <div class="price">
           <div class="dotType">
             <div class="dottextff">
-              <router-link v-if="datas.status==2" :to="{ path: '/consultDetail', query: { id: datas.id }}">
+              <router-link v-if="datas.status==2" :to="{ path: '/consultDetail', query: { id: datas.id ,status:datas.status}}">
                 <img src="@/assets/conversationImg/freeText.png" />
                 <span class="fontSize12">免费</span>
               </router-link>

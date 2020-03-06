@@ -4,7 +4,7 @@
     <div class="conversationCard">
       <div class="disFlex">
         <span>{{conversation.startTime|lasttime}}</span>
-        <span class="online" :class="conversation.status==1?'online':'complete'">{{conversation.status==1?'咨询中':'已结束'}}</span>
+        <span class="online" :class="conversation.status==1?'online':'complete'">{{conversation.status==0?'咨询中':'已结束'}}</span>
       </div>
       <div class="card-divider card-divider-horizontal"></div>
       <div class="online-item">
@@ -29,15 +29,9 @@
           <img src="@/assets/conversationImg/freeText.png" />
           <span>图文问诊</span>
         </div>
-
-          <router-link :to="{ path: '/chatRoom', query: {
-          id: conversation.id,
-          name: conversation.drName
-        }}" >
-        <p class="consult " :class="conversation.status==1?'online-consult':'complete-consult'">
-            咨询详情
+        <p class="consult " @click="into" :class="conversation.status==1?'online-consult':'complete-consult'">
+          咨询详情
         </p>
-          </router-link>
       </div>
     </div>
   </div>
@@ -59,7 +53,17 @@ export default {
 
   },
   methods: {
-
+    into() {
+      this.$router.push({
+        name: 'chatRoom',
+        query: {
+          id: this.conversation.doctorId,
+          name: this.conversation.doctorName,
+          patientId:this.conversation.patientId,
+          status:this.conversation.status,
+        }
+      })
+    }
   },
   watch: {
 

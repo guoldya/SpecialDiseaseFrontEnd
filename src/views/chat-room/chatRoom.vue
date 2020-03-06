@@ -12,7 +12,7 @@ export default {
     return {
       imSdk: this.$imsdk,
       chooseId: '',
-      isOpen:false
+      isOpen: false
     };
   },
   name: "ChatRoom",
@@ -28,7 +28,10 @@ export default {
     } else {
       this.chooseId = this.$store.state.accountInfo.id;
     }
-    console.log(this.imSdk,"ssssssss")
+    if (this.$route.query.patientId) {
+      this.chooseId = this.$route.query.patientId;
+    }
+    console.log(this.imSdk, "ssssssss")
     this.imSdk.createUserConnect(
       "p" + this.chooseId,
       "123456",
@@ -42,6 +45,7 @@ export default {
             {
               getMessageCallback: () => {
                 // 拿到消息列表之后的回调
+                console.log("拿到消息")
               }
             }
           );

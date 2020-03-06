@@ -7,7 +7,7 @@
       <div v-show="isShowScrollButtomTips" class="newMessageTips" @click="scrollMessageListToButtom">回到最新位置</div>
     </div>
     <div class="footer">
-      <message-send-box v-if="isShow" />
+      <message-send-box v-if="showSendBox" />
     </div>
 
   </div>
@@ -34,33 +34,41 @@ export default {
       isShow: true,
     }
   },
+  computed:{
+    showSendBox(){
+      if(this.imSdk && this.imSdk.messageList.length){
+        let len = this.imSdk.messageList.length;
+        return !JSON.parse(this.imSdk.messageList[len - 1].content).close
+      }
+    }
+  },
   mounted() {
 
     this.scrollMessageListToButtom()
+
     if (this.imSdk.messageList[this.imSdk.messageList.length - 1]) {
       if (JSON.parse(this.imSdk.messageList[this.imSdk.messageList.length - 1].content).close) {
         this.isShow = false;
-        
+
       }
     }
 
   },
   updated() {
 
-    if (this.imSdk.messageList[this.imSdk.messageList.length - 1]) {
-      if (JSON.parse(this.imSdk.messageList[this.imSdk.messageList.length - 1].content).close) {
-        this.isShow = false;
-        this.$store.commit('feeActiveFun', 1)
+    if (this.isShow) {
+      if (this.imSdk.messageList[this.imSdk.messageList.length - 1]) {
+        if (JSON.parse(this.imSdk.messageList[this.imSdk.messageList.length - 1].content).close) {
+          this.isShow = false;
+
+        }
       }
+     
     }
 
-    this.onScroll()
-    // setTimeout(() => {
-    //   this.onScroll()
-    // }, 300)
-    // 1. 系统会话隐藏右侧资料组件
-    // 2. 没有当前会话时，隐藏右侧资料组件。
-    //    背景：退出群组/删除会话时，会出现一处空白区域
+ this.onScroll()
+
+    
 
   },
 

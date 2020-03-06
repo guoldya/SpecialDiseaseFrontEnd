@@ -20,7 +20,7 @@ export default {
     CurrentConversation
   },
   mounted() {
-    if (this.isOpen) {
+    if (this.$route.query.isOpen) {
       this.isOpen = true;
     }
     if (typeof (this.$store.state.accountInfo) == 'string') {

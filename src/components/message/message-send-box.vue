@@ -87,11 +87,7 @@ export default {
     })
   },
 
-  updated() {
-
-
-
-  },
+  
   mounted() {
     this.$refs.inputModel.focus()
 

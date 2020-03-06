@@ -334,7 +334,7 @@ export default {
 .bg3 {
   img {
     width: 100%;
-    padding: 24px;
+    padding: 24px 24px 0;
     margin-top: -70px;
   }
 }

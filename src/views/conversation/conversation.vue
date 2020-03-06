@@ -73,7 +73,7 @@ export default {
       this.$axios
         .put(selectDrugs, {
           pageSize: 20,
-          status: 2,
+          // status: 2,
           patientId: this.chooseId,
           pageNumber: this.current,
         })

@@ -112,6 +112,7 @@
           </span>
         </div>
       </div>
+      
       <Null :loading-true="drugsList.drugs.length==0"></Null>
       <md-icon v-if="!loadingtrue && busy" name="spinner" size="lg" style="-webkit-filter:invert(1)"></md-icon>
       <div class="nomore" v-if="!loadingtrue && (drugsList.nowPage == pages || pages == 0)">没有更多数据了</div>
@@ -316,7 +317,7 @@ export default {
   }
 }
 .lookmore {
-  padding: 14px 24px;
+  padding: 24px 24px 7px;
   display: flex;
   justify-content: space-between;
   font-size: 26px;
@@ -328,6 +329,7 @@ export default {
   }
   img {
     width: 12px;
+    height: 24px;
   }
 }
 .mycard .have {

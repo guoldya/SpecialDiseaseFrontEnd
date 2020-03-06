@@ -185,7 +185,7 @@ export default {
             id: this.$route.query.id,
             name: this.$route.query.name,
 
-            isOpen: 1
+            isOpen: true
           }
         })
       }, 1000);

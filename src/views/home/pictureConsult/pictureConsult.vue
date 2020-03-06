@@ -100,24 +100,14 @@ export default {
     }
     // 注册用户
     this.imSdk.registerUser('p' + this.chooseId, this.$store.state.accountInfo.name, () => {
-      this.imSdk.createUserConnect('p' + this.chooseId, '123456', {
-        userConnectCallback: () => {
-          // 拿到消息列表之后的回调
-          this.imSdk.openSession(
-            this.$store.state.accountInfo.name,
-            'd' + this.$route.query.id,
-            this.$route.query.name,
-            {
-              getMessageCallback: () => {
-                this.$store.commit('selectTestFun', this.imSdk.messageList);
-              }
-            }
-          )
-
-        }
-      })
+      this.imSdk.createUserConnect('p' + this.chooseId, '123456',  )
     })
-
+    this.imSdk.openSession(
+      this.$store.state.accountInfo.name,
+      'd' + this.$route.query.id,
+      this.$route.query.name,
+      
+    )
   },
 
   methods: {

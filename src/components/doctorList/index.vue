@@ -22,7 +22,7 @@
             :class="datas.allowType<3||!datas.allowType ?'noOpen' :''"
           >视频</span>&nbsp;
         </p>
-        <p class="content">擅长：{{datas.expertField}}</p>
+        <p class="content lineHeight17">擅长：{{datas.expertField}}</p>
         <p class="colo3">
           <span style=" margin-right: 20px;">
             咨询数：
@@ -238,6 +238,8 @@ export default {
 .dotType img {
   margin-right: 5px;
 }
- 
+.lineHeight17{
+  line-height: 34px !important;
+}
 </style>
 

@@ -6,12 +6,12 @@
       <span class="send" @click="sendTextMessage" :class="aaa ? 'active' : ''">发送</span>
     </div>
     <div class="inquiry-online-tool-detail">
+      <span @click="tool('emoji')" :class="toolType == 'emoji' ? 'active' :''">
+        <i class="iconfont icon-biaoqing1"></i>
+      </span>
       <span @click="tool('img')">
         <input class="upload-img" ref="uploadImg" type="file" @change="upload" accept="image/*">
         <i class="iconfont icon-tupian"></i>
-      </span>
-      <span @click="tool('emoji')" :class="toolType == 'emoji' ? 'active' :''">
-        <i class="iconfont icon-biaoqing1"></i>
       </span>
       <span>
         <i class="iconfont icon-shipin"></i>

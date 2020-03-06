@@ -20,25 +20,23 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
       <div class="dotType">
         <!---->
         <div class="dottextff">
-          <img src="@/assets/conversationImg/freeText.png" />图文问诊
+          <img src="@/assets/conversationImg/freeText.png" />
+          <span>图文问诊</span>
         </div>
-        <p class="consult " :class="1?'online-consult':'complete-consult'">
 
           <router-link :to="{ path: '/chatRoom', query: {
           id: conversation.id,
           name: conversation.drName
-        }}" class="consult">
-
+        }}" >
+        <p class="consult " :class="conversation.status==1?'online-consult':'complete-consult'">
             咨询详情
-
-          </router-link>
         </p>
+          </router-link>
       </div>
     </div>
   </div>
@@ -167,6 +165,8 @@ export default {
 .dottextff {
   color: var(--primary--secondary);
   text-align: left;
+  display: flex;
+  align-items: center;
 }
 .dotdhff {
   color: var(--primary--content);
@@ -177,10 +177,6 @@ export default {
   text-align: right;
 }
 .dotType img {
-  width: 32px;
-  height: 32px;
-  position: relative;
-  top: 3px;
   margin-right: 5px;
 }
 .online {

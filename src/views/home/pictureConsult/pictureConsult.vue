@@ -170,7 +170,7 @@ export default {
         type: 'questionDes',
         text: this.questionDes,
         userInfo: this.$store.state.accountInfo,
-        date: year + '-' + mon + '-' + date + '-' + h + '-' + m,
+        date: year + '-' + mon + '-' + date + ' ' + h + ':' + m,
       }
       this.isShow = false;
       this.imSdk.send(msg)
@@ -182,7 +182,8 @@ export default {
           name: 'chatRoom',
           query: {
             id: this.$route.query.id,
-            name: this.$route.query.name
+            name: this.$route.query.name,
+            isOpen:1
           }
         })
       }, 1000);

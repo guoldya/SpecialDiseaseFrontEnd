@@ -3,12 +3,14 @@
 
     <div class="content" ref="message-list">
       <div class="message-list" @scroll="this.onScroll">
+    
         <message-item v-for="message in imSdk.messageList" :key="message.ID" :message="message" />
       </div>
+       
       <div v-show="isShowScrollButtomTips" class="newMessageTips" @click="scrollMessageListToButtom">回到最新位置</div>
     </div>
     <div class="footer">
-      <message-send-box @fatherMethod="fatherMethod" v-if="isShow" />
+      <message-send-box v-if="isShow" />
     </div>
 
   </div>
@@ -38,10 +40,10 @@ export default {
   mounted() {
 
     this.scrollMessageListToButtom()
-    setTimeout(() => {
-      this.onScroll()
-    }, 300)
-    this.onScroll()
+    // setTimeout(() => {
+    //   this.onScroll()
+    // }, 300)
+    // this.onScroll()
 
   },
   updated() {
@@ -52,11 +54,10 @@ export default {
       }
     }
 
-
     this.onScroll()
-    setTimeout(() => {
-      this.onScroll()
-    }, 300)
+    // setTimeout(() => {
+    //   this.onScroll()
+    // }, 300)
     // 1. 系统会话隐藏右侧资料组件
     // 2. 没有当前会话时，隐藏右侧资料组件。
     //    背景：退出群组/删除会话时，会出现一处空白区域

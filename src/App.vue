@@ -123,15 +123,42 @@ body {
     border-radius: 8px;
     list-style-type: none;
     padding: 20px 24px 4px;
-    
 }
 .disFlex {
   display: flex;
   justify-content: space-between;
 }
+/* 分割线 */
+.card-divider-horizontal {
+  display: block;
+  clear: both;
+  width: 100%;
+  min-width: 100%;
+  height: 1px;
+  margin: 24px 0;
+}
+.card-divider,
+.card-divider-vertical {
+  position: relative;
+  display: inline-block;
+  width: 1px;
+  height: 0.1em;
+  vertical-align: middle;
+}
+.card-divider {
+  box-sizing: border-box;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5;
+  list-style: none;
+  font-feature-settings: "tnum";
+  background: #e8e8e8;
+}
 /* 分割线加文字 */
 .message-item{
-  margin: 0 12px;
+  /* margin: 0 12px; */
 }
 .system-normal-message .message-content span {
     position: relative;
@@ -141,6 +168,7 @@ body {
     left: 50%;
     -webkit-transform: translate(-50%);
     transform: translate(-50%);
+    /* text-align: justify; */
 }
 .system-message .message-content,
 .system-normal-message .message-content {
@@ -174,7 +202,6 @@ body {
 }
 .system-message, .system-normal-message{
   position: relative;
-  margin: 0 24px 16px 24px;
 }
 .message-item {
     margin-bottom: 15px;
@@ -198,26 +225,19 @@ body {
   height: 1px;
   margin: 24px 0;
 }
-.card-divider,
-.card-divider-vertical {
-  position: relative;
-  /* top: -0.06em; */
-  display: inline-block;
-  width: 1px;
-  height: 0.1em;
-  vertical-align: middle;
+/* 聊天文字提示 */
+.system-tips-message .system-message-inner {
+    text-align: center;
 }
-.card-divider {
-  box-sizing: border-box;
-  /* margin: 0; */
-  padding: 0;
-  color: rgba(0, 0, 0, 0.65);
-  font-size: 14px;
-  font-variant: tabular-nums;
-  line-height: 1.5;
-  list-style: none;
-  font-feature-settings: "tnum";
-  background: #e8e8e8;
+.system-tips-message .message-content {
+    display: inline-block;
+    border-radius: 6px;
+    font-size: 24px;
+    padding: 16px 20px;
+    line-height: 16px;
+    background-color: #c4cdd8;
+    color: #fff;
+    text-align: left;
 }
 .system-tips-message{
     padding: 0 .15rem;

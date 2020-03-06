@@ -1,6 +1,6 @@
 <template>
   <div refs="message-list">
-    <Header :post-title="$route.query.name"></Header>
+    <Header :isOpen='isOpen' :post-title="$route.query.name"></Header>
     <current-conversation :content="$store.state.test" />
   </div>
 </template>
@@ -12,6 +12,7 @@ export default {
     return {
       imSdk: this.$imsdk,
       chooseId: '',
+      isOpen:false
     };
   },
   name: "ChatRoom",
@@ -19,11 +20,15 @@ export default {
     CurrentConversation
   },
   mounted() {
+    if (this.isOpen) {
+      this.isOpen = true;
+    }
     if (typeof (this.$store.state.accountInfo) == 'string') {
       this.chooseId = JSON.parse(this.$store.state.accountInfo).id;
     } else {
       this.chooseId = this.$store.state.accountInfo.id;
     }
+    console.log(this.imSdk,"ssssssss")
     this.imSdk.createUserConnect(
       "p" + this.chooseId,
       "123456",

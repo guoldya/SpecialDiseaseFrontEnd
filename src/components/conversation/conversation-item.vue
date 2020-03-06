@@ -10,7 +10,7 @@
       <div class="online-item">
         <div class="header">
           <!-- <avatar :src="avatar" :type="conversation.type" /> -->
-          <img src="@/assets/conversationImg/onlineText.png" />
+          <img src="@/assets/images/3.jpg" />
         </div>
         <div class="content">
           <div class="row-1">

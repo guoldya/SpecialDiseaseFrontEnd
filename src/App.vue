@@ -164,7 +164,7 @@ body {
     position: relative;
     display: inline-block;
     background-color: #ededed;
-    padding: 0 18px;
+    padding: 0 10px;
     left: 50%;
     -webkit-transform: translate(-50%);
     transform: translate(-50%);
@@ -172,21 +172,25 @@ body {
 }
 .system-message .message-content,
 .system-normal-message .message-content {
-  font-size: 24px;
-  padding: 8px 52px;
+  display: inline-block;
+  position: relative;
+  font-size: 26px;
+  padding: 4px 48px;
 }
 .system-normal-message .message-content {
   position: relative;
   display: block;
 }
-/* .system-message .message-content:after, */
+
+
+.system-message .message-content:after,
 .system-message .message-content:before,
-/* .system-normal-message .message-content:after, */
+.system-normal-message .message-content:after,
 .system-normal-message .message-content:before {
   content: "";
   position: absolute;
-  top: 20px;
-  width: 20px;
+  top: 14px;
+  width:20px;
   border-top: 2px solid #adb5bd;
 }
 .system-normal-message .message-content:before {
@@ -200,17 +204,26 @@ body {
   position: relative;
 }
 .message-item {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 .message-datetime.show {
     display: block;
 }
 .message-datetime {
     display: none;
-    padding: 10px 30px;
+    padding: 10px 15px;
     color: #999baa;
     text-align: center;
-    font-size: 28px;
+    font-size: 14px;
+}
+/* 分割线 */
+.card-divider-horizontal {
+  display: block;
+  clear: both;
+  width: 100%;
+  min-width: 100%;
+  height: 1px;
+  margin: 24px 0;
 }
 /* 聊天文字提示 */
 .system-tips-message .system-message-inner {
@@ -226,5 +239,21 @@ body {
     color: #fff;
     text-align: left;
 }
-
+.system-tips-message{
+    padding: 0 .15rem;
+    margin-bottom: .08rem;
+}
+.system-tips-message .system-message-inner {
+    text-align: center;
+}
+.system-tips-message .audit-message-content {
+    display: inline-block;
+    border-radius: 6px;
+    font-size: 24px;
+    padding: 10px 18px;
+    line-height: 32px;
+    background-color: #c4cdd8;
+    color: #fff;
+    text-align: left;
+}
 </style>

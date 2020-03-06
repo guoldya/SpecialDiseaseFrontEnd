@@ -38,6 +38,30 @@
       </div>
     </div> -->
 
+    <!-- 分割线加文字 -->
+    <!-- <div v-if="aa.type=='questionDes'" class="message-item system-normal-message normal-style">
+      <div class="message-datetime show">2019-12-10 01:17</div>
+      <div class="message-inner">
+        <div class="system-message-wrapper">
+          <div class="message-wrapper">
+            <div class="message-content">
+              <span>您好，医生已经收到您的病情描述及用药诉求，正在为您诊断，请稍后，如有补充请这里回复</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <!-- 聊天文字提示 -->
+    <!-- <div  class="message-item system-tips-message message-state--8 normal-style">
+      <div class="message-datetime show">2019-12-11 08:50</div>
+      <div class="message-inner">
+        <div class="system-message-wrapper">
+          <div class="system-message-inner">
+            <span class="audit-message-content">审核通过，服药期间如有不适请及时线下医院就诊</span>
+          </div>
+        </div>
+      </div>
+    </div> -->
     <!-- 病历详情 -->
     <div v-if="aa.type=='questionDes'" class="medical-right">
       <div class="right-inner">

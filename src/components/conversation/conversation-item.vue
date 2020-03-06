@@ -16,11 +16,10 @@
           <div class="row-1">
             <div class="name">
               <div class="text-ellipsis">
-                <span>{{conversation.drName}}</span>
+                <span>{{conversation.doctorName}}</span>
               </div>
             </div>
           </div>
-
         </div>
       </div>
       <div class="dotType">
@@ -31,8 +30,8 @@
         <p class="consult " :class="1?'online-consult':'complete-consult'">
 
           <router-link :to="{ path: '/chatRoom', query: {
-          id: conversation.id,
-          name: conversation.drName
+          id: conversation.doctorId,
+          name: conversation.doctorName
         }}" class="consult">
 
             咨询详情

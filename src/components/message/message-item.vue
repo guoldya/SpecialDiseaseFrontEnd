@@ -11,9 +11,19 @@
         </div>
       </template>
       <template v-else>
-        <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
+        <!-- <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
         <div class="online-content-list-text">
           <span>聊天结束</span>
+        </div> -->
+        <div class="message-item system-tips-message message-state--8 normal-style">
+          <div class="message-datetime show">{{aa.date}}</div>
+          <div class="message-inner">
+            <div class="system-message-wrapper">
+              <div class="system-message-inner">
+                <span class="message-content">问诊结束，服药期间如有不适请及时线下医院就诊</span>
+              </div>
+            </div>
+          </div>
         </div>
       </template>
     </div>
@@ -28,9 +38,49 @@
       </div>
     </div> -->
 
+    <!-- 病历详情 -->
+    <div v-if="aa.type=='questionDes'" class="medical-right">
+      <div class="right-inner">
+        <div class="content-wrapper width-100">
+          <div class="template-message">
+            <span class="triangle"></span>
+            <div class="header">
+              <a class="link">
+                <div class="info">
+                  <span class="name">{{this.accountInfo.name}}</span>
+                  <span class="sex">{{this.accountInfo.sex|examSex}}</span>
+                  <span class="age">{{this.accountInfo.age}}</span>
+                </div>
+              </a>
+              <div class="diag-type">
+                <span>购药开方</span>
+              </div>
+            </div>
+            <div class="body">
+              <div class="template-message-content">
+                <div class="title">病情描述：</div>
+                <span>线下确诊疾病为：{{aa.text}}。</span>
+              </div>
+              <!-- <div class="imgs">
+                <ul class="image-list">
+                  <li class="image-item image-wrapper">
+                    <div class="bg-image" style="background-image: url(&quot;http://img30.360buyimg.com/yiyaoapp/jfs/t1/91788/39/5596/91244/5dee8167Ebbf57a77/c7fa1baf52edc2d8.jpg&quot;); height: 20vw;"></div>
+                  </li>
+                </ul>
+              </div> -->
+            </div>
+            <div class="footer">
+              <div class="privacy-tip">互联网医院保证您隐私，请放心问诊</div>
+            </div>
+          </div>
+          <div class="send-state"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- 分割线加文字 -->
     <div v-if="aa.type=='questionDes'" class="message-item system-normal-message normal-style">
-      <div class="message-datetime show">2019-12-10 01:17</div>
+      <div class="message-datetime show">{{aa.date}}</div>
       <div class="message-inner">
         <div class="system-message-wrapper">
           <div class="message-wrapper">
@@ -52,46 +102,6 @@
         </div>
       </div>
     </div> -->
-    <!-- 病历详情 -->
-    <!-- <div class="medical-right">
-      <div class="right-inner">
-        <div class="content-wrapper width-100">
-          <div class="template-message">
-            <span class="triangle"></span>
-            <div class="header">
-              <a class="link">
-                <div class="info">
-                  <span class="name">张张</span>
-                  <span class="sex">男</span>
-                  <span class="age">45岁</span>
-                </div>
-              </a>
-              <div class="diag-type">
-                <span>购药开方</span>
-              </div>
-            </div>
-            <div class="body">
-              <div class="template-message-content">
-                <div class="title">病情描述：</div>
-                <span>线下确诊疾病为：高血压；想开药：缬沙坦氨氯地平片(I)80mg：5mg*7片x10。请医生给予诊疗方案。</span>
-              </div>
-              <div class="imgs">
-                <ul class="image-list">
-                  <li class="image-item image-wrapper">
-                    <div class="bg-image" style="background-image: url(&quot;http://img30.360buyimg.com/yiyaoapp/jfs/t1/91788/39/5596/91244/5dee8167Ebbf57a77/c7fa1baf52edc2d8.jpg&quot;); height: 20vw;"></div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="footer">
-              <div class="privacy-tip">互联网医院保证您隐私，请放心问诊</div>
-            </div>
-          </div>
-          <div class="send-state"></div>
-        </div>
-      </div>
-
-    </div> -->
 
     <div v-if="aa.type=='geo'" class="online-content-list outpation">
       <img class="online-content-list-head" src="@/assets/images/head1.png" alt />
@@ -106,7 +116,6 @@
         </router-link>
       </div>
     </div>
-
     <div v-if="aa.type=='image'" class="online-content-list" :class="message.senderId===$imsdk.user.id?'right':''">
       <img class="online-content-list-head" src="@/assets/images/head1.png" alt />
       <div class="online-content-list-text">
@@ -130,18 +139,23 @@ export default {
 
   data() {
     return {
+      accountInfo: '',
       emojiName: emoji.obj,
       imSdk: this.$imsdk,
       renderDom: [],
       currentImg: [], // 当前图片
       isViewerShow: false, // 是否大图显示
       clickViewer: false, // 是否点击的是图片，true点击，用于不让滚动条滚动到指定位置
-
       aa: ""
     };
   },
   mounted() {
     this.aa = JSON.parse(this.message.content);
+    if (typeof (this.$store.state.accountInfo) == 'string') {
+      this.accountInfo = JSON.parse(this.$store.state.accountInfo);
+    } else {
+      this.accountInfo = this.$store.state.accountInfo;
+    }
   },
   computed: {},
   methods: {

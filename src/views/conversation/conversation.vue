@@ -1,9 +1,9 @@
 <template>
   <div class="selectMedicine margin55">
-    <Header post-title="咨询记录11" :isBackTo='true'></Header>
+    <Header post-title="咨询记录" :isBackTo='true'></Header>
     <ul class="content" v-show="show && !loadingtrue">
-      <conversation-item v-if="drugsList.drugs.length!=0" :conversation="item" :index="index" v-for="(item,index) in drugsList.drugs" :key="item.conversationID"   />
-      
+      <conversation-item v-if="drugsList.drugs.length!=0" :conversation="item" :index="index" v-for="(item,index) in drugsList.drugs" :key="item.conversationID" />
+
       <Null :loading-true="drugsList.drugs.length==0"></Null>
       <md-icon v-if="!loadingtrue && busy" name="spinner" size="lg" style="-webkit-filter:invert(1)"></md-icon>
       <div class="nomore" v-if="!loadingtrue && (drugsList.nowPage == pages || pages == 0)">没有更多数据了</div>
@@ -73,7 +73,7 @@ export default {
       this.$axios
         .put(selectDrugs, {
           pageSize: 20,
-
+          status: 2,
           patientId: this.chooseId,
           pageNumber: this.current,
         })

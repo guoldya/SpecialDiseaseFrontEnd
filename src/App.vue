@@ -123,72 +123,10 @@ body {
     border-radius: 8px;
     list-style-type: none;
     padding: 20px 24px 4px;
-    
 }
 .disFlex {
   display: flex;
   justify-content: space-between;
-}
-/* 分割线加文字 */
-.message-item{
-  margin: 0 12px;
-}
-.system-normal-message .content span {
-    position: relative;
-    display: inline-block;
-    background-color: #f8f8f8;
-    padding: 0 .1rem;
-    left: 50%;
-    -webkit-transform: translate(-50%);
-    transform: translate(-50%);
-}
-.system-message .content,
-.system-normal-message .content {
-  display: inline-block;
-  position: relative;
-  font-size: 0.13rem;
-  padding: 0.04rem 0.24rem;
-}
-.system-normal-message .content {
-  position: relative;
-  display: block;
-}
-
-
-.system-message .content:after,
-.system-message .content:before,
-.system-normal-message .content:after,
-.system-normal-message .content:before {
-  content: "";
-  position: absolute;
-  top: 0.14rem;
-  width: 0.2rem;
-  border-top: 0.01rem solid #adb5bd;
-}
-.system-normal-message .content:before {
-  /* top: 0.12rem; */
-  width: 100%;
-}
-.system-message .content:before,
-.system-normal-message .content:before {
-  left: 0;
-}
-.system-message, .system-normal-message{
-  position: relative;
-  margin: 0 24px 16px 24px;
-}
-.message-item {
-    margin-bottom: .15rem;
-}
-.message-datetime.show {
-    display: block;
-}
-.message-datetime {
-    display: none;
-    padding: .1rem .15rem;
-    color: #999baa;
-    text-align: center;
-    font-size: .14rem;
 }
 /* 分割线 */
 .card-divider-horizontal {
@@ -202,7 +140,6 @@ body {
 .card-divider,
 .card-divider-vertical {
   position: relative;
-  /* top: -0.06em; */
   display: inline-block;
   width: 1px;
   height: 0.1em;
@@ -210,7 +147,6 @@ body {
 }
 .card-divider {
   box-sizing: border-box;
-  /* margin: 0; */
   padding: 0;
   color: rgba(0, 0, 0, 0.65);
   font-size: 14px;
@@ -219,6 +155,76 @@ body {
   list-style: none;
   font-feature-settings: "tnum";
   background: #e8e8e8;
+}
+/* 分割线加文字 */
+.message-item{
+  /* margin: 0 12px; */
+}
+.system-normal-message .message-content span {
+    position: relative;
+    display: inline-block;
+    background-color: #ededed;
+    padding: 0 18px;
+    left: 50%;
+    -webkit-transform: translate(-50%);
+    transform: translate(-50%);
+    /* text-align: justify; */
+}
+.system-message .message-content,
+.system-normal-message .message-content {
+  font-size: 24px;
+  padding: 8px 52px;
+}
+.system-normal-message .message-content {
+  position: relative;
+  display: block;
+}
+/* .system-message .message-content:after, */
+.system-message .message-content:before,
+/* .system-normal-message .message-content:after, */
+.system-normal-message .message-content:before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  width: 20px;
+  border-top: 2px solid #adb5bd;
+}
+.system-normal-message .message-content:before {
+  width: 100%;
+}
+.system-message .message-content:before,
+.system-normal-message .message-content:before {
+  left: 0;
+}
+.system-message, .system-normal-message{
+  position: relative;
+}
+.message-item {
+    margin-bottom: 30px;
+}
+.message-datetime.show {
+    display: block;
+}
+.message-datetime {
+    display: none;
+    padding: 10px 30px;
+    color: #999baa;
+    text-align: center;
+    font-size: 28px;
+}
+/* 聊天文字提示 */
+.system-tips-message .system-message-inner {
+    text-align: center;
+}
+.system-tips-message .message-content {
+    display: inline-block;
+    border-radius: 6px;
+    font-size: 24px;
+    padding: 16px 20px;
+    line-height: 16px;
+    background-color: #c4cdd8;
+    color: #fff;
+    text-align: left;
 }
 
 </style>

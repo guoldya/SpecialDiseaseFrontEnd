@@ -1,12 +1,19 @@
 <template>
   <div class="navigation">
-    <i v-if="!isBackTo" class="icon-iconfontjiantou" @click="$router.go(-1)">
-      <img src="@/assets/images/icon_back.png">
-    </i>
+    <template v-if="isOpen">
+      <i class="icon-iconfontjiantou" @click="$router.go(-3)">
+        <img src="@/assets/images/icon_back.png">
+      </i>
+    </template>
+    <template v-else>
+      <i v-if="!isBackTo" class="icon-iconfontjiantou" @click="$router.go(-1)">
+        <img src="@/assets/images/icon_back.png">
+      </i>
+    </template>
     <div class="navigation-content">
       {{postTitle}}
     </div>
-    <div class="right" @click="switchTo()"  :class="active.length==0? 'mu-secondary-text-color' : '' ">
+    <div class="right" @click="switchTo()" :class="active.length==0? 'mu-secondary-text-color' : '' ">
       <slot>{{titleRight}}</slot>
     </div>
     <slot name="right"></slot>
@@ -16,10 +23,10 @@
 export default {
   data() {
     return {
-      active:[""],
+      active: [""],
     }
   },
-  props: ['postTitle','titleRight','isBackTo'],
+  props: ['postTitle', 'titleRight', 'isBackTo', 'isOpen'],
   created() {
 
   },
@@ -27,16 +34,15 @@ export default {
 
   },
   methods: {
-      switchTo() {
-          this.active=this.$store.state.activeId;
-          this.$emit('switchToValue');
-      },
+    switchTo() {
+      this.active = this.$store.state.activeId;
+      this.$emit('switchToValue');
+    },
   },
 }
 </script>
 
 <style lang="scss" >
-
 .navigation {
   position: fixed;
   width: 100%;
@@ -48,7 +54,7 @@ export default {
   box-sizing: border-box;
   align-items: center;
   background: #fff;
-  color:  var(--primary--title);
+  color: var(--primary--title);
   z-index: 99;
 
   img {

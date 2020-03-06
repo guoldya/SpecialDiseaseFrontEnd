@@ -17,6 +17,7 @@
             <div class="name">
               <div class="text-ellipsis">
                 <span>{{conversation.doctorName}}</span>
+                <span> {{conversation.deptName}}</span>
               </div>
             </div>
           </div>

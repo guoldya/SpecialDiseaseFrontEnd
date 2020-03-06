@@ -40,10 +40,7 @@ export default {
   mounted() {
 
     this.scrollMessageListToButtom()
-    // setTimeout(() => {
-    //   this.onScroll()
-    // }, 300)
-    // this.onScroll()
+  
 
   },
   updated() {
@@ -65,11 +62,6 @@ export default {
   },
 
   methods: {
-    fatherMethod() {
-      this.onScroll()
-      this.scrollMessageListToButtom()
-    },
-
 
     onScroll() {
       console.log('执行滚动1111')

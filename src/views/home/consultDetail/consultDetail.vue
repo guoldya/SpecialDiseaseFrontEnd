@@ -151,10 +151,7 @@
       </md-dialog>
 
     </div>
-    <div class="loadmore" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
-      <md-icon v-if="!isloading&&busy" name="spinner" size="lg" style="-webkit-filter:invert(1)"></md-icon>
-      <div class="nomore" v-if="pagingParams.num == pagingParams.pages">没有更多了</div>
-    </div>
+
   </div>
 </template>
 <script>
@@ -166,7 +163,7 @@ export default {
   data() {
     return {
       money: '',
-      isloading: true, // 是否显示loading
+      isloading: true,
       doctorInfo: {}, // 医生信息
       // 咨询弹窗
       basicDialog: {
@@ -198,7 +195,7 @@ export default {
   },
   mounted() {
     this.init();
-    
+
   },
   methods: {
     // 初始化
@@ -218,16 +215,7 @@ export default {
       }
     },
 
-    loadMore: function () {
-      if (this.isloading) return false;
-      if (this.pagingParams.num == this.pagingParams.pages) return false
-      this.busy = true;
-      setTimeout(() => {
-        this.pagingParams.num++
-        // this.queryCommon(true)
-        this.busy = false;
-      }, 1000);
-    },
+
     // 取消按钮
     onCancel() {
       this.basicDialog.open = false;
@@ -276,7 +264,7 @@ export default {
       }
     }
 
-    
+
   },
   components: {
     Dialog

@@ -44,8 +44,7 @@
 // let wechatbizPatientCardreadpage = "/app/bizPatientCard/read/list";
 import { Dialog, Button, Toast } from 'mand-mobile'
 import { mapState } from 'vuex';
-
-
+let appbizPatientCarduntie = "sysPatientBinding/unBind";
 export default {
   data() {
     return {
@@ -73,9 +72,60 @@ export default {
   },
   methods: {
     unblind(data) {
-      this.$router.push({
-        name: 'unblind',
-        query: { id: data.id }
+      // this.$router.push({
+      //   name: 'unblind',
+      //   query: { id: data.id }
+      // });
+
+
+       this.$dialog.confirm({
+        title: '提示',
+        content: '确定解除绑定吗!',
+        confirmText: '确定',
+        cancelText: '取消',
+        onConfirm: () => {
+          this.$axios.post(appbizPatientCarduntie, {
+            patientId: data.id,
+
+          }).then(res => {
+            if (res.data.code == '200') {
+              // isEmpty     0不为空 不跳转     1为空跳转绑定页
+              console.log("ww选中wwwww", this.$route.query.id, this.chooseId)
+              if (res.data.data.isEmpty == 0) {
+
+                this.$store.dispatch('getCards', { update: true }).then(res => {
+                  this.$store.commit('accountInfoFun', '')
+                  console.log("wwwa重新赋值wwww", this.$route.query.id, this.chooseId, this._cardlist[0])
+                  if (this.$route.query.id * 1 == this.chooseId) {
+                    this.$store.commit('accountInfoFun', this._cardlist[0])
+                  }
+                });
+
+                this.$toast.info("解绑成功")
+                // setTimeout(() => {
+                //   this.$router.go(-1);
+                // }, 1000);
+
+              } else if (res.data.data.isEmpty == 1) {
+
+                this.$store.dispatch('getCards', { update: true }).then(res => {
+                  this.$store.commit('accountInfoFun', '')
+                });
+                this.$router.replace({
+                  name: 'addpeple',
+                  query: { isnews: 1 }
+                });
+              }
+
+
+            } else {
+              this.$toast.info(res.data.msg)
+            }
+          }).catch(function (err) {
+            console.log(err);
+          });
+
+        },
       });
     },
     addpeple() {

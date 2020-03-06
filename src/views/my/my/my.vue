@@ -20,7 +20,7 @@
         <ul>
           <li @click="mydoctor">
             <img src="@/assets/images/my1.png" alt="" class="image">
-            <p>我的医生</p>
+            <p>我的账单</p>
           </li>
           <li @click="outpation()">
             <img src="@/assets/images/my2.png" alt="" class="image">
@@ -31,11 +31,10 @@
             <p>我的订单</p>
           </li>
         </ul>
-
       </div>
 
       <div class="aui-list-cell">
-        <!-- <a href="javascript:;" class="aui-list-item" @click="consultation">
+        <a href="javascript:;" class="aui-list-item" @click="consultation">
           <div class="aui-list-item-fl">
             <i class="icon icon-item01"></i>
             我的咨询
@@ -43,7 +42,7 @@
           <div class="aui-list-item-fr aui-list-item-arrow">
             <i></i>
           </div>
-        </a> -->
+        </a>
         <a href="javascript:;" class="aui-list-item" @click="idcardlist">
           <div class="aui-list-item-fl">
             <i class="icon icon-item02"></i>
@@ -181,7 +180,6 @@ export default {
     consultation() {
       let argu = {};
       this.$router.push({
-
         name: "consultation",
         query: argu
       });

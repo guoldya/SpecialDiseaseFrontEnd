@@ -183,10 +183,12 @@ export default {
           query: {
             id: this.$route.query.id,
             name: this.$route.query.name,
-            isOpen:1
+            headerurl: this.$store.state.userInfo.headPic,
+            isOpen: 1
           }
         })
       }, 1000);
+      
       this.isShow = true;
 
 

@@ -24,7 +24,7 @@
 
         <p class="dise">{{item.diseaseName}}</p>
         <p class="dise">{{item.idCard}}</p>
-        <img class="qiehuan" @click="switchCard(index)" src="@/assets/images/qiehuan.png">
+        <img class="qiehuan"  v-if=" _cardlist.length!=1" @click="switchCard(index)" src="@/assets/images/qiehuan.png">
       </div>
     </div>
     <p class="doctorlisttitle">

@@ -2,7 +2,7 @@
   <div class="online-content-warp">
     <div v-if="aa.type=='text'" class="online-content-list " :class="message.senderId===$imsdk.user.id?'right':''">
       <template v-if="!aa.close">
-        <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
+        <img class="online-content-list-head" :src="this.$store.state.userInfo.headPic" alt>
         <div class="online-content-list-text">
           <em></em>
           <div>
@@ -10,11 +10,7 @@
           </div>
         </div>
       </template>
-      <template v-else>
-        <!-- <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
-        <div class="online-content-list-text">
-          <span>聊天结束</span>
-        </div> -->
+      <template v-if="aa.close">
         <div class="message-item system-tips-message message-state--8 normal-style">
           <div class="message-datetime show">{{aa.date}}</div>
           <div class="message-inner">
@@ -141,7 +137,7 @@
       </div>
     </div>
     <div v-if="aa.type=='image'" class="online-content-list" :class="message.senderId===$imsdk.user.id?'right':''">
-      <img class="online-content-list-head" src="@/assets/images/head1.png" alt />
+      <img class="online-content-list-head" :src="message.senderId!=$imsdk.user.id?require('@/assets/images/head1.png'):this.$store.state.userInfo.headPic" alt />
       <div class="online-content-list-text">
         <em></em>
         <div>

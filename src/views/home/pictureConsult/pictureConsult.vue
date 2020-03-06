@@ -100,7 +100,7 @@ export default {
     }
     // 注册用户
     this.imSdk.registerUser('p' + this.chooseId, this.$store.state.accountInfo.name, () => {
-      this.imSdk.createUserConnect('p' + this.chooseId, '123456',  )
+      this.imSdk.createUserConnect('p' + this.chooseId, '123456')
     })
     this.imSdk.openSession(
       this.$store.state.accountInfo.name,

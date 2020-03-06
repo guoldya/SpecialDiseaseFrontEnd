@@ -79,7 +79,7 @@
             <div class="body">
               <div class="template-message-content">
                 <div class="title">病情描述：</div>
-                <span>线下确诊疾病为：{{aa.text}}。</span>
+                <span>{{aa.text}}</span>
               </div>
               <!-- <div class="imgs">
                 <ul class="image-list">

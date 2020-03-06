@@ -308,15 +308,12 @@ export default {
     width: 60%;
   }
   em {
-    // margin-left: -20px;
-    top: 20px;
+    margin-left: -20px;
+    top: 10px;
     background-color: transparent;
-
-    // border-width: 20px 20px 20px 0;
-    // border-color: transparent transparent transparent transparent;
     &:before {
       content: "";
-      // border-color: transparent #48b6ff transparent transparent;
+      background-color: #48b6ff ;
     }
   }
 }
@@ -425,7 +422,7 @@ export default {
   .template-message .footer .privacy-tip {
     color: #606270;
     position: relative;
-    padding-left: 28px;
+    // padding-left: 28px;
   }
   .template-message .footer .privacy-tip:before {
     content: "";

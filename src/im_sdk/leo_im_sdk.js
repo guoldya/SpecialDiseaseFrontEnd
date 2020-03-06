@@ -7,7 +7,11 @@ import { ImSendSDK } from '@/im_sdk/imSendSDK'
 export class ImSdk {
     //user: Object = null;
     //构造函数
+
     constructor() {
+    this.isOpenWS=false
+
+
         this.user = null //当前用户信息
         this.onlineStatus = null //当前用户状态
         this.token = null //令牌
@@ -39,21 +43,22 @@ export class ImSdk {
         sessionStorage.clear()
             //TODO:1关闭 通讯 2通知后台
     }
-    createUserConnect(username, password, { userConnectCallback } = {}) {
+    createUserConnect(username, password) {
+
+        if(this.isOpenWS===true) return
         //创建于服务端的会话
         this.restFulApi.userLogi(username, password, (userId) => {
             this.restFulApi.userUpdateOnlineStatus(userId, () => {
                 this.restFulApi.userlistUserChannels(() => {
                     console.log(this, "数据状态查询")
-
                         //初始化会话连接
-                     this.imkSocketSDK.initIMClient();
-                     userConnectCallback()
+                    this.imkSocketSDK.initIMClient();
+                    this.isOpenWS=true;
                 })
             })
         })
     }
-    openSession(fromUsername, toUserId, toUsername, { getMessageCallback } = {}) {
+    openSession(fromUsername, toUserId, toUsername) {
         //打开会话
         let exists = this.userChannelList.findIndex(item => item.toUserId === toUserId)
         if (exists == -1) {
@@ -63,20 +68,19 @@ export class ImSdk {
                 toUsername: toUsername,
             }
             this.restFulApi.createChannel(channel, (data) => {
-                console.log(data,"d打开会话")
                 this.userChannel = data
                 this.selectedChannelId = data.channelId
-                this.imSessionSDK.init({ getMessageCallback })
+                this.imSessionSDK.init()
             })
         } else {
             this.userChannel = this.userChannelList[exists]
-            this.penSession(this.userChannelList[exists].channelId, { getMessageCallback })
+            this.penSession(this.userChannelList[exists].channelId)
         }
     }
-    penSession = (channelId, { getMessageCallback } = {}) => {
+    penSession = (channelId) => {
         //打开会话
         this.selectedChannelId = channelId
-        this.imSessionSDK.init({ getMessageCallback })
+        this.imSessionSDK.init()
     }
     userIdToChannelId() {
         //用户不在线时前端要处理掉
@@ -86,8 +90,6 @@ export class ImSdk {
         this.imSendSDK.send(message)
     }
     moreMessageList(callback) {
-        // 等于null 没得消息
-        // true消息成功 false消息失败
         //获取跟多历史消息
         this.restFulApi.getMessageList(callback)
     }

@@ -10,7 +10,7 @@
           </div>
         </div>
       </template>
-      <template v-if="aa.close||$route.query.status==2">
+      <template v-if="aa.close ">
         <div class="message-item system-tips-message message-state--8 normal-style">
           <div class="message-datetime show">{{aa.date}}</div>
           <div class="message-inner">

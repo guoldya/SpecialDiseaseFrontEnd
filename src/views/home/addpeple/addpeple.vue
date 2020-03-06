@@ -127,6 +127,7 @@ export default {
 
             this.$store.dispatch('getCards', { update: true }).then(res => {
               if (!this.$store.state.accountInfo) {
+                console.log("111111111绑定选中的")
                 this.$store.commit('accountInfoFun', this._cardlist[0])
               }
             });

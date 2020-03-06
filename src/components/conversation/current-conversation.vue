@@ -37,7 +37,12 @@ export default {
   mounted() {
 
     this.scrollMessageListToButtom()
-
+    if (this.imSdk.messageList[this.imSdk.messageList.length - 1]) {
+      if (JSON.parse(this.imSdk.messageList[this.imSdk.messageList.length - 1].content).close) {
+        this.isShow = false;
+        
+      }
+    }
 
   },
   updated() {

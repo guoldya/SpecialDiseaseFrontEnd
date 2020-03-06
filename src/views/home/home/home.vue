@@ -24,7 +24,7 @@
 
         <p class="dise">{{item.diseaseName}}</p>
         <p class="dise">{{item.idCard}}</p>
-        <img class="qiehuan"  v-if=" _cardlist.length!=1" @click="switchCard(index)" src="@/assets/images/qiehuan.png">
+        <img class="qiehuan" v-if=" _cardlist.length!=1" @click="switchCard(index)" src="@/assets/images/qiehuan.png">
       </div>
     </div>
     <p class="doctorlisttitle">
@@ -68,30 +68,48 @@ export default {
   },
 
   async mounted() {
+
     // await this.$store.dispatch('getCards', { update: true });
-    await this.$store.dispatch('getCards', { update: true });
-    // await this.$store.dispatch('getDepart', { update: true });
 
-    console.log(typeof (this.$store.state.accountInfo), this.$store.state.accountInfo.id,  )
+    this.$store.dispatch('getCards', { update: true }).then(res => {
+      // if (this.chooseId) {
+      //   this._cardlist.map(x => {
+      //     console.log(x, "sssssssss", String(x.id).search(this.chooseId))
+      //     if (String(x.id).search(this.chooseId) == -1) {
+      //       this.$store.commit('accountInfoFun', this._cardlist[0])
+      //       this.homeNumber(this._cardlist[0].id);
+      //        return
+      //     }
+      //   })
+      // }
 
-    if (this.$store.state.accountInfo) {
-      if (typeof (this.$store.state.accountInfo) == 'string') {
-        this.chooseId = JSON.parse(this.$store.state.accountInfo).id;
+      if (this.$store.state.accountInfo) {
+        if (typeof (this.$store.state.accountInfo) == 'string') {
+          this.chooseId = JSON.parse(this.$store.state.accountInfo).id;
+        } else {
+          this.chooseId = this.$store.state.accountInfo.id;
+        }
+
       } else {
-        this.chooseId = this.$store.state.accountInfo.id;
+
+        if (this._cardlist.length == 0) {
+          return
+        }
+        this.chooseId = this._cardlist[0].id;
+        this.$store.commit('accountInfoFun', this._cardlist[0])
+
       }
 
-    } else {
-      if (this._cardlist.length == 0) {
-        return
-      }
-      this.chooseId = this._cardlist[0].id;
-      // let setInfo = JSON.stringify(this._cardlist[0])
-      // sessionStorage.setItem('objInfo', JSON.parse(setInfo))
+      this.homeNumber(this.chooseId);
 
-      this.$store.commit('accountInfoFun', this._cardlist[0])//已登录
-    }
-    this.homeNumber(this.chooseId);
+
+    });
+
+
+
+
+
+
 
 
 

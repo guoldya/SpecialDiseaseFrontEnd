@@ -18,9 +18,7 @@
         </div>
       </div>
     </div>
-
     <md-button type="primary" round class="margin16" @click="unBlind">解除绑定</md-button>
-
   </div>
 </template>
 <script type="text/babel">

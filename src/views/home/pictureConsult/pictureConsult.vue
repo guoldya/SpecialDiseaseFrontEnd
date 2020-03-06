@@ -33,7 +33,7 @@
     </div>
     <div class="picture-consult-problem">
       <p>
-        问题描述&nbsp;&nbsp;
+        病情描述&nbsp;&nbsp;
         <span>(症状表现、检查/用药和希望获得的帮助)</span>
       </p>
       <textarea maxlength="500" v-model="questionDes"></textarea>
@@ -52,7 +52,7 @@
     </div>
 
     <div style="padding:0.24rem">
-      <md-button type="primary" @click="onConfirm( )"  :inactive="!isShow" round style="margin-top:16px">提交问题</md-button>
+      <md-button type="primary" @click="onConfirm( )" :inactive="!isShow" round style="margin-top:16px">提交描述</md-button>
     </div>
     <!-- 咨询弹窗 -->
 
@@ -158,9 +158,19 @@ export default {
       }).catch(function (err) {
         console.log(err);
       });
+      var myDate = new Date;
+      var year = myDate.getFullYear(); //获取当前年
+      var mon = myDate.getMonth() + 1; //获取当前月
+      var date = myDate.getDate(); //获取当前日
+      var h = myDate.getHours();//获取当前小时数(0-23)
+      var m = myDate.getMinutes();//获取当前分钟数(0-59)
+      //  var s = myDate.getSeconds();//获取当前秒
+      // var ms = myDate.getMilliseconds();//获取当前毫秒
       let msg = {
         type: 'questionDes',
         text: this.questionDes,
+        userInfo: this.$store.state.accountInfo,
+        date: year + '-' + mon + '-' + date + '-' + h + '-' + m,
       }
       this.isShow = false;
       this.imSdk.send(msg)

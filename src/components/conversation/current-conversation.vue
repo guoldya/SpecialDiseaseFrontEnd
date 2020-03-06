@@ -46,11 +46,13 @@ export default {
   },
   updated() {
 
-    console.log(this.imSdk.messageList[this.imSdk.messageList.length - 1], "77777777777")
-
-    if (JSON.parse(this.imSdk.messageList[this.imSdk.messageList.length - 1].content).close) {
-      this.isShow = false;
+    if (this.imSdk.messageList[this.imSdk.messageList.length - 1]) {
+      if (JSON.parse(this.imSdk.messageList[this.imSdk.messageList.length - 1].content).close) {
+        this.isShow = false;
+      }
     }
+
+
     this.onScroll()
     setTimeout(() => {
       this.onScroll()

@@ -3,8 +3,8 @@
   <div class="con tent22">
     <div class="conversationCard">
       <div class="disFlex">
-        <span>2020-12-12</span>
-        <span class="online" :class="1?'online':'complete'">{{1?'咨询中':'已结束'}}</span>
+        <span>{{conversation.startTime|lasttime}}</span>
+        <span class="online" :class="conversation.status==1?'online':'complete'">{{conversation.status==1?'咨询中':'已结束'}}</span>
       </div>
       <div class="card-divider card-divider-horizontal"></div>
       <div class="online-item">
@@ -16,7 +16,7 @@
           <div class="row-1">
             <div class="name">
               <div class="text-ellipsis">
-                <span>冉有钱</span>
+                <span>{{conversation.drName}}</span>
               </div>
             </div>
           </div>
@@ -28,7 +28,17 @@
         <div class="dottextff">
           <img src="@/assets/conversationImg/freeText.png" />图文问诊
         </div>
-        <p class="consult " :class="1?'online-consult':'complete-consult'">咨询详情</p>
+        <p class="consult " :class="1?'online-consult':'complete-consult'">
+
+          <router-link :to="{ path: '/chatRoom', query: {
+          id: conversation.id,
+          name: conversation.drName
+        }}" class="consult">
+
+            咨询详情
+
+          </router-link>
+        </p>
       </div>
     </div>
   </div>

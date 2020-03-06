@@ -17,11 +17,11 @@
     </div>
     <!-- <div class="homePage" v-if=" _cardlist.length!=0"> -->
     <div class="homePage" v-if=" _cardlist.length!=0">
-      <div class="cardhome" v-for="(item, index) in  _cardlist"  v-if="item.id==chooseId"  :key="'cardlist' + index">
+      <div class="cardhome" v-for="(item, index) in  _cardlist" v-if="item.id==chooseId" :key="'cardlist' + index">
         <p class="name">{{item.name}}
           <span class="code">{{item.code}}</span>
         </p>
-        
+
         <p class="dise">{{item.diseaseName}}</p>
         <p class="dise">{{item.idCard}}</p>
         <img class="qiehuan" @click="switchCard(index)" src="@/assets/images/qiehuan.png">
@@ -80,7 +80,7 @@ export default {
       } else {
         this.chooseId = this.$store.state.accountInfo.id;
       }
-       
+
     } else {
       if (this._cardlist.length == 0) {
         return
@@ -88,7 +88,7 @@ export default {
       this.chooseId = this._cardlist[0].id;
       // let setInfo = JSON.stringify(this._cardlist[0])
       // sessionStorage.setItem('objInfo', JSON.parse(setInfo))
-      
+
       this.$store.commit('accountInfoFun', this._cardlist[0])//已登录
     }
     this.homeNumber(this.chooseId);
@@ -213,6 +213,7 @@ export default {
 }
 .homePage {
   margin-top: -90px;
+  height: 196px;
 }
 .bindCard {
   width: 94%;

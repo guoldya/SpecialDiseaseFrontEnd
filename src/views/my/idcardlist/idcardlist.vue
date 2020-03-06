@@ -2,7 +2,6 @@
   <div class="margin55">
     <Header post-title="管理门特患者"></Header>
     <div>
-
       <div v-if="cardlist.length!=0">
         <div class="mentecard" v-for="(item,index) in cardlist" :key="index" @click="unblind(item)">
           <div class="mentecardtitlt">
@@ -10,6 +9,7 @@
               <span class="name">{{item.name}}</span>
               <span>{{item.sex|examSex}}</span>
               <span>{{item.age}}</span>
+               
             </p>
           </div>
           <div class="mentecardcontent">

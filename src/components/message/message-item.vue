@@ -18,7 +18,7 @@
       </template>
     </div>
 
-    <div v-if="aa.type=='questionDes'" class="online-content-list " :class="message.senderId===$imsdk.user.id?'right':''">
+    <!-- <div v-if="aa.type=='questionDes'" class="online-content-list " :class="message.senderId===$imsdk.user.id?'right':''">
       <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
       <div class="online-content-list-text">
         <em></em>
@@ -26,10 +26,10 @@
           <span v-html="aa.text" class="padding-left-2"></span>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- 分割线加文字 -->
-    <div class="message-item system-normal-message normal-style">
+    <div v-if="aa.type=='questionDes'" class="message-item system-normal-message normal-style">
       <div class="message-datetime show">2019-12-10 01:17</div>
       <div class="message-inner">
         <div class="system-message-wrapper">
@@ -42,7 +42,7 @@
       </div>
     </div>
     <!-- 聊天文字提示 -->
-    <div class="message-item system-tips-message message-state--8 normal-style">
+    <!-- <div  class="message-item system-tips-message message-state--8 normal-style">
       <div class="message-datetime show">2019-12-11 08:50</div>
       <div class="message-inner">
         <div class="system-message-wrapper">
@@ -51,9 +51,9 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- 病历详情 -->
-    <div class="medical-right">
+    <!-- <div class="medical-right">
       <div class="right-inner">
         <div class="content-wrapper width-100">
           <div class="template-message">
@@ -78,10 +78,7 @@
               <div class="imgs">
                 <ul class="image-list">
                   <li class="image-item image-wrapper">
-                    <div
-                      class="bg-image"
-                      style="background-image: url(&quot;http://img30.360buyimg.com/yiyaoapp/jfs/t1/91788/39/5596/91244/5dee8167Ebbf57a77/c7fa1baf52edc2d8.jpg&quot;); height: 20vw;"
-                    ></div>
+                    <div class="bg-image" style="background-image: url(&quot;http://img30.360buyimg.com/yiyaoapp/jfs/t1/91788/39/5596/91244/5dee8167Ebbf57a77/c7fa1baf52edc2d8.jpg&quot;); height: 20vw;"></div>
                   </li>
                 </ul>
               </div>
@@ -94,7 +91,7 @@
         </div>
       </div>
 
-    </div>
+    </div> -->
 
     <div v-if="aa.type=='geo'" class="online-content-list outpation">
       <img class="online-content-list-head" src="@/assets/images/head1.png" alt />
@@ -110,21 +107,12 @@
       </div>
     </div>
 
-    <div
-      v-if="aa.type=='image'"
-      class="online-content-list"
-      :class="message.senderId===$imsdk.user.id?'right':''"
-    >
+    <div v-if="aa.type=='image'" class="online-content-list" :class="message.senderId===$imsdk.user.id?'right':''">
       <img class="online-content-list-head" src="@/assets/images/head1.png" alt />
       <div class="online-content-list-text">
         <em></em>
         <div>
-          <img
-            style="width:100px;"
-            :src="'http://192.168.0.11:9999/net-medical/picture/'+aa.text"
-            @click="showViewer('http://192.168.0.11:9999/net-medical/picture/'+aa.text)"
-            alt
-          />
+          <img style="width:100px;" :src="'http://192.168.0.11:9999/net-medical/picture/'+aa.text" @click="showViewer('http://192.168.0.11:9999/net-medical/picture/'+aa.text)" alt />
         </div>
       </div>
     </div>
@@ -284,12 +272,12 @@ export default {
   em {
     // margin-left: -20px;
     top: 20px;
-      background-color: transparent;
+    background-color: transparent;
 
     // border-width: 20px 20px 20px 0;
     // border-color: transparent transparent transparent transparent;
     &:before {
-      content: '';
+      content: "";
       // border-color: transparent #48b6ff transparent transparent;
     }
   }

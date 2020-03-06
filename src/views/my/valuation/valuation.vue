@@ -76,7 +76,6 @@
 
 
 
-import data from './data.js'
 let updateByList = "/api/hos/bizPatientEvaluate/updateByList";
 let detailurl = "bizSurvey/read/queryById";
 let saveResult = 'bizSurvey/read/saveResult'
@@ -172,8 +171,6 @@ export default {
         res.data.data.list.map(x => {
           if (x.childNode) {
             x.childNode.forEach(item => item.checked = false);
-            console.log(x.childNode.length, "hhhhhhhhhhhhhhh")
-            console.log(x.childNode[1])
             x.childNode[0].checked = true;
           }
 
@@ -187,7 +184,6 @@ export default {
         this.isloading = false;
       } catch (error) {
         this.isloading = false;
-        console.log(error.message);
       }
     },
     onDatePickerConfirm() {
@@ -204,7 +200,6 @@ export default {
     selectService(index, index2, data, name) {
 
       if (data == 2) {
-        console.log(name.search("都没有") != -1)
         if (name.search("都没有") != -1) {
 
 
@@ -214,7 +209,6 @@ export default {
           if (this.doctorInfo[index2].childNode.filter(item => item.name.search("都没有") != -1)[0].checked) {
             return
           }
-          console.log(serviceresult, "这里555555555")
           // this.doctorInfo[index2].childNode
           serviceresult.forEach(item => item.checked = false)
           this.doctorInfo[index2].childNode[index].checked = !this.doctorInfo[index2].childNode[index].checked;
@@ -223,7 +217,6 @@ export default {
           const serviceresult2 = this.doctorInfo[index2].childNode.filter(item => item.name.search("都没有") != -1);
           const serviceresult3 = this.doctorInfo[index2].childNode.filter(item => item.name.search("都没有") == -1);
           const serviceresult4 = serviceresult3.filter(item => item.checked == true);
-          console.log(serviceresult4.length, "我是选中的长度")
           // const serviceresult2 = this.doctorInfo[index2].childNode.filter(item => item.id != 13);
           if (serviceresult4.length == 1) {
             if (this.doctorInfo[index2].childNode[index].checked) return

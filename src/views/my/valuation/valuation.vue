@@ -201,8 +201,6 @@ export default {
 
       if (data == 2) {
         if (name.search("都没有") != -1) {
-
-
           //  const serviceresult = this.doctorInfo[index2].childNode.filter(item => item.id != 13);
           // const serviceresult = this.doctorInfo[index2].childNode.filter(item => item.name != '都没有');
           const serviceresult = this.doctorInfo[index2].childNode.filter(item => item.name.search("都没有") == -1);

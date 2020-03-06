@@ -1,6 +1,6 @@
 <template>
   <div class="selectMedicine margin55">
-    <Header post-title="我的咨询" :isBackTo='true'></Header>
+    <Header post-title="我的咨询"></Header>
     <ul class="content" v-show="show && !loadingtrue">
       <conversation-item v-if="drugsList.drugs.length!=0" :conversation="item" :index="index" v-for="(item,index) in drugsList.drugs" :key="item.conversationID" />
       <Null :loading-true="drugsList.drugs.length==0"></Null>
@@ -9,7 +9,7 @@
       <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"></div>
     </ul>
     <Loading v-if="loadingtrue"></Loading>
-    <Footer></Footer>
+   
   </div>
 </template>
 <script>

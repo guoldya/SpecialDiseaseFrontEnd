@@ -9,7 +9,7 @@
               <span class="name">{{item.name}}</span>
               <span>{{item.sex|examSex}}</span>
               <span>{{item.age}}</span>
-               
+
             </p>
           </div>
           <div class="mentecardcontent">
@@ -78,7 +78,7 @@ export default {
       // });
 
 
-       this.$dialog.confirm({
+      this.$dialog.confirm({
         title: '提示',
         content: '确定解除绑定吗!',
         confirmText: '确定',
@@ -95,10 +95,13 @@ export default {
 
                 this.$store.dispatch('getCards', { update: true }).then(res => {
                   this.$store.commit('accountInfoFun', '')
-                  console.log("wwwa重新赋值wwww", this.$route.query.id, this.chooseId, this._cardlist[0])
-                  if (this.$route.query.id * 1 == this.chooseId) {
-                    this.$store.commit('accountInfoFun', this._cardlist[0])
+                  if (this._cardlist) {
+                    if (this.$route.query.id * 1 == this.chooseId) {
+                      this.$store.commit('accountInfoFun', this._cardlist[0])
+                    }
                   }
+
+
                 });
 
                 this.$toast.info("解绑成功")

@@ -126,7 +126,8 @@ export default {
             this.accountId = res.data.data.accountId;
 
             this.$store.dispatch('getCards', { update: true }).then(res => {
-              if (!this.$store.state.accountInfo) {
+              if (this.$route.query.isnews) {
+                console.log("111111111绑定选中的")
                 this.$store.commit('accountInfoFun', this._cardlist[0])
               }
             });

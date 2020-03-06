@@ -24,16 +24,20 @@
 
         <p class="dise">{{item.diseaseName}}</p>
         <p class="dise">{{item.idCard}}</p>
-        <img class="qiehuan"  v-if=" _cardlist.length!=1" @click="switchCard(index)" src="@/assets/images/qiehuan.png">
+        <img class="qiehuan" v-if=" _cardlist.length!=1" @click="switchCard(index)" src="@/assets/images/qiehuan.png">
       </div>
+    </div>
+    <p class="doctorlisttitle">
+      <span>问卷调查</span>
+      <!-- <span @click="$router.push({name:'doctorlist'})">更多<img src="@/assets/images/more.png" alt=""></span> -->
+    </p>
+    <div class="bg3" @click="valuation">
+      <img src="@/assets/images/bg3.png" alt="">
     </div>
     <p class="doctorlisttitle">
       <span>医生列表</span>
       <!-- <span @click="$router.push({name:'doctorlist'})">更多<img src="@/assets/images/more.png" alt=""></span> -->
     </p>
-    <div class="bg3">
-      <img src="@/assets/images/bg3.png" alt="">
-    </div>
     <doctorList v-for="(item, index) in listdata" :datas="item" :key="index"></doctorList>
     <!-- 底部 -->
     <Footer></Footer>
@@ -68,30 +72,48 @@ export default {
   },
 
   async mounted() {
+
     // await this.$store.dispatch('getCards', { update: true });
-    await this.$store.dispatch('getCards', { update: true });
-    // await this.$store.dispatch('getDepart', { update: true });
 
-    console.log(typeof (this.$store.state.accountInfo), this.$store.state.accountInfo.id,  )
+    this.$store.dispatch('getCards', { update: true }).then(res => {
+      // if (this.chooseId) {
+      //   this._cardlist.map(x => {
+      //     console.log(x, "sssssssss", String(x.id).search(this.chooseId))
+      //     if (String(x.id).search(this.chooseId) == -1) {
+      //       this.$store.commit('accountInfoFun', this._cardlist[0])
+      //       this.homeNumber(this._cardlist[0].id);
+      //       return
+      //     }
+      //   })
+      // }
 
-    if (this.$store.state.accountInfo) {
-      if (typeof (this.$store.state.accountInfo) == 'string') {
-        this.chooseId = JSON.parse(this.$store.state.accountInfo).id;
+      if (this.$store.state.accountInfo) {
+        if (typeof (this.$store.state.accountInfo) == 'string') {
+          this.chooseId = JSON.parse(this.$store.state.accountInfo).id;
+        } else {
+          this.chooseId = this.$store.state.accountInfo.id;
+        }
+
       } else {
-        this.chooseId = this.$store.state.accountInfo.id;
+
+        if (this._cardlist.length == 0) {
+          return
+        }
+        this.chooseId = this._cardlist[0].id;
+        this.$store.commit('accountInfoFun', this._cardlist[0])
+
       }
 
-    } else {
-      if (this._cardlist.length == 0) {
-        return
-      }
-      this.chooseId = this._cardlist[0].id;
-      // let setInfo = JSON.stringify(this._cardlist[0])
-      // sessionStorage.setItem('objInfo', JSON.parse(setInfo))
+      this.homeNumber(this.chooseId);
 
-      this.$store.commit('accountInfoFun', this._cardlist[0])//已登录
-    }
-    this.homeNumber(this.chooseId);
+
+    });
+
+
+
+
+
+
 
 
 
@@ -100,6 +122,13 @@ export default {
   },
 
   methods: {
+    valuation() {
+      let argu = {};
+      this.$router.push({
+        name: "valuation",
+        query: argu
+      });
+    },
     doctorlist() {
       let argu = {};
       this.$router.push({

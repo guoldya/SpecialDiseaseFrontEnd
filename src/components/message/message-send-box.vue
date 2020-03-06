@@ -89,12 +89,12 @@ export default {
 
   updated() {
 
-    
+
 
   },
   mounted() {
     this.$refs.inputModel.focus()
-    
+
   },
   beforeDestroy() {
     // this.$refs['text-input'].removeEventListener('paste', this.handlePaste)
@@ -113,6 +113,7 @@ export default {
         }
         let msg = {
           type: 'image',
+          headerurl: this.$store.state.userInfo.headPic,
           text: res.data.rows[0].fileName
         }
         return this.imSdk.send(msg)
@@ -183,6 +184,7 @@ export default {
       }
       let msg = {
         type: 'text',
+        headerurl: this.$store.state.userInfo.headPic,
         text: this.$refs.inputModel.innerHTML
       }
       this.imSdk.send(msg)

@@ -2,7 +2,7 @@
   <div class="online-content-warp">
     <div v-if="aa.type=='text'" class="online-content-list " :class="message.senderId===$imsdk.user.id?'right':''">
       <template v-if="!aa.close">
-        <img class="online-content-list-head" :src="this.$store.state.userInfo.headPic" alt>
+        <img class="online-content-list-head" :src="message.senderId!=$imsdk.user.id?require('@/assets/images/head1.png'):this.$store.state.userInfo.headPic" alt>
         <div class="online-content-list-text">
           <em></em>
           <div>

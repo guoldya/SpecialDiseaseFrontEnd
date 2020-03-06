@@ -171,6 +171,7 @@ export default {
         text: this.questionDes,
         userInfo: this.$store.state.accountInfo,
         date: year + '-' + mon + '-' + date + ' ' + h + ':' + m,
+        headerurl: this.$store.state.userInfo.headPic,
       }
       this.isShow = false;
       this.imSdk.send(msg)
@@ -183,12 +184,12 @@ export default {
           query: {
             id: this.$route.query.id,
             name: this.$route.query.name,
-            headerurl: this.$store.state.userInfo.headPic,
+
             isOpen: 1
           }
         })
       }, 1000);
-      
+
       this.isShow = true;
 
 

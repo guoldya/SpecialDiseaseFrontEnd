@@ -22,9 +22,9 @@ export default {
       wechatCode = str.split("?")[0].split("&")[0].split("=")[1];
       sessionStorage.setItem('wechatCode', wechatCode);
     } else {
-      wechatCode ='edd169b85704410aa5219512cb6f1f00';
+      wechatCode = 'code';
     }
-    let url = appLoginlogin + '?wechatCode=' + 'code' + '&roleMark=' + '1';
+    let url = appLoginlogin + '?wechatCode=' + wechatCode + '&roleMark=' + '1';
     if (this.$route.query.loginAgin) {
       url = appLoginlogin + '?accountId=' + this.$route.query.accountId;
     }

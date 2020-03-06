@@ -73,7 +73,7 @@ Vue.use(infiniteScroll);
 
 
 import Vconsole from 'vconsole';
-// const vConsole = new Vconsole();
+  const vConsole = new Vconsole();
 // 路由拦截
 router.beforeEach((to, from, next) => {
     if (to.meta && to.meta.title) {

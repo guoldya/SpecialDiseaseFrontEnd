@@ -28,12 +28,16 @@
       </div>
     </div>
     <p class="doctorlisttitle">
+      <span>问卷调查</span>
+      <!-- <span @click="$router.push({name:'doctorlist'})">更多<img src="@/assets/images/more.png" alt=""></span> -->
+    </p>
+    <div class="bg3" @click="valuation">
+      <img src="@/assets/images/bg3.png" alt="">
+    </div>
+    <p class="doctorlisttitle">
       <span>医生列表</span>
       <!-- <span @click="$router.push({name:'doctorlist'})">更多<img src="@/assets/images/more.png" alt=""></span> -->
     </p>
-    <div class="bg3">
-      <img src="@/assets/images/bg3.png" alt="">
-    </div>
     <doctorList v-for="(item, index) in listdata" :datas="item" :key="index"></doctorList>
     <!-- 底部 -->
     <Footer></Footer>
@@ -78,7 +82,7 @@ export default {
       //     if (String(x.id).search(this.chooseId) == -1) {
       //       this.$store.commit('accountInfoFun', this._cardlist[0])
       //       this.homeNumber(this._cardlist[0].id);
-      //        return
+      //       return
       //     }
       //   })
       // }
@@ -118,6 +122,13 @@ export default {
   },
 
   methods: {
+    valuation() {
+      let argu = {};
+      this.$router.push({
+        name: "valuation",
+        query: argu
+      });
+    },
     doctorlist() {
       let argu = {};
       this.$router.push({

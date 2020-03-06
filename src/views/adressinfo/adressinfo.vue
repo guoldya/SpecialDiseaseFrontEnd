@@ -1,7 +1,7 @@
 <template>
   <div class="adressinfo">
-    <Header  :post-title="this.post"></Header>
-    
+    <Header :post-title="this.post"></Header>
+
     <!-- <Navigation type="title" :title="post">
       <span v-show="$route.query.id" class="mu-secondary-text-color" @click="dedete">删除</span>
     </Navigation> -->
@@ -53,6 +53,7 @@ export default {
       zipCode: '',
       post: "编辑地址",
       pickerDefaultValue: [],
+      chooseId: '',
       isOK: false,
     }
   },
@@ -96,65 +97,24 @@ export default {
     } else {
       this.isDefault - false
     }
+
+    if (typeof (this.$store.state.accountInfo) == 'string') {
+      this.chooseId = JSON.parse(this.$store.state.accountInfo).id;
+    } else {
+      this.chooseId = this.$store.state.accountInfo.id;
+    }
+
   },
   methods: {
-    dedete() {
-      let params = {}, p_data = {};
-      p_data.id = this.$route.query.id;
-      params.data = p_data;
-      this.$dialog.confirm({
-        title: '确认',
-        content: '请确认删除该地址吗',
-        confirmText: '确定',
-        onConfirm: () => {
-          this.$axios.delete(deleteAddress, params).then((res) => {
-            if (res.data.code == '200') {
-              if (this.$route.query.checked) {
-                this.$toast.loading("删除中...")
-                setTimeout(() => {
-                  this.$axios.put(appshippingAddressaddressList, {}).then((res) => {
-                    if (res.data.code == '200') {
-                      this.$toast.info("删除成功")
-                      if (this._selectAdress.id == this.$route.query.id) {
-                        if (res.data.rows.length != 0) {
-                          this.$store.commit('selectAdressFun', res.data.rows.filter(item => item.isDefault == 1)[0]);
-                        } else {
-                          this.$store.commit('selectAdressFun', '');
-                        }
-                      }
-                      this.$router.go(-1);
 
-                    } else {
-                      this.$toast.info(res.msg);
-                    }
-                  }).catch(function (err) {
-                    console.log(err);
-                  });
-                }, 1000)
-
-              } else {
-                this.$toast.info("删除成功")
-                this.$router.go(-1);
-              }
-
-
-            } else {
-              this.$toast.info(res.msg);
-            }
-          }).catch(function (err) {
-            console.log(err);
-          });
-        }
-      })
-    },
     adressByValue: function (childValue) {
       // console.log(childValue, "childValuechildValue")
       this.areaId = childValue
     },
     tijiao() {
       this.isTijiao = false;
-     if (!this.receiver || !this.mobile || !this.address || !this.areaId) {
-       // if (!this.receiver || !this.mobile) {
+      if (!this.receiver || !this.mobile || !this.address || !this.areaId) {
+        // if (!this.receiver || !this.mobile) {
         this.$toast.info("请完善信息")
         this.isTijiao = true;
       } else {
@@ -165,6 +125,7 @@ export default {
         }
         let aa = {};
         aa.id = this.$route.query.id * 1;
+        aa.patientId = this.chooseId;
         aa.receiver = this.receiver;
         aa.mobile = this.mobile;
         aa.address = this.address;
@@ -173,7 +134,7 @@ export default {
         aa.isDefault = this.isDefault ? 1 : 0;
         this.$axios.post(addOrUpdate, aa).then(res => {
           if (res.data.code == '200') {
-            if (this.$route.query.checked) {
+            if (this.$route.query.id) {
               setTimeout(() => {
                 if (this._selectAdress.id == this.$route.query.id) {
                   this.$axios.put(appshippingAddressaddressList, {}).then((res) => {
@@ -192,6 +153,8 @@ export default {
               }, 1000)
 
             } else {
+
+
               this.isTijiao = true;
               this.$router.go(-1);
             }

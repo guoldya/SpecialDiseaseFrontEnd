@@ -1,6 +1,6 @@
 <template>
   <div class="selectMedicine margin55">
-    <Header post-title="咨询s记录" :isBackTo='true'></Header>
+    <Header post-title="我的咨询" :isBackTo='true'></Header>
     <ul class="content" v-show="show && !loadingtrue">
       <conversation-item v-if="drugsList.drugs.length!=0" :conversation="item" :index="index" v-for="(item,index) in drugsList.drugs" :key="item.conversationID" />
       <Null :loading-true="drugsList.drugs.length==0"></Null>
@@ -88,7 +88,7 @@ export default {
             if (!this.busy) this.loadingtrue = false;
             this.busy = false;
 
-            console.log(this.drugsList.drugs,"this.drugsList.drugs")
+
           } else {
             this.$toast.info(res.data.msg);
           }
@@ -96,6 +96,18 @@ export default {
         .catch(function (err) {
           console.log(err);
         });
+    },
+    into(data) {
+
+      this.$router.push({
+        name: 'chatRoom',
+        query: {
+          id: data.id,
+          name: data.drName
+        }
+      })
+
+
     },
     loadMore: function () {
       if (this.loadingtrue) return false;
@@ -122,3 +134,4 @@ export default {
   flex: 1;
 }
 </style>
+ 

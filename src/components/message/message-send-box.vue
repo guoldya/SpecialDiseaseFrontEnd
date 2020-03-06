@@ -89,12 +89,12 @@ export default {
 
   updated() {
 
-    
+
 
   },
   mounted() {
     this.$refs.inputModel.focus()
-    
+
   },
   beforeDestroy() {
     // this.$refs['text-input'].removeEventListener('paste', this.handlePaste)
@@ -107,12 +107,18 @@ export default {
         var formData = new FormData();
         var file = this.$refs.uploadImg.files[0];
         formData.append("file", file);
-        let res = await this.$axios.post('upload/file', formData);
+        let config = {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        };
+        let res = await this.$axios.post('upload/file', formData,config);
         if (res.data.code != 200) {
           throw Error(res.data.msg);
         }
         let msg = {
           type: 'image',
+          headerurl: this.$store.state.userInfo.headPic,
           text: res.data.rows[0].fileName
         }
         return this.imSdk.send(msg)
@@ -183,6 +189,7 @@ export default {
       }
       let msg = {
         type: 'text',
+        headerurl: this.$store.state.userInfo.headPic,
         text: this.$refs.inputModel.innerHTML
       }
       this.imSdk.send(msg)

@@ -2,7 +2,6 @@
   <div class="selectMedicine margin55">
     <Header post-title="处方列表"> </Header>
     <ul class="content" v-show="show && !loadingtrue">
-
       <Recordcard v-if="drugsList.drugs.length!=0" v-for="(item,i) in drugsList.drugs" :content="item" :type="4" :key="i"></Recordcard>
       <Null :loading-true="drugsList.drugs.length==0"></Null>
       <md-icon v-if="!loadingtrue && busy" name="spinner" size="lg" style="-webkit-filter:invert(1)"></md-icon>

@@ -1,5 +1,5 @@
  <template>
-  <div class="margin55 outCarint">
+  <!-- <div class="margin55 outCarint">
     <Header post-title="我的订单"></Header>
     <div class="mycard" v-if="waitPayData.length!=0" v-show="!loadingtrue" v-for="(item, index) in waitPayData" :key="index">
       <div class="mycardtop">
@@ -10,22 +10,15 @@
           <div>
             <p>订单编号</p>
             <p class="orderno">{{item.orderCode}}</p>
-
           </div>
         </div>
         <div class="cardtopright" @click="updown(index)">
           <div>
             <p class="button">
-
               <span>{{item.status|payTypeFilter}}</span>
-              <!-- {{item.status|payTypeFilter}} -->
             </p>
             <p class="money">￥{{item.totalMoney|keepTwoNum}}</p>
           </div>
-          <!-- <div>
-            <img v-if="isSHOW==index" src="@/assets/images/icon_down.png" alt="">
-            <img v-if="isSHOW!=index" src="@/assets/images/icon_up@2x.png" alt="">
-          </div> -->
         </div>
       </div>
       <div>
@@ -66,26 +59,86 @@
     </div>
     <Loading v-show="loadingtrue"></Loading>
 
+  </div> -->
+  <div class="margin55 outCarint">
+    <Header post-title="我的订单"> </Header>
+    <ul class="content" v-show="show && !loadingtrue">
+      <div class="mycard" v-if="drugsList.drugs.length!=0" v-for="(item,i) in drugsList.drugs" :key="i">
+        <div class="mycardtop">
+          <div class="cardtopleft">
+            <div>
+              <img src="@/assets/images/dill13.png" alt="商品图片">
+            </div>
+            <div>
+              <p>订单编号</p>
+              <p class="orderno">{{item.orderCode}}</p>
+            </div>
+          </div>
+          <div class="cardtopright" @click="updown(index)">
+            <div>
+              <p class="button">
+                <span>{{item.status|payTypeFilter}}</span>
+              </p>
+              <p class="money">￥{{item.totalMoney|keepTwoNum}}</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="mycardlist" v-for="(item2, index2) in item.orderDetailsList" :key="index2">
+            <div class="mycardlistleft">
+              <div class="img">
+                <img src="@/assets/images/1.jpg" alt="">
+              </div>
+              <div>
+                <p>{{item2.drugName}}</p>
+                <p class="price">单价：￥{{item2.price|keepTwoNum}}</p>
+              </div>
+            </div>
+            <div class="mycardlistright">
+              <p>订单金额：￥{{item2.total|keepTwoNum}}</p>
+              <p class="num">数量：{{item2.num}}</p>
+            </div>
+          </div>
+
+        </div>
+        <div class="lookmore" @click="orderinfo(item)">
+          <span><label v-if="item.status!=3">查看详情</label>
+          </span>
+          <span>
+            <router-link v-if="item.status==3" :to="{ path: '/myorderinfo', query: { id: item.id }}" class="consult">
+              <span class="have">确认收货</span>
+            </router-link>
+            <img v-if="item.status!=3" src="@/assets/images/icon_right.png" alt="">
+          </span>
+        </div>
+      </div>
+      <Null :loading-true="drugsList.drugs.length==0"></Null>
+      <md-icon v-if="!loadingtrue && busy" name="spinner" size="lg" style="-webkit-filter:invert(1)"></md-icon>
+      <div class="nomore" v-if="!loadingtrue && (drugsList.nowPage == pages || pages == 0)">没有更多数据了</div>
+      <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"></div>
+    </ul>
+    <Loading v-if="loadingtrue"></Loading>
   </div>
 </template>
  <script>
-let pay_list_url = 'bizOrder/selectPage'
+let selectDrugs = 'bizOrder/selectPage'
 
 export default {
   data() {
     return {
-      isSHOW: 0,
-      waitPayData: [],
-      page: 1,
-      pageSize: 10,
-      busy: true,
-      nomore: false,
+      show: true,
+      pages: 1,
       loadingtrue: true,
-
+      busy: false,
+      current: 1,
+      drugsList: {
+        nowPage: 1,
+        drugs: []
+      }
     };
   },
   mounted() {
-    this.WaitPay(false);
+    this.selectDrugsList();
   },
   methods: {
     updown(data) {
@@ -97,47 +150,37 @@ export default {
         this.isSHOW = data;
       }
     },
-    WaitPay(flag) {
-      const params = {};
-      params.pageNumber = this.page;
-      params.pageSize = this.pageSize;
-      this.$axios.put(pay_list_url, params).then((res) => {
-        this.loadingtrue = false;
-        if (res.data.code == 200) {
-          if (res.data.rows) {
-            if (flag) {
-              this.waitPayData = this.waitPayData.concat(res.data.rows);  //concat数组串联进行合并
-              if (this.page < Math.ceil(res.data.total / 10)) {  //如果数据加载完 那么禁用滚动时间 this.busy设置为true
-                this.busy = false;
-                this.nomore = false;
-              } else {
-                this.busy = true;
-                this.nomore = true;
-              }
-            } else {
-              this.waitPayData = res.data.rows;
-              this.busy = true;
-              if (res.data.total < 10) {
-                this.busy = true;
-                this.nomore = true;
-              } else {
-                this.busy = false;
-                this.nomore = false;
-              }
-            }
-          }
-          //2、
+    async selectDrugsList() {
+      if (!this.busy) this.loadingtrue = true;
+
+      this.$axios.put(selectDrugs, {
+        pageSize: 20,
+        pageNumber: this.current,
+      }).then((res) => {
+        if (res.data.code == '200') {
+          res = res.data;
+          this.drugsList.drugs = this.current == 1 ? res.rows : this.drugsList.drugs.concat(res.rows);
+          this.drugsList.nowPage = res.current;
+          this.pages = res.pages;
+          if (!this.busy) this.loadingtrue = false;
+          this.busy = false;
+
         } else {
-          this.waitPayData = []
+          this.$toast.info(res.data.msg);
         }
-      })
+      }).catch(function (err) {
+        console.log(err);
+      });
+
     },
-    loadMore() {
-      this.busy = true;  //将无限滚动给禁用
-      setTimeout(() => {  //发送请求有时间间隔第一个滚动时间结束后才发送第二个请求
-        this.page++;  //滚动之后加载第二页
-        this.WaitPay(true);
-      }, 500);
+    loadMore: function () {
+      if (this.loadingtrue) return false;
+      if (this.drugsList.nowPage == this.pages) return false;
+      this.busy = true;
+      setTimeout(() => {
+        this.current++;
+        this.selectDrugsList();
+      }, 1000)
     },
     orderinfo(data) {
       let argu = { id: data.id };

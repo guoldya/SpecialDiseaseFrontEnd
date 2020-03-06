@@ -24,7 +24,7 @@
 
         <p class="dise">{{item.diseaseName}}</p>
         <p class="dise">{{item.idCard}}</p>
-        <img class="qiehuan" @click="switchCard(index)" src="@/assets/images/qiehuan.png">
+        <img class="qiehuan"  v-if=" _cardlist.length!=1" @click="switchCard(index)" src="@/assets/images/qiehuan.png">
       </div>
     </div>
     <p class="doctorlisttitle">
@@ -72,7 +72,7 @@ export default {
     await this.$store.dispatch('getCards', { update: true });
     // await this.$store.dispatch('getDepart', { update: true });
 
-    console.log(typeof (this.$store.state.accountInfo), this.$store.state.accountInfo.id, "ssssssssss")
+    console.log(typeof (this.$store.state.accountInfo), this.$store.state.accountInfo.id,  )
 
     if (this.$store.state.accountInfo) {
       if (typeof (this.$store.state.accountInfo) == 'string') {
@@ -108,7 +108,6 @@ export default {
       });
     },
     async homeNumber(data) {
-      console.log("ddddddddddddd")
       try {
         let res = await this.$axios.put(doctorlistURL, {
 

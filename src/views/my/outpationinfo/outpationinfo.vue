@@ -46,7 +46,7 @@
         </div>
       </div>
     </div>
-    <div class="infobottom" v-show="this.$route.query.status==0">
+    <div class="infobottom" v-show="reportInfoData.status==0">
       <!-- <p>请完善收件人信息</p> -->
       <div class="submitUser" v-if="_selectAdress.receiver">
         <div class="adress-box">
@@ -89,7 +89,7 @@
     <md-dialog title="提示" :closable="false" v-model="actDialog.open" :btns="actDialog.btns">
       是否确定记账
     </md-dialog>
-    <div style="padding:0.24rem" v-show="this.$route.query.status==0">
+    <div style="padding:0.24rem" v-show="reportInfoData.status==0">
       <md-button type="primary" @click="tijiao" round style="margin-top:16px">处方确认记账</md-button>
     </div>
     <Loading v-show="loadingtrue"></Loading>

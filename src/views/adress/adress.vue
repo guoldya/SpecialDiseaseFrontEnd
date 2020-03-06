@@ -53,7 +53,7 @@
 <script type="text/babel">
 import { Toast } from 'mand-mobile';
 import { Dialog, Button } from 'mand-mobile'
-
+import { mapState } from 'vuex';
 let appshippingAddressaddressList = "bizShippingAddress/addressList";
 let deleteAddress = "bizShippingAddress/delete";
 let isDefault = "bizShippingAddress/insertOrUpdate"
@@ -65,6 +65,11 @@ export default {
       addressInfo: '',
       loadingtrue: true,
     };
+  },
+  computed: {
+    ...mapState({
+      _selectAdress: state => state.selectAdress,
+    }),
   },
   created() {
     this.$axios.put(appshippingAddressaddressList, {
@@ -80,7 +85,7 @@ export default {
       console.log(err);
     });
   },
- 
+
   methods: {
     selectFun(val) {
       if (this.$route.query.checked) {
@@ -136,6 +141,21 @@ export default {
                 console.log(res)
                 if (res.data.code == '200') {
                   this.addressInfo = res.data.rows;
+                  console.log(this._selectAdress, "sssssssss")
+                  if (this._selectAdress) {
+                    if (this._selectAdress.id == data) {
+                      if (res.data.rows.length != 0) {
+                        this.$store.commit('selectAdressFun', this.addressInfo.filter(item => item.isDefault == 1)[0]);
+                      } else {
+                        this.$store.commit('selectAdressFun', '');
+                        console.log("ssssssssss", this._selectAdress)
+                      }
+                    }
+                  } else {
+                    this.$store.commit('selectAdressFun', '');
+                    console.log("ssssssssss", this._selectAdress)
+                  }
+
                 } else {
                   console.log(res.msg);
                 }

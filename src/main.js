@@ -72,8 +72,8 @@ Vue.use(infiniteScroll);
 
 
 
-// import Vconsole from 'vconsole';
-// const vConsole = new Vconsole();
+import Vconsole from 'vconsole';
+const vConsole = new Vconsole();
 // 路由拦截
 router.beforeEach((to, from, next) => {
     if (to.meta && to.meta.title) {
@@ -116,7 +116,8 @@ axios.interceptors.request.use(function (config) {
             // config.headers.Authorization = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7XCJtb2JpbGVcIjpcIjE4OTk2MTI4NzkxXCIsXCJuaWNrbmFtZVwiOlwi5Zmr5oGL44CCZmxvd2VyXCIsXCJpZFwiOjE4OX0iLCJqdGkiOiIxZjgxODhkZC01ZTk2LTQwZjUtODIxNC00YjFmMDg2MjQ3MWQiLCJpYXQiOjE1NjE2MDM4NzYsImV4cCI6MTU2NDE5NTg3Nn0.Tff9tLESvE7f0QgjiTsp4K1mdgpS8ZUUnrsc07aUFgU";
             config.headers.Authorization = ""
         } else {
-            config.headers.Authorization = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7XCJtb2JpbGVcIjpcIjE4OTk2MTI4NzkxXCIsXCJuaWNrbmFtZVwiOlwi5Zmr5oGL44CCZmxvd2VyXCIsXCJpZFwiOjE4OX0iLCJqdGkiOiIxZjgxODhkZC01ZTk2LTQwZjUtODIxNC00YjFmMDg2MjQ3MWQiLCJpYXQiOjE1NjE2MDM4NzYsImV4cCI6MTU2NDE5NTg3Nn0.Tff9tLESvE7f0QgjiTsp4K1mdgpS8ZUUnrsc07aUFgU";
+            // config.headers.Authorization = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7XCJtb2JpbGVcIjpcIjE4OTk2MTI4NzkxXCIsXCJuaWNrbmFtZVwiOlwi5Zmr5oGL44CCZmxvd2VyXCIsXCJpZFwiOjE4OX0iLCJqdGkiOiIxZjgxODhkZC01ZTk2LTQwZjUtODIxNC00YjFmMDg2MjQ3MWQiLCJpYXQiOjE1NjE2MDM4NzYsImV4cCI6MTU2NDE5NTg3Nn0.Tff9tLESvE7f0QgjiTsp4K1mdgpS8ZUUnrsc07aUFgU";
+            config.headers.Authorization = ""
         };
     }
     return config;

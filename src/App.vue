@@ -133,44 +133,43 @@ body {
 .message-item{
   margin: 0 12px;
 }
-.system-normal-message .content span {
+.system-normal-message .message-content span {
     position: relative;
     display: inline-block;
-    background-color: #f8f8f8;
-    padding: 0 .1rem;
+    background-color: #ededed;
+    padding: 0 10px;
     left: 50%;
     -webkit-transform: translate(-50%);
     transform: translate(-50%);
 }
-.system-message .content,
-.system-normal-message .content {
+.system-message .message-content,
+.system-normal-message .message-content {
   display: inline-block;
   position: relative;
-  font-size: 0.13rem;
-  padding: 0.04rem 0.24rem;
+  font-size: 26px;
+  padding: 4px 48px;
 }
-.system-normal-message .content {
+.system-normal-message .message-content {
   position: relative;
   display: block;
 }
 
 
-.system-message .content:after,
-.system-message .content:before,
-.system-normal-message .content:after,
-.system-normal-message .content:before {
+.system-message .message-content:after,
+.system-message .message-content:before,
+.system-normal-message .message-content:after,
+.system-normal-message .message-content:before {
   content: "";
   position: absolute;
-  top: 0.14rem;
-  width: 0.2rem;
-  border-top: 0.01rem solid #adb5bd;
+  top: 14px;
+  width:20px;
+  border-top: 2px solid #adb5bd;
 }
-.system-normal-message .content:before {
-  /* top: 0.12rem; */
+.system-normal-message .message-content:before {
   width: 100%;
 }
-.system-message .content:before,
-.system-normal-message .content:before {
+.system-message .message-content:before,
+.system-normal-message .message-content:before {
   left: 0;
 }
 .system-message, .system-normal-message{
@@ -178,17 +177,17 @@ body {
   margin: 0 24px 16px 24px;
 }
 .message-item {
-    margin-bottom: .15rem;
+    margin-bottom: 15px;
 }
 .message-datetime.show {
     display: block;
 }
 .message-datetime {
     display: none;
-    padding: .1rem .15rem;
+    padding: 10px 15px;
     color: #999baa;
     text-align: center;
-    font-size: .14rem;
+    font-size: 14px;
 }
 /* 分割线 */
 .card-divider-horizontal {
@@ -220,5 +219,21 @@ body {
   font-feature-settings: "tnum";
   background: #e8e8e8;
 }
-
+.system-tips-message{
+    padding: 0 .15rem;
+    margin-bottom: .08rem;
+}
+.system-tips-message .system-message-inner {
+    text-align: center;
+}
+.system-tips-message .audit-message-content {
+    display: inline-block;
+    border-radius: 6px;
+    font-size: 24px;
+    padding: 10px 18px;
+    line-height: 32px;
+    background-color: #c4cdd8;
+    color: #fff;
+    text-align: left;
+}
 </style>

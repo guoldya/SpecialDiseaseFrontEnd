@@ -47,7 +47,7 @@
       <div class="message-inner">
         <div class="system-message-wrapper">
           <div class="system-message-inner">
-            <span class="message-content">审核通过，服药期间如有不适请及时线下医院就诊</span>
+            <span class="audit-message-content">审核通过，服药期间如有不适请及时线下医院就诊</span>
           </div>
         </div>
       </div>

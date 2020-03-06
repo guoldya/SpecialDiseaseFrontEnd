@@ -42,20 +42,23 @@
                 :to="{ path: '/consultDetail', query: { id: datas.id }}"
               >
                 <img src="@/assets/conversationImg/freeText.png" />
-                <span>免费</span>
+                <span class="fontSize12">免费</span>
               </router-link>
               <router-link
                 v-else
                 :to="{ path: '/chatRoom', query: { id: datas.id ,name:datas.drName}}"
               >
-                <img src="@/assets/conversationImg/freeText.png" />咨询中
+                <img src="@/assets/conversationImg/freeText.png" />
+                <span class="fontSize12">咨询中</span>
               </router-link>
             </div>
             <div class="dotdhff">
-              <img src="@/assets/conversationImg/offlineVoice.png" />暂无
+              <img src="@/assets/conversationImg/offlineVoice.png" />
+                <span class="fontSize12">暂无</span>
             </div>
             <div class="dotvideoff">
-              <img src="@/assets/conversationImg/offlineVideo.png" />暂无
+              <img src="@/assets/conversationImg/offlineVideo.png" />
+                <span class="fontSize12">暂无</span>
             </div>
           </div>
           <!-- ￥{{datas.minPrice|keepTwoNum}} -->
@@ -211,35 +214,30 @@ export default {
   border: none;
 }
 .dotType {
-  border-top: 1px solid #fcfcfc;
-  // height: 80px;
   display: flex;
   align-items: center;
-  // margin-top: 12px;
   justify-content: space-between;
 }
 .dotType div {
-  width: 33.3333%;
-  font-size: 12px;
+  // width: 33.3333%;
+  font-size: 26px;
 }
-.dotType .dottextff a span {
-  color: var(--primary--secondary) ;
-  text-align: left;
+.dotType .dottextff a{
+  display: flex;
+  align-items: center;
+  span {
+    color: var(--primary--secondary) ;
+    // text-align: left;
+  }
 }
-.dotdhff {
+.dotdhff, .dotvideoff{
   color: var(--primary--content);
-  text-align: center;
-}
-.dotvideoff {
-  color: var(--primary--content);
-  text-align: right;
+  display: flex;
+  align-items: center;
 }
 .dotType img {
-  width: 32px;
-  height: 32px;
-  position: relative;
-  top: 3px;
   margin-right: 5px;
 }
+ 
 </style>
 

@@ -141,10 +141,8 @@ export default {
     this.doctorReply();
     this.$nextTick(function () {
       var ele = this.$refs['chatContent'];
-      console.log(ele.scrollHeight, "内容的高度")
-
       ele.scrollTop = 1000;
-      console.log(ele.scrollTop, "执行滚动")
+       
     });
   },
   updated: function () {

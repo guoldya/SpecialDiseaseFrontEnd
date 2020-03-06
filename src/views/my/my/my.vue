@@ -115,7 +115,7 @@ export default {
     }),
   },
   created() {
-    // sessionStorage.setItem('feeActiveFun', 1);
+    
   },
   async mounted() {
     // await this.$store.dispatch('getAccount');

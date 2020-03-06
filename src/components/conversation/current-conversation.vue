@@ -1,12 +1,9 @@
 <template>
   <div class="current-conversation-wrapper">
-
     <div class="content" ref="message-list">
       <div class="message-list" @scroll="this.onScroll">
-    
         <message-item v-for="message in imSdk.messageList" :key="message.ID" :message="message" />
       </div>
-       
       <div v-show="isShowScrollButtomTips" class="newMessageTips" @click="scrollMessageListToButtom">回到最新位置</div>
     </div>
     <div class="footer">
@@ -40,7 +37,7 @@ export default {
   mounted() {
 
     this.scrollMessageListToButtom()
-  
+
 
   },
   updated() {
@@ -48,6 +45,7 @@ export default {
     if (this.imSdk.messageList[this.imSdk.messageList.length - 1]) {
       if (JSON.parse(this.imSdk.messageList[this.imSdk.messageList.length - 1].content).close) {
         this.isShow = false;
+        this.$store.commit('feeActiveFun', 1)
       }
     }
 
@@ -64,11 +62,9 @@ export default {
   methods: {
 
     onScroll() {
-      console.log('执行滚动1111')
       this.$nextTick(function () {
         var ele = this.$refs['message-list'];
         ele.scrollTop = ele.scrollHeight;
-        console.log(ele.scrollHeight, "高度")
       });
     },
     // 如果滚到底部就保持在底部，否则提示是否要滚到底部

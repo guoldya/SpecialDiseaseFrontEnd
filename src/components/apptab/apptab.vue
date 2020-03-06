@@ -20,9 +20,7 @@ export default {
   },
   props: ['tabTitle', 'depart'],
   mounted() {
-    if (sessionStorage.getItem('feeActiveFun')) {
-      this.active1 = sessionStorage.getItem('feeActiveFun') * 1
-    }
+     
     this.$nextTick(() => {
       if (this.depart == 1) {
         this.active1 = this.tabTitle[0].id

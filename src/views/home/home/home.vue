@@ -72,7 +72,7 @@ export default {
     await this.$store.dispatch('getCards', { update: true });
     // await this.$store.dispatch('getDepart', { update: true });
 
-    console.log(typeof (this.$store.state.accountInfo), this.$store.state.accountInfo.id, "ssssssssss")
+    console.log(typeof (this.$store.state.accountInfo), this.$store.state.accountInfo.id,  )
 
     if (this.$store.state.accountInfo) {
       if (typeof (this.$store.state.accountInfo) == 'string') {
@@ -108,7 +108,6 @@ export default {
       });
     },
     async homeNumber(data) {
-      console.log("ddddddddddddd")
       try {
         let res = await this.$axios.put(doctorlistURL, {
 

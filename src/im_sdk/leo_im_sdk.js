@@ -8,6 +8,8 @@ export class ImSdk {
     //user: Object = null;
     //构造函数
     constructor() {
+        this.isOpenWS=false
+
         this.user = null //当前用户信息
         this.onlineStatus = null //当前用户状态
         this.token = null //令牌
@@ -40,18 +42,22 @@ export class ImSdk {
             //TODO:1关闭 通讯 2通知后台
     }
     createUserConnect(username, password, { userConnectCallback } = {}) {
+        console.log("创建于服务端的会话")
+       
+     if(this.isOpenWS===true) return
         //创建于服务端的会话
         this.restFulApi.userLogi(username, password, (userId) => {
             this.restFulApi.userUpdateOnlineStatus(userId, () => {
                 this.restFulApi.userlistUserChannels(() => {
                     console.log(this, "数据状态查询")
-
                         //初始化会话连接
-                     this.imkSocketSDK.initIMClient();
-                     userConnectCallback()
+                    this.imkSocketSDK.initIMClient();
+                    userConnectCallback()
+                     this.isOpenWS=true;
                 })
             })
         })
+         
     }
     openSession(fromUsername, toUserId, toUsername, { getMessageCallback } = {}) {
         //打开会话

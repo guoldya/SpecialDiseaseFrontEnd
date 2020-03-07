@@ -49,16 +49,16 @@ export default {
       {
         userConnectCallback: () => {
           // 拿到消息列表之后的回调
-          // this.imSdk.openSession(
-          //   this.$store.state.userInfo.nickname,
-          //   "d" + this.$route.query.id,
-          //   this.$route.query.name,
-          //   {
-          //     getMessageCallback: () => {
-          //       // 拿到消息列表之后的回调
-          //     }
-          //   }
-          // );
+          this.imSdk.openSession(
+            this.$store.state.userInfo.nickname,
+            "d" + this.$route.query.id,
+            this.$route.query.name,
+            {
+              getMessageCallback: () => {
+                // 拿到消息列表之后的回调
+              }
+            }
+          );
         }
       }
     );

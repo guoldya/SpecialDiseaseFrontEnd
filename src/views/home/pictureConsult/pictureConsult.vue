@@ -95,29 +95,34 @@ export default {
     this.init();
     if (typeof (this.$store.state.accountInfo) == 'string') {
       this.chooseId = JSON.parse(this.$store.state.accountInfo).id;
+      this.$store.state.accountInfo = JSON.parse(this.$store.state.accountInfo)
     } else {
       this.chooseId = this.$store.state.accountInfo.id;
     }
     // 注册用户
     this.imSdk.registerUser('p' + this.chooseId, this.$store.state.accountInfo.name, () => {
-      this.imSdk.createUserConnect('p' + this.chooseId, '123456', {
-        userConnectCallback: () => {
-          // 拿到消息列表之后的回调
-          this.imSdk.openSession(
-            this.$store.state.accountInfo.name,
-            'd' + this.$route.query.id,
-            this.$route.query.name,
-            {
-              getMessageCallback: () => {
-                this.$store.commit('selectTestFun', this.imSdk.messageList);
+      this.imSdk.createUserConnect('p' + this.chooseId, '123456',
+        {
+          userConnectCallback: () => {
+            // 拿到消息列表之后的回调
+            this.imSdk.openSession(
+              this.$store.state.accountInfo.name,
+              'd' + this.$route.query.id,
+              this.$route.query.name,
+              {
+                getMessageCallback: () => {
+                  // 拿到消息列表之后的回调
+                }
               }
-            }
-          )
-
-        }
-      })
+            );
+          }
+        })
     })
-
+    // this.imSdk.openSession(
+    //   this.$store.state.accountInfo.name,
+    //   'd' + this.$route.query.id,
+    //   this.$route.query.name,
+    // )
   },
 
   methods: {
@@ -184,7 +189,6 @@ export default {
           query: {
             id: this.$route.query.id,
             name: this.$route.query.name,
-
             isOpen: true
           }
         })

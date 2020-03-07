@@ -42,9 +42,9 @@ export class ImSdk {
             //TODO:1关闭 通讯 2通知后台
     }
     createUserConnect(username, password, { userConnectCallback } = {}) {
-        console.log("创建于服务端的会话")
        
-     if(this.isOpenWS===true) return
+       
+    //  if(this.isOpenWS===true) return
         //创建于服务端的会话
         this.restFulApi.userLogi(username, password, (userId) => {
             this.restFulApi.userUpdateOnlineStatus(userId, () => {
@@ -52,6 +52,7 @@ export class ImSdk {
                     console.log(this, "数据状态查询")
                         //初始化会话连接
                     this.imkSocketSDK.initIMClient();
+                  
                     userConnectCallback()
                      this.isOpenWS=true;
                 })

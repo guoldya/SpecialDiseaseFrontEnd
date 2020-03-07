@@ -4,13 +4,10 @@ export class ImSessionSDK {
     constructor(IMData) {
         this.IMData = IMData
     }
-    init = ({
-        getMessageCallback, // 获取消息列表完成之后的回调
-    } = {}) => {
+    init = () => {
         if (this.IMData.selectedChannelId === undefined || this.IMData.selectedChannelId == null) {
             return false
         }
-
         this.IMData.maxCreateAt = 0
         this.IMData.messageList = []
         this.initIMClient()
@@ -25,7 +22,7 @@ export class ImSessionSDK {
         imClient.bindMessageRemoved(this.onMessageRemoved)
 
         this.IMData.restFulApi.getSessionUserChannel()
-        this.getMessageList(getMessageCallback)
+        this.getMessageList()
         return true
     }
     initIMClient = () => {
@@ -42,11 +39,10 @@ export class ImSessionSDK {
             this.IMData.userChannel.memberCount += message.count
         }
     }
-    getMessageList = (callback) => {
+    getMessageList = () => {
         const limit = 20
         listMessage(this.IMData.selectedChannelId, this.IMData.maxCreateAt, limit)
             .then(response => {
-                console.log(response,"ssssssddddddss")
                 this.IMData.hasMoreMessage = response.data.length === 20
                 if (response.data.length > 0) {
                     this.IMData.messageList = [...response.data.reverse(), ...this.IMData.messageList]
@@ -56,13 +52,9 @@ export class ImSessionSDK {
                             this.outputError(error, "标记消息已经读取")
                         })
                 }
-
-                typeof callback === 'function' && callback()
             })
             .catch(error => {
                 this.outputError(error, "获取消息列表")
-
-                typeof callback === 'function' && callback(false)
             })
     }
     onNewMessage = (message) => {

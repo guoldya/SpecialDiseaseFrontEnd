@@ -128,9 +128,11 @@ class RestFulApi {
         channel.type = 'P'
         channel.fromUserNickname = channel.fromUsername
         channel.toUserNickname = channel.toUsername
-        createChannel(channel).then(response => {
+        createChannel(channel)
+            .then(response => {
                 callback(response.data)
-            }).catch(error => {
+            })
+            .catch(error => {
                 callback(null)
                 this.IMDataoutputError(this, error)
             })

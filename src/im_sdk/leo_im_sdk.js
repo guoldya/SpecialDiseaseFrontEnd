@@ -44,7 +44,7 @@ export class ImSdk {
     createUserConnect(username, password, { userConnectCallback } = {}) {
        
        
-    //  if(this.isOpenWS===true) return
+   if(this.isOpenWS===true) return
         //创建于服务端的会话
         this.restFulApi.userLogi(username, password, (userId) => {
             this.restFulApi.userUpdateOnlineStatus(userId, () => {

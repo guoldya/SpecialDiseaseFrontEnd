@@ -19,8 +19,7 @@
 
     <div class="package-status">
       <div class="status-box">
-        <ul class="status-list">
-        </ul>
+        <ul class="status-list"></ul>
       </div>
     </div>
   </div>
@@ -28,7 +27,7 @@
 <script>
 let bizLisReportreaddetail = "bizOrder/read/detail";
 let readExpressDelivery = "bizOrder/read/expressDelivery";
-import $ from 'jquery'
+import $ from "jquery";
 export default {
   data() {
     return {
@@ -64,49 +63,93 @@ export default {
       this.$axios
         .put(readExpressDelivery, jogistics, {})
         .then(res => {
-          if (res.data.code == "200") {
+          if (res.data.code == "800"||res.data.code == "200") {
             this.loadingtrue = false;
             this.LogisticsData = res.data.data.list;
+            // this.LogisticsData=[
+            //   {status:'ggsasasaujsuhasuaus16261266252',time:'2020-01-12 13:12'},
+            //   {status:'ggsasasaujsuhasuaus16261266252',time:'2020-01-13 13:12'},
+            //   {status:'位于匹配串右侧的文本位于匹配串右侧的文本16261266252',time:'2020-01-14 13:12'},
+            //   {status:'ggsasasaujsuhasuaus16261266252',time:'2020-01-15 13:12'},
+            //   {status:'ggsasasaujsuhasuaus16261266252',time:'2020-01-16 13:12'},
+            // ]
+            const telReg = /((?:0[1-9][0-9]{1,2}- )?[2-8][0-9]{6,7}$)|(1[3-9][0-9]{9}$)/g; //固话加手机正则
+              let current = ""; //匹配项
+              this.LogisticsData.map((item, index) => {
+                if (telReg.test(item.status))
+                  current = item.status.match(telReg)[0];
+                  console.log(item.status,current)
+                item.status = item.status.replace(
+                  current,
+                  `<a href=" tel :${current}" style="color :#0A7DE6 ">`
+                  +current+
+                  `</a>`
+                );
+              });
+              console.log(this.LogisticsData, current)
             var deliver1 =
-            `<li>
-              <span></span>
-            <div class="status-content-before">`+ this.LogisticsData[0].status+`</div>
-            <div class="status-time-before">`+this.LogisticsData[0].time+`</div>
+              `<li>
+            <div class="status-time-before">` +
+              this.LogisticsData[0].time +
+              `<span></span></div>
+            <div class="status-content-before">` +
+              this.LogisticsData[0].status +
+              `</div>
             <div class="status-line"></div>
           </li>`;
-                $(".status-list").html(deliver1); //清空ul并添加最新一条物流信息
-                for (var i = 1; i < this.LogisticsData.length; i++) {
-                  var deliver =
-                    `<li>
-              <span></span>
-
-            <div class="status-content-before">`+ this.LogisticsData[i].status+`</div>
-            <div class="status-time-before">`+this.LogisticsData[i].time+`</div>
-            <div class="status-line"></div>
-          </li>`
-                  $(".status-list").append(deliver); //添加之前的物流轨迹
-                  $(".status-list li").css({
-                    borderLeft: '2px solid #0278d8',
-                    textAlign: 'left',
-                    position:'relative',
-                    padding:'0 0 10px 15px'
-                  });
-                  $(".status-list li:first-child").css({
-                    color:'var(--primary)'
-                  });
-                  $(".status-list li span").css({
-                    border: '6px solid var(--primary)',
-                    backgroundColor: 'var(--primary)',
-                    display: 'inline-block',
-                    width: '4px',
-                    height: '4px',
-                    borderRadius: '10px',
-                    marginLeft: '-11px',
-                    marginRight: '10px',
-                    left: '4px',
-                    position:'absolute'
-                  });
-                }
+            $(".status-list").html(deliver1); //清空ul并添加最新一条物流信息
+            for (var i = 1; i < this.LogisticsData.length; i++) {
+              var deliver =
+                `<li>
+                <div class="status-time-before">
+                  <div>` +this.LogisticsData[i].time +
+                `</div> <span></span></div>
+                  <div class="status-content-before">` +
+                this.LogisticsData[i].status +
+                `</div>
+                  <div class="status-line"></div>
+                </li>`;
+               //添加之前的物流轨迹
+                $(".status-list").append(deliver);
+            }
+            // 样式
+              $(".status-list li div").css({
+               display:'inline-block',
+              });
+              $(".status-list li").css({
+                display: "flex",
+              });
+              $(".status-list li .status-time-before").css({
+                borderRight: "2px solid var(--primary--light)",
+                textAlign: "center",
+                position: "relative",
+                width: '29%',
+                paddingRight:'8px',
+                paddingBottom: "10px",
+              });
+              $(".status-list li .status-content-before").css({
+                width: '70%',
+                paddingLeft:'10px',
+                paddingBottom: "10px",
+              });
+              $(".status-list li:first-child").css({
+                color: "var(--primary)"
+              });
+              $(".status-list li:not(:first-child)").css({
+                color: "var(--primary--content)"
+              });
+              $(".status-list li span").css({
+                border: "6px solid var(--primary)",
+                backgroundColor: "var(--primary)",
+                display: "inline-block",
+                borderRadius: "10px",
+                right: "-7px",
+                top:'0',
+                position: "absolute"
+              });
+              $(".status-list li span:not(:first-child)").css({
+                border: "6px solid var(--primary--light)",
+              });
           }
         })
         .catch(function(err) {
@@ -133,8 +176,6 @@ ul li {
   padding: 0;
   padding-left: 8px;
   list-style: none;
-  margin:10px 10px 0,
-
 }
 
 .package-status .status-list > li {

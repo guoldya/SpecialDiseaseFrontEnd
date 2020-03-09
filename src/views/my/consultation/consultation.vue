@@ -9,7 +9,6 @@
       <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"></div>
     </ul>
     <Loading v-if="loadingtrue"></Loading>
-   
   </div>
 </template>
 <script>

@@ -33,7 +33,7 @@ const payment = () => import(/* webpackChunkName: "my" */ "@/views/my/payment/pa
 const outpation = () => import(/* webpackChunkName: "my" */ "@/views/my/outpation/outpation.vue")
 const outpationinfo = () => import(/* webpackChunkName: "my" */ "@/views/my/outpationinfo/outpationinfo.vue")
 const payorder = () => import(/* webpackChunkName: "my" */ "@/views/my/payorder/payorder.vue")
-const mydoctor = () => import(/* webpackChunkName: "my" */ "@/views/my/mydoctor/mydoctor.vue")
+const mybill = () => import(/* webpackChunkName: "my" */ "@/views/my/mybill/mybill.vue")
 const valuation = () => import(/* webpackChunkName: "my" */ "@/views/my/valuation/valuation.vue")
 const logistics = () => import(/* webpackChunkName: "my" */ "@/views/my/logistics/logistics.vue")
 
@@ -133,9 +133,9 @@ export default new Router({
     }
   },
   {
-    path: '/mydoctor',
-    name: 'mydoctor',
-    component: mydoctor,
+    path: '/mybill',
+    name: 'mybill',
+    component: mybill,
     meta: {
       title: '我的医生'
     }

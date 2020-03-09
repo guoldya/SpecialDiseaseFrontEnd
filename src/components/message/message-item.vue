@@ -141,7 +141,7 @@
       <div class="online-content-list-text">
         <em></em>
         <div>
-          <img style="width:100px;" :src="'http://192.168.0.11:9999/net-medical/picture/'+aa.text" @click="showViewer('http://192.168.0.11:9999/net-medical/picture/'+aa.text)" alt />
+          <img style="width:100px;" :src="$conf.constant.img_base_url+aa.text" @click="showViewer($conf.constant.img_base_url+aa.text)" alt />
         </div>
       </div>
     </div>

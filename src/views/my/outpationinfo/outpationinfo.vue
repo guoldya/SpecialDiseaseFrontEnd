@@ -19,6 +19,7 @@
         <p>
           <span>临床诊断：{{reportInfoData.diag}}</span>
         </p>
+
       </div>
 
       <div>
@@ -39,9 +40,13 @@
 
         <p class="totalmoney">合计：<span>{{reportInfoData.totalMoney|keepTwoNum}}元</span> </p>
         <div class="bottom">
+
           <p>
             <span>医师：{{reportInfoData.doctorName}}</span>
             <span>药师：{{reportInfoData.druggistName}}</span>
+          </p>
+          <p class="notice">
+            <span>医嘱：{{reportInfoData.notice}}</span>
           </p>
         </div>
       </div>
@@ -241,12 +246,12 @@ export default {
       justify-content: space-between;
     }
     .userinfo {
-       justify-content: flex-start;
-       :first-child{
-         flex:0 0 270px;
-       }
-  
-      .last{
+      justify-content: flex-start;
+      :first-child {
+        flex: 0 0 270px;
+      }
+
+      .last {
         margin-left: 100px;
       }
     }
@@ -273,6 +278,9 @@ export default {
     line-height: 70px;
     display: flex;
     justify-content: space-between;
+  }
+  .notice {
+    line-height: 50px;
   }
 }
 .totalmoney {

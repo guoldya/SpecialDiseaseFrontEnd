@@ -17,7 +17,7 @@
       </p>
     </div>
 
-    <div class="package-status">
+    <div class="package-status" v-if="LogisticsData.length>0">
       <div class="status-box">
         <ul class="status-list"></ul>
       </div>
@@ -57,8 +57,8 @@ export default {
     },
     getLogistics() {
       let jogistics = {
-        mobile: 15523759451, //this.reportInfoData.telephone,
-        number: 773025677672954 //this.reportInfoData.logisticsNo
+        mobile: this.reportInfoData.telephone,
+        number: this.reportInfoData.logisticsNo
       };
       this.$axios
         .put(readExpressDelivery, jogistics, {})
@@ -66,19 +66,11 @@ export default {
           if (res.data.code == "800"||res.data.code == "200") {
             this.loadingtrue = false;
             this.LogisticsData = res.data.data.list;
-            // this.LogisticsData=[
-            //   {status:'ggsasasaujsuhasuaus16261266252',time:'2020-01-12 13:12'},
-            //   {status:'ggsasasaujsuhasuaus16261266252',time:'2020-01-13 13:12'},
-            //   {status:'位于匹配串右侧的文本位于匹配串右侧的文本16261266252',time:'2020-01-14 13:12'},
-            //   {status:'ggsasasaujsuhasuaus16261266252',time:'2020-01-15 13:12'},
-            //   {status:'ggsasasaujsuhasuaus16261266252',time:'2020-01-16 13:12'},
-            // ]
             const telReg = /((?:0[1-9][0-9]{1,2}- )?[2-8][0-9]{6,7}$)|(1[3-9][0-9]{9}$)/g; //固话加手机正则
               let current = ""; //匹配项
               this.LogisticsData.map((item, index) => {
                 if (telReg.test(item.status))
                   current = item.status.match(telReg)[0];
-                  console.log(item.status,current)
                 item.status = item.status.replace(
                   current,
                   `<a href=" tel :${current}" style="color :#0A7DE6 ">`

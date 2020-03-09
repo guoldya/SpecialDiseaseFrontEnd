@@ -1,7 +1,7 @@
 <template>
   <div class="margin55   outpationinfo">
     <Header post-title="处方详情"></Header>
-    <div class="outpationcard">
+    <div v-show="!loadingtrue" class="outpationcard">
       <p class="title"><span>处方号：{{reportInfoData.code}}</span> </p>
       <div class="outpationcard-top">
         <p class="userinfo">
@@ -51,7 +51,7 @@
         </div>
       </div>
     </div>
-    <div class="infobottom" v-show="reportInfoData.status==0">
+    <div   class="infobottom" v-show="reportInfoData.status==0&&!loadingtrue">
       <!-- <p>请完善收件人信息</p> -->
       <div class="submitUser" v-if="_selectAdress.receiver">
         <div class="adress-box">

@@ -13,7 +13,6 @@
                 </p>
                 <p class="headdesc">{{item.address}}</p>
               </div>
-
               <p class="order-bottom">
                 <span>
                   <div class="md-agree" @click="onChange(item.id,item.isDefault)">
@@ -42,7 +41,6 @@
         </li>
 
       </ul>
-
       <Null :loading-true="!loadingtrue&&addressInfo.length==0"></Null>
     </div>
     <Loading v-show="loadingtrue"></Loading>
@@ -101,16 +99,14 @@ export default {
       this.$axios.post(isDefault, {
         id: data, isDefault: 1
       }).then((res) => {
-        console.log(res)
         if (res.data.code == '200') {
           this.$toast.info("设置成功");
           this.$axios.put(appshippingAddressaddressList, {
           }).then((res) => {
-            console.log(res)
             if (res.data.code == '200') {
               this.addressInfo = res.data.rows;
             } else {
-              console.log(res.msg);
+              this.$toast.info(res.msg)
             }
           }).catch(function (err) {
             console.log(err);
@@ -123,7 +119,6 @@ export default {
       });
     },
     dedete(data) {
-      console.log(data)
       let params = {}, p_data = {};
       p_data.id = data;
       params.data = p_data;
@@ -133,31 +128,26 @@ export default {
         confirmText: '确定',
         onConfirm: () => {
           this.$axios.delete(deleteAddress, params).then((res) => {
-            console.log(res)
             if (res.data.code == '200') {
               this.$toast.info("删除成功")
               this.$axios.put(appshippingAddressaddressList, {
               }).then((res) => {
-                console.log(res)
                 if (res.data.code == '200') {
                   this.addressInfo = res.data.rows;
-                  console.log(this._selectAdress, "sssssssss")
                   if (this._selectAdress) {
                     if (this._selectAdress.id == data) {
                       if (res.data.rows.length != 0) {
                         this.$store.commit('selectAdressFun', this.addressInfo.filter(item => item.isDefault == 1)[0]);
                       } else {
                         this.$store.commit('selectAdressFun', '');
-                        console.log("ssssssssss", this._selectAdress)
                       }
                     }
                   } else {
                     this.$store.commit('selectAdressFun', '');
-                    console.log("ssssssssss", this._selectAdress)
                   }
-
                 } else {
-                  console.log(res.msg);
+                  this.$toast.info(res.msg)
+                  // console.log(res.msg);
                 }
               }).catch(function (err) {
                 console.log(err);

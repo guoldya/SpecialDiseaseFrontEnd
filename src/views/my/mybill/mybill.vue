@@ -109,8 +109,8 @@ export default {
       this.$axios
         .put(selectDrugs, {
           pageSize: 20,
-          // patientId: this.patientId,
-          patientId: 13,
+          patientId: this.patientId,
+          // patientId: 13,
           pageNumber: this.current,
         })
         .then(res => {

@@ -26,7 +26,6 @@ const acctest = () => import(/* webpackChunkName: "my" */ "@/views/my/acctest/ac
 const acctestinfo = () => import(/* webpackChunkName: "my" */ "@/views/my/acctestinfo/acctestinfo.vue")
 const idcardlist = () => import(/* webpackChunkName: "my" */ "@/views/my/idcardlist/idcardlist.vue")
 const unblind = () => import(/* webpackChunkName: "my" */ "@/views/my/unblind/unblind.vue")
-const consultation = () => import(/* webpackChunkName: "my" */ "@/views/my/consultation/consultation.vue")
 const myorder = () => import(/* webpackChunkName: "my" */ "@/views/my/myorder/myorder.vue")
 const myorderinfo = () => import(/* webpackChunkName: "my" */ "@/views/my/myorderinfo/myorderinfo.vue")
 const payment = () => import(/* webpackChunkName: "my" */ "@/views/my/payment/payment.vue")
@@ -247,14 +246,7 @@ export default new Router({
       title: '处方详情'
     }
   },
-  {
-    path: '/consultation',
-    name: 'consultation',
-    component: consultation,
-    meta: {
-      title: '我的咨询'
-    }
-  },
+ 
 
   {
     path: '/online',

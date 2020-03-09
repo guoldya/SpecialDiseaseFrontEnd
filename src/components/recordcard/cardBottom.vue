@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  props: ['argn', 'type', 'path','content'],
+  props: ['argn', 'type', 'path', 'content'],
 }
 </script>
 <style lang="scss" scoped>
@@ -31,9 +31,9 @@ export default {
   color: var(--primary);
   border: 1px solid var(--primary);
   border-radius: 40px;
-  line-height: 45px;
+  line-height: 26px;
   text-align: center;
   display: block;
-  padding: 0 12px;
+  padding: 12px;
 }
 </style>

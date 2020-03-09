@@ -128,11 +128,11 @@ const payStatusText = function (value) {
         return ""
     }
     if (value == 1) {
-        return "线下预缴金充值"
+        return "充值"
     } else if (value == 2) {
-        return "特病处方"
+        return "处方记账"
     } else if (value == 3) {
-        return "医保报销"
+        return "医保"
     } 
 };
 

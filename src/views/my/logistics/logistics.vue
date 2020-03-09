@@ -2,69 +2,38 @@
   <div class="margin55">
     <Header post-title="物流详情"></Header>
     <div class="infobottom">
-
       <p>
         <span>收货名</span>
-        <span> {{reportInfoData.receiver}}</span>
-
+        <span>{{reportInfoData.receiver}}</span>
       </p>
       <p>
         <span>联系电话</span>
-        <span> {{reportInfoData.telephone}} </span>
+        <span>{{reportInfoData.telephone}}</span>
       </p>
 
       <p>
         <span>收件地址</span>
         <span>{{reportInfoData.address}}</span>
       </p>
-
     </div>
 
     <div class="package-status">
       <div class="status-box">
         <ul class="status-list">
-          <li>
-            <div class="status-content-before">您的订单开始处理</div>
-            <div class="status-time-before">2017-08-17 23:31 周四</div>
-            <div class="status-line"></div>
-          </li>
-          <li>
-            <div class="status-content-before">卖家发货</div>
-            <div class="status-time-before">2017-08-18 09:11 周五</div>
-            <div class="status-line"></div>
-          </li>
-          <li>
-            <div class="status-content-before">发往深圳中转站</div>
-            <div class="status-time-before">2017-08-19 01:21 周六</div>
-            <div class="status-line"></div>
-          </li>
-          <li>
-            <div class="status-content-before">到达深圳</div>
-            <div class="status-time-before">2017-08-19 06:21 周六</div>
-            <div class="status-line"></div>
-          </li>
-          <li>
-            <div class="status-content-before">发往潮汕中心</div>
-            <div class="status-time-before">2017-08-19 09:21 周六</div>
-            <div class="status-line"></div>
-          </li>
-          <li class="latest">
-            <div class="status-content-latest">快件到达 潮汕中心</div>
-            <div class="status-time-latest">2017-08-20 14:16 周日</div>
-            <div class="status-line"></div>
-          </li>
         </ul>
       </div>
     </div>
   </div>
-
 </template>
 <script>
-let bizLisReportreaddetail = 'bizOrder/read/detail'
+let bizLisReportreaddetail = "bizOrder/read/detail";
+let readExpressDelivery = "bizOrder/read/expressDelivery";
+import $ from 'jquery'
 export default {
   data() {
     return {
-      reportInfoData: '',
+      reportInfoData: "",
+      LogisticsData: []
     };
   },
   mounted() {
@@ -74,19 +43,78 @@ export default {
     checkReportDetail() {
       let checkParams = {};
       checkParams.id = parseInt(this.$route.query.id);
-      this.$axios.put(bizLisReportreaddetail, checkParams, {
-      }).then((res) => {
-        if (res.data.code == '200') {
-          this.loadingtrue = false;
-          this.reportInfoData = res.data.data;
-        }
-      }).catch(function (err) {
-        console.log(err);
-      });
-
+      this.$axios
+        .put(bizLisReportreaddetail, checkParams, {})
+        .then(res => {
+          if (res.data.code == "200") {
+            this.loadingtrue = false;
+            this.reportInfoData = res.data.data;
+            this.getLogistics();
+          }
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
     },
+    getLogistics() {
+      let jogistics = {
+        mobile: 15523759451, //this.reportInfoData.telephone,
+        number: 773025677672954 //this.reportInfoData.logisticsNo
+      };
+      this.$axios
+        .put(readExpressDelivery, jogistics, {})
+        .then(res => {
+          if (res.data.code == "200") {
+            this.loadingtrue = false;
+            this.LogisticsData = res.data.data.list;
+            var deliver1 =
+            `<li>
+              <span></span>
+            <div class="status-content-before">`+ this.LogisticsData[0].status+`</div>
+            <div class="status-time-before">`+this.LogisticsData[0].time+`</div>
+            <div class="status-line"></div>
+          </li>`;
+                $(".status-list").html(deliver1); //清空ul并添加最新一条物流信息
+                for (var i = 1; i < this.LogisticsData.length; i++) {
+                  var deliver =
+                    `<li>
+              <span></span>
+
+            <div class="status-content-before">`+ this.LogisticsData[i].status+`</div>
+            <div class="status-time-before">`+this.LogisticsData[i].time+`</div>
+            <div class="status-line"></div>
+          </li>`
+                  $(".status-list").append(deliver); //添加之前的物流轨迹
+                  $(".status-list li").css({
+                    borderLeft: '2px solid #0278d8',
+                    textAlign: 'left',
+                    position:'relative',
+                    padding:'0 0 10px 15px'
+                  });
+                  $(".status-list li:first-child").css({
+                    color:'var(--primary)'
+                  });
+                  $(".status-list li span").css({
+                    border: '6px solid var(--primary)',
+                    backgroundColor: 'var(--primary)',
+                    display: 'inline-block',
+                    width: '4px',
+                    height: '4px',
+                    borderRadius: '10px',
+                    marginLeft: '-11px',
+                    marginRight: '10px',
+                    left: '4px',
+                    position:'absolute'
+                  });
+                }
+          }
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+    }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 ul li {
@@ -94,7 +122,7 @@ ul li {
 }
 
 .package-status {
-  padding: 30px 24px;
+  padding: 30px 12px;
   margin: 24px;
   background: #ffffff;
   border-radius: 20px;
@@ -103,9 +131,10 @@ ul li {
 .package-status .status-list {
   margin: 0;
   padding: 0;
-  margin-top: -5px;
   padding-left: 8px;
   list-style: none;
+  margin:10px 10px 0,
+
 }
 
 .package-status .status-list > li {
@@ -124,7 +153,7 @@ ul li {
   border-radius: 10px;
   margin-left: -11px;
   margin-right: 10px;
-  top:-5px;
+  top: -5px;
 }
 
 .package-status .status-box {
@@ -134,7 +163,6 @@ ul li {
 .package-status .status-list > li {
   height: 110px;
   width: 95%;
-  
 }
 
 .package-status .status-list {
@@ -193,7 +221,6 @@ ul li {
 }
 
 .status-line {
- 
   margin-left: 25px;
   margin-top: 10px;
 }
@@ -221,5 +248,18 @@ ul li {
       flex: 0 0 170px;
     }
   }
+}
+li:before {
+  /* 流程点的样式 */
+  content: "";
+  border: 8px solid var(--primary);
+  background-color: var(--primary);
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 10px;
+  margin-left: -11px;
+  margin-right: 10px;
+  top: -5px;
 }
 </style>

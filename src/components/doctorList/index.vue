@@ -32,20 +32,20 @@
           <div class="dotType">
             <div class="dottextff">
               <router-link v-if="datas.status==2" :to="{ path: '/consultDetail', query: { id: datas.id ,status:datas.status}}">
-                <img src="@/assets/conversationImg/freeText.png" />
+                <img src="@/assets/conversationImg/freeText1.png" />
                 <span class="fontSize12">免费</span>
               </router-link>
               <router-link v-else :to="{ path: '/chatRoom', query: { id: datas.id ,name:datas.drName}}">
-                <img src="@/assets/conversationImg/freeText.png" />
+                <img src="@/assets/conversationImg/freeText1.png" />
                 <span class="fontSize12">咨询中</span>
               </router-link>
             </div>
             <div class="dotdhff">
-              <img src="@/assets/conversationImg/offlineVoice.png" />
+              <img src="@/assets/conversationImg/offlineVoice1.png" />
               <span class="fontSize12">暂无</span>
             </div>
             <div class="dotvideoff">
-              <img src="@/assets/conversationImg/offlineVideo.png" />
+              <img src="@/assets/conversationImg/offlineVideo1.png" />
               <span class="fontSize12">暂无</span>
             </div>
           </div>
@@ -226,6 +226,7 @@ export default {
 }
 .dotType img {
   margin-right: 5px;
+  width: 24%;
 }
 .lineHeight17 {
   line-height: 34px !important;

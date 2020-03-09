@@ -8,7 +8,7 @@
     </div> -->
     <div class="hometop">
     </div>
-    <div class="homePage" v-if=" _cardlist.length==0">
+    <div class="homePage bindCarda"  v-if=" _cardlist.length==0">
       <div class="homeCard bindCard  ">
         <span class="bindCardBtn" @click="addpeple">添加门特患者</span>
       </div>
@@ -253,8 +253,11 @@ export default {
   line-height: 240px;
   border-radius: 10px;
   box-shadow: 0 0 17px rgba(20, 19, 51, 0.1);
+  
 }
-
+.bindCarda{
+   margin-bottom: 70px;
+}
 .bindCard .bindCardBtn {
   padding: 17px 35px;
   background: #2f86f6;

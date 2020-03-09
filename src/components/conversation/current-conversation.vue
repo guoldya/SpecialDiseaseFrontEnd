@@ -7,8 +7,8 @@
       <div v-show="isShowScrollButtomTips" class="newMessageTips" @click="scrollMessageListToButtom">回到最新位置</div>
     </div>
     <div class="footer">
-      <!-- <message-send-box v-if="showSendBox" /> -->
-      <message-send-box  />
+      <message-send-box v-if="showSendBox&&!showSendBoxa" />
+      <!-- <message-send-box  /> -->
     </div>
 
   </div>
@@ -33,21 +33,26 @@ export default {
       showConversationProfile: false,
       timeout: '',
       isShow: true,
+      showSendBox: true,
     }
   },
   computed: {
-    showSendBox() {
+    showSendBoxa() {
       if (this.imSdk && this.imSdk.messageList.length) {
-        if (this.$route.query.status == 2) {
+
+        // let len = this.imSdk.messageList.length;
+        // return !JSON.parse(this.imSdk.messageList[len - 1].content).close
           return false
-        }
-        let len = this.imSdk.messageList.length;
-        return !JSON.parse(this.imSdk.messageList[len - 1].content).close
       }
     }
   },
   mounted() {
-
+    console.log(this.$route.query.status, "sssssss状态")
+    if (this.$route.query.status) {
+      if (this.$route.query.status == 2) {
+        this.showSendBox = false;
+      }
+    }
     this.scrollMessageListToButtom()
 
     if (this.imSdk.messageList[this.imSdk.messageList.length - 1]) {
@@ -71,7 +76,7 @@ export default {
 
     this.onScroll()
 
- 
+
 
   },
 

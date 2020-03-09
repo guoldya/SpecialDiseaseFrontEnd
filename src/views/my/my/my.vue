@@ -18,7 +18,7 @@
       </div>
       <div class="my-tool">
         <ul>
-          <li @click="mydoctor">
+          <li @click="mybill">
             <img src="@/assets/images/my1.png" alt="" class="image">
             <p>我的账单</p>
           </li>
@@ -130,10 +130,10 @@ export default {
         query: argu
       });
     },
-    mydoctor() {
+    mybill() {
       let argu = {};
       this.$router.push({
-        name: "mydoctor",
+        name: "mybill",
         query: argu
       });
     },

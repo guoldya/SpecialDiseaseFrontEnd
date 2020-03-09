@@ -10,11 +10,11 @@ const filterType = function (value) {
         return " "
     }
     if (value == 1) {
-        return "住院"
+        return "咨询中"
     } else if (value == 2) {
-        return "门诊"
-    } else if (value == 3) {
-        return "体检"
+        return "已结束"
+    } else if (value == 0) {
+        return "候诊中"
     }
 };
 const filterTypeIMG = function (value) {
@@ -22,11 +22,11 @@ const filterTypeIMG = function (value) {
         return ""
     }
     if (value == 1) {
-        return require('@/assets/images/zhuyuan.png')
+        return require('@/assets/images/chongzhi.png')
     } else if (value == 2) {
-        return require('@/assets/images/menzhen.png')
+        return require('@/assets/images/tebing.png')
     } else if (value == 3) {
-        return require('@/assets/images/tijian.png')
+        return require('@/assets/images/yibao.png')
     }
 };
 
@@ -128,22 +128,12 @@ const payStatusText = function (value) {
         return ""
     }
     if (value == 1) {
-        return "一般"
+        return "线下预缴金充值"
     } else if (value == 2) {
-        return "口腔"
+        return "特病处方"
     } else if (value == 3) {
-        return "血常规"
-    } else if (value == 4) {
-        return "尿常规"
-    } else if (value == 5) {
-        return "实验室"
-    } else if (value == 6) {
-        return "超声"
-    } else if (value == 7) {
-        return "放射"
-    } else if (value == 8) {
-        return "心电图"
-    }
+        return "医保报销"
+    } 
 };
 
 

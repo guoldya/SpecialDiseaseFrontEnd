@@ -84,7 +84,6 @@ export class ImSdk {
         })
     }
     openSession(fromUsername, toUserId, toUsername, { getMessageCallback } = {}) {
-        console.log(toUsername,"医生姓名创建链接")
         //打开会话
         let exists = this.userChannelList.findIndex(item => item.toUserId === toUserId)
         if (exists == -1) {

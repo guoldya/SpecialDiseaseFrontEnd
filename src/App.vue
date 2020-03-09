@@ -88,6 +88,7 @@ export default {
 }
 body {
   background: var(--primary--body);
+  /* background: rgb(205, 245, 167); */
 }
 .colo13 {
   font-size: 26px;
@@ -255,5 +256,8 @@ body {
     background-color: #c4cdd8;
     color: #fff;
     text-align: left;
+}
+.md-input-item-fake, .md-input-item-input{
+  font-weight: 400 !important;
 }
 </style>

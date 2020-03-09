@@ -1,6 +1,6 @@
 const Config = {
    constant: {
-      img_base_url: 'http://192.168.0.150:40080/res/'
+      img_base_url: 'http://m.cq2win.com:9999/net-medical/picture/'
       //  img_base_url: '/res/',
    }
 };

@@ -5,8 +5,7 @@ export class ImSendSDK {
     send = (message) => {
         const newMessage = {
             channelId: this.IMData.selectedChannelId,
-            channelType: 'p',
-            // content: message.replace(new RegExp("\n", "gm"), "<br />")
+            channelType: "P",
             content: message
         }
         this.IMData.restFulApi.putMessage(newMessage)

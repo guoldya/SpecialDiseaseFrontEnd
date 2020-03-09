@@ -87,6 +87,9 @@ export class IMClient {
     onClose() {
         this.heartCheckUtil.stop()
         this.reconnectUtil.start()
+        if (this.handleOnlineStatusChanged) {
+            this.unbindOnlineStatusChanged()
+        }
         if (this.handleConnectionClosed) {
             this.handleConnectionClosed()
         }

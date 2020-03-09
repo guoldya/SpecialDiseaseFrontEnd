@@ -1,216 +1,138 @@
 <template>
-  <div class="margin55">
-    <Header post-title="我的医生"></Header>
-    <div class="doctor-list"  v-if="waitPayData.length!=0" v-show="!loadingtrue" v-for="(item, index) in waitPayData" :datas="item" :key="index">
-      <div class="header"><img src="@/assets/images/3.jpg" /></div>
-      <div class="comment-right">
-        <p class="introduce">
-          <span class="name">{{item.doctorName}}</span>&nbsp;
-          <span>{{item.education}}</span>&nbsp;
-          <span>{{item.deptName}}</span>&nbsp;
-        </p>
-        <p class="colo13">
-          <span class="picture" :class="item.allowType<1||!item.allowType ?'noOpen' :''">图文</span>&nbsp;
-          <span class="picture picture1" :class="item.allowType<2||!item.allowType ?'noOpen' :''">门特在线</span>&nbsp;
-          <span class="picture picture2" :class="item.allowType<3||!item.allowType ?'noOpen' :''">视频</span>&nbsp;
-        </p>
-        <p class="content">擅长：{{item.expertField}}</p>
-        <p class="colo13">
-          <span>咨询数：<span class="num">{{item.diagnosisNum||'0'}}</span></span>&nbsp;
-          <span>平均回复时长：<span class="num">{{item.replyTime||'0'}}</span> 分</span>&nbsp;
-        </p>
-      </div>
-    </div>
-    <Null :loading-true="!loadingtrue&&waitPayData.length==0"></Null>
-    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="30" class="textCenter">
-      <span v-if="waitPayData.length!=0&&!nomore">
-        <span class="mu-light-text-color">加载中</span>
-        <md-icon name="spinner" size="lg" style="-webkit-filter:invert(1)"></md-icon>
+
+  <div class="selectMedicine margin55">
+    <Header post-title="我的咨询"></Header>
+    <ul class="content" v-show="show && !loadingtrue">
+      <span class="aui-navBar-item">
+        <div>
+          <md-field>
+            <md-field-item :content="selectorValue" @click="selectStyle" solid />
+          </md-field>
+          <md-selector v-model="isSelectorShow" default-value="7" :data="optionsData" max-height="320px" title="选择就诊卡" @choose="onSelectorChoose "></md-selector>
+        </div>
+
       </span>
-    </div>
-    <Loading v-show="loadingtrue"></Loading>
+      <!-- <conversation-item v-if="drugsList.drugs.length!=0" :conversation="item" :index="index" v-for="(item,index) in drugsList.drugs" :key="item.conversationID" /> -->
+      <Null :loading-true="drugsList.drugs.length==0"></Null>
+      <md-icon v-if="!loadingtrue && busy" name="spinner" size="lg" style="-webkit-filter:invert(1)"></md-icon>
+      <div class="nomore" v-if="!loadingtrue && (drugsList.nowPage == pages || pages == 0)">没有更多数据了</div>
+      <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"></div>
+    </ul>
+    <Loading v-if="loadingtrue"></Loading>
+
   </div>
 </template>
 <script>
 
-let pay_list_url = 'bizConsultRecord/selectList'
+let bizPatientCard = "sysPatient/read/list";
+let selectDrugs = "bizConsultRecord/selectList";
 export default {
   data() {
     return {
-      waitPayData: [],
-      page: 1,
-      pageSize: 10,
-      type: 0,
-      busy: true,
-      nomore: false,
-      loadingtrue: true,
-      title: '',
-    };
-  },
+      isSelectorShow: false,
 
+      selectorValue: '',
+      optionsData: [],
+      show: true,
+      pages: 1,
+      loadingtrue: true,
+      busy: false,
+      current: 1,
+      drugsList: {
+        nowPage: 1,
+        drugs: []
+      }
+    }
+  },
   mounted() {
-    this.WaitPay(false);
+    this.$axios.put(bizPatientCard, {
+    }).then(res => {
+      if (res.data.code == '200') {
+      
+        for (let i = 0; i < res.data.rows.length; i++) {
+          this.selectorValue = res.data.rows[0].name;
+          this.id = res.data.rows[0].id;
+          let neslist = {
+            text: res.data.rows[i].name,
+            value: res.data.rows[i].id,
+            aaa: res.data.rows[i].createTime,
+
+          }
+          this.optionsData.push(neslist);
+        }
+
+      } else if (res.data.code == '800') {
+
+      }
+    }).catch(function (err) {
+      console.log(err);
+    });
+
+    this.selectDrugsList();
+
+  },
+  watch: {
+    selectorValue: function (val, oldval) {
+      this.page = 1;
+      this.drugsList = {
+        nowPage: 1,
+        drugs: []
+      };
+      this.loadingtrue = true;
+      this.selectDrugsList(false);
+    },
+   
   },
   methods: {
-    WaitPay(flag) {
-      const params = {};
-      params.pageNumber = this.page;
-      params.pageSize = this.pageSize;
-      params.status = 2;
-      this.$axios.put(pay_list_url, params).then((res) => {
-        this.loadingtrue = false;
-        if (res.data.code == 200) {
-          if (res.data.rows) {
-            if (flag) {
-              this.waitPayData = this.waitPayData.concat(res.data.rows);  //concat数组串联进行合并
-              if (this.page < Math.ceil(res.data.total / 10)) {  //如果数据加载完 那么禁用滚动时间 this.busy设置为true
-                this.busy = false;
-                this.nomore = false;
-              } else {
-                this.busy = true;
-                this.nomore = true;
-              }
-            } else {
-              this.waitPayData = res.data.rows;
-              this.busy = true;
-              if (res.data.total < 10) {
-                this.busy = true;
-                this.nomore = true;
-              } else {
-                this.busy = false;
-                this.nomore = false;
-              }
-            }
+    selectStyle(data) {
+      this.isSelectorShow = true
+    },
+    onSelectorChoose({ text, value, id }) {
+      this.selectorValue = text;
+      
+
+    },
+    async selectDrugsList() {
+      if (!this.busy) this.loadingtrue = true;
+      this.$axios
+        .put(selectDrugs, {
+          pageSize: 20,
+          status: 2,
+          patientId: this.chooseId,
+          pageNumber: this.current,
+        })
+        .then(res => {
+          if (res.data.code == "200") {
+            res = res.data;
+            this.drugsList.drugs =
+              this.current == 1
+                ? res.rows
+                : this.drugsList.drugs.concat(res.rows);
+            this.drugsList.nowPage = res.current;
+            this.pages = res.pages;
+            if (!this.busy) this.loadingtrue = false;
+            this.busy = false;
+
+
+          } else {
+            this.$toast.info(res.data.msg);
           }
-          //2、
-        } else {
-          this.waitPayData = []
-        }
-      })
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    }, loadMore: function () {
+      if (this.loadingtrue) return false;
+      if (this.drugsList.nowPage == this.pages) return false;
+      this.busy = true;
+      setTimeout(() => {
+        this.current++;
+        this.selectDrugsList();
+      }, 1000);
     },
-    loadMore() {
-      this.busy = true;  //将无限滚动给禁用
-      setTimeout(() => {  //发送请求有时间间隔第一个滚动时间结束后才发送第二个请求
-        this.page++;  //滚动之后加载第二页
-        this.WaitPay(true);
-      }, 500);
-    },
-
-
-
-
-  },
-
-};
+  }
+}
 </script>
 
-<style scoped   lang="scss">
-.doctor-list {
-  position: relative;
-  margin-top: 20px;
-  border-bottom: 1px solid #e0e0e0;
-  background: #fff;
-  width: 94%;
-  margin-left: 3%;
-  border-radius: 20px;
-  padding: 10px;
-}
-
-.doctor-list .header {
-  width: 98px;
-  position: absolute;
-}
-
-.doctor-list .header img {
-  width: 100%;
-  border-radius: 50%;
-  padding: 5px;
-}
-
-.doctor-list .comment-right {
-  padding: 10px 0px 30px 108px;
-}
-/* #e2e4ea */
-.doctor-list em {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 40px;
-  line-height: 40px;
-  padding: 0 20px;
-  font-size: 28px;
-  font-style: normal;
-  color: #fff;
-  background: var(--primary--content);
-  border-top-right-radius: 15px;
-  border-bottom-left-radius: 15px;
-}
-.doctor-list p {
-  line-height: 40px;
-}
-
-.doctor-list .name {
-  font-size: 32px;
-}
-
-.content {
-  font-size: 24px;
-  color: #878787;
-  line-height: 30px;
-}
-
-.picture {
-  padding: 1px 5px;
-  border-radius: 7px;
-  color: #fff;
-  background: #9ac3ff;
-  font-size: 22px;
-}
-.picture1 {
-  background: #a5dbff;
-}
-.picture2 {
-  background: #82e0c3;
-}
-.noOpen {
-  padding: 1px 5px;
-  border-radius: 7px;
-  color: var(--primary--content);
-  color: #fff;
-}
-.introduce {
-  font-size: 24px;
-}
-.num{
-   color: #3A3A3A;
-   font-size: 28px;
-}
-.doctor-list .price {
-  color: #f74749;
-  font-weight: 500;
-  letter-spacing: 1px;
-  overflow: hidden;
-  margin-top: 10px;
-  a {
-    font-size: 26px;
-    float: right;
-    display: inline-block;
-    height: 45px;
-    line-height: 45px;
-    padding: 0 20px;
-    border: 1px solid var(--primary);
-    border-radius: 30px;
-    margin-left: 30px;
-    color: var(--primary);
-  }
-  .consult {
-    color: #fff;
-    background: var(--primary);
-    font-size: 23px;
-  }
-}
-
-.doctor-list:last-child {
-  border: none;
-}
+<style>
 </style>

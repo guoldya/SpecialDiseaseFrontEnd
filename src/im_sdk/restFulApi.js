@@ -138,10 +138,10 @@ class RestFulApi {
             })
 
     }
-    registerUser = (name, nickname, callback) => {
+    registerUser = (userid, name, callback) => {
         let userModel = {
-            name: name,
-            nickname: nickname,
+            name: userid,
+            nickname: name,
             password: '123456',
             checkPassword: '123456',
         }

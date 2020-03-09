@@ -1,16 +1,25 @@
 <template>
   <div class="cardblind">
     <Header post-title="添加门特患者"></Header>
+
     <div class="margin55">
+      <div class="warn">
+        <p class="title"> <img src="@/assets/images/warn.png">【温馨提示】</p>
+        <p>1.本系统为门特患者提供线上续方功能，仅限线下已完成初诊的门特患者使用;</p>
+        <p>2.初次登录请录入预留的姓名、电话及身份证进行绑定；</p>
+        <p>3.续方流程：选择医生→在线咨询→医生在线开方→记账→收货；</p>
+        <p>4.定期到定点医院报销；</p>
+        <p>5.您最多可以绑定5名特病患者。</p>
+      </div>
       <md-field>
-        <md-input-item class="outCarint" ref="input13" v-model="name" title="姓名" placeholder="请输入病人姓名" maxlength="10"></md-input-item>
+        <md-input-item align="right" class="outCarint" ref="input13" v-model="name" title="姓名" placeholder="请输入病人姓名" maxlength="10"></md-input-item>
         <md-field-item class="outCarint" title="患与关系" arrow="arrow-right" :addon="selectorValue" @click="showSelector">
         </md-field-item>
-        <md-input-item class="outCarint" ref="input13" v-model="idcard" title="身份证号" maxlength="18" placeholder="请输入身份证号"></md-input-item>
+        <md-input-item align="right" class="outCarint" ref="input13" v-model="idcard" title="身份证号" maxlength="18" placeholder="请输入身份证号"></md-input-item>
         <md-button @click="tijiao" :inactive="!isTijiao" type="primary" round style="margin-top:16px">提交</md-button>
       </md-field>
       <md-selector v-model="isSelectorShow" :default-value="1" :data="test" max-height="320px" title="选择您与患者的关系" @choose="onSelectorChoose"></md-selector>
-      <p class="warnTip">温馨提示：您可以累计添加五个患者！</p>
+
     </div>
     <!-- 咨询弹窗 -->
     <md-dialog :title="basicDialog.title" :closable="true" v-model="basicDialog.open" :btns="basicDialog.btns">
@@ -156,7 +165,7 @@ export default {
 }
 
 </script>
- <style scoped>
+ <style  scoped>
 .cardblind .md-button.block {
   width: 94%;
   margin-left: 3%;
@@ -164,12 +173,23 @@ export default {
 .cardblind .md-field {
   padding: 0px !important;
 }
-.warnTip {
-  color: #f99c2e;
-  bottom: 0;
-  padding-top: 0.4rem;
-  margin-bottom: 0.4rem;
-  font-size: 0.24rem;
-  margin-left: 0.34rem;
+.warn {
+  padding: 22px;
+  background: rgba(255, 246, 213, 1);
+  color: #e7b91d;
+  font-size: 24px;
+  line-height: 40px;
+  border: 1px solid #e7b91d;
+}
+.warn p{
+  margin-left: 28px;
+}
+.warn .title{
+  margin-left: 0;
+}
+.title img {
+  width: 30px;
+  position: relative;
+  top:4px
 }
 </style>

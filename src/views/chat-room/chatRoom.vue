@@ -32,13 +32,12 @@ export default {
     if (this.$route.query.patientId) {
       this.chooseId = this.$route.query.patientId;
     }
-    
+
     this.imSdk.createUserConnect(
       "p" + this.chooseId,
       "123456",
       {
         userConnectCallback: () => {
-         
           // 拿到消息列表之后的回调
           this.imSdk.openSession(
             this.$store.state.accountInfo.name,
@@ -47,16 +46,25 @@ export default {
             {
               getMessageCallback: () => {
                 // 拿到消息列表之后的回调
-                 console.log("拿到消息列表之后的回调777777")
+                console.log("拿到消息列表之后的回调777777")
               }
             }
           );
         }
       }
-
     );
 
-    
+    this.imSdk.openSession(
+      this.$store.state.accountInfo.name,
+      "d" + this.$route.query.id,
+      this.$route.query.name,
+      {
+        getMessageCallback: () => {
+          // 拿到消息列表之后的回调
+          console.log("拿到消息列表之后的回调777777")
+        }
+      }
+    );
 
     // this.imSdk.openSession(
     //   this.$store.state.userInfo.nickname,

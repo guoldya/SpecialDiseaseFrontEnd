@@ -26,6 +26,12 @@ export class ImkSocketSDK {
         imClient.connect(this.bindToGroupChannel)
         this.IMData.imClient = imClient
     }
+    close = () => {
+        if (this.IMData.imClient) {
+            this.IMData.imClient.onClose();
+            this.IMData.imClient = null
+        }
+    }
     onOnlineStatusChanged = (message) => {
         if (message.userId === this.IMData.user.userId) {
             return

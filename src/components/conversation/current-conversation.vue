@@ -7,7 +7,8 @@
       <div v-show="isShowScrollButtomTips" class="newMessageTips" @click="scrollMessageListToButtom">回到最新位置</div>
     </div>
     <div class="footer">
-      <message-send-box v-if="showSendBox" />
+      <!-- <message-send-box v-if="showSendBox" /> -->
+      <message-send-box  />
     </div>
 
   </div>

@@ -26,7 +26,7 @@
       <div class="dotType">
         <!---->
         <div class="dottextff">
-          <img src="@/assets/conversationImg/freeText.png" />
+          <img src="@/assets/conversationImg/freeText1.png" />
           <span>图文问诊</span>
         </div>
         <p class="consult " @click="into" :class="conversation.status==1?'online-consult':'complete-consult'">
@@ -164,8 +164,8 @@ export default {
   justify-content: space-between;
 }
 .dotType div {
-  width: 33.3333%;
-  font-size: 12px;
+  // width: 33.3333%;
+  font-size: 26px;
 }
 .dottextff {
   color: var(--primary--secondary);
@@ -183,6 +183,7 @@ export default {
 }
 .dotType img {
   margin-right: 5px;
+  width: 20%;
 }
 .online {
   color: var(--primary);

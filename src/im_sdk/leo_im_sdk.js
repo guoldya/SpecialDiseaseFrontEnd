@@ -56,6 +56,7 @@ export class ImSdk {
         this.messageList = [] //与会话用户的消息列表
         this.hasMoreMessage = false //
         this.isOpenWS = false //是否建立与服务器连接
+        this.oldname=null
             //初始化所有SDK
         this.restFulApi = new RestFulApi(this)
         this.imkSocketSDK = new ImkSocketSDK(this)
@@ -65,11 +66,13 @@ export class ImSdk {
     }
     createUserConnect(username, password, { userConnectCallback } = {}) {
         // if (this.isOpenWS == true) {
+        //     userConnectCallback()
         //     return;
         // }
-        if(username==this.isOpenWS) {
+        if(username==this.oldname) {
+            userConnectCallback()
             return
-        }else if(this.isOpenWS){
+        }else if(this.oldname){
             this.userLogout()
         }
         //创建于服务端的会话
@@ -79,9 +82,9 @@ export class ImSdk {
                     console.log(this, "数据状态查询")
                         //初始化会话连接
                     this.imkSocketSDK.initIMClient();
-                    // this.isOpenWS = false;
+                    //  this.isOpenWS = true;
                     userConnectCallback()
-                    this.isOpenWS=username;
+                    this.oldname=username;
                 })
             })
         })

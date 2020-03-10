@@ -153,7 +153,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #f8f8f8;
+  color: #717477;
   font-size: 32px;
   position: absolute;
   width: 100%;

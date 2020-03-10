@@ -20,6 +20,7 @@ export default {
     CurrentConversation
   },
   mounted() {
+    
     if (this.$route.query.isOpen) {
       this.isOpen = true;
     }

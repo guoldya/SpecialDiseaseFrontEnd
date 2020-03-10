@@ -17,10 +17,18 @@
       </p>
     </div>
 
-    <div class="package-status" v-if="LogisticsData.length>0">
-      <div class="status-box">
-        <ul class="status-list"></ul>
+    <div class="package-status">
+      <div class="title">物流信息</div>
+      <div class="noDataDiv" v-if="LogisticsData.length<1">
+        <img class="notfound" src="@/assets/images/logistics_img.png" alt />
+        <div class="nomore">暂无物流信息</div>
+        <p class="refresh" @click="getLogistics">刷新试试</p>
       </div>
+      <div class="status-box" v-else>
+        <ul class="status-list">
+        </ul>
+      </div>
+      
     </div>
   </div>
 </template>
@@ -58,27 +66,31 @@ export default {
     getLogistics() {
       let jogistics = {
         mobile: this.reportInfoData.telephone,
-        number: this.reportInfoData.logisticsNo
+        number: this.reportInfoData.logisticsNo //773025677672954 ,
       };
       this.$axios
         .put(readExpressDelivery, jogistics, {})
         .then(res => {
-          if (res.data.code == "800"||res.data.code == "200") {
+          if (res.data.code == "200") {
             this.loadingtrue = false;
             this.LogisticsData = res.data.data.list;
-            const telReg = /((?:0[1-9][0-9]{1,2}- )?[2-8][0-9]{6,7}$)|(1[3-9][0-9]{9}$)/g; //固话加手机正则
-              let current = ""; //匹配项
-              this.LogisticsData.map((item, index) => {
-                if (telReg.test(item.status))
-                  current = item.status.match(telReg)[0];
-                item.status = item.status.replace(
-                  current,
-                  `<a href=" tel :${current}" style="color :#0A7DE6 ">`
-                  +current+
+            const telReg = /((((13[0-9])|(15[^4])|(18[0,1,2,3,5-9])|(17[0-8])|(147))\d{8})|((\d3,4|\d{3,4}-|\s)?\d{7,14}))?/g; //固话加手机正则
+            let current = ""; //匹配项
+            this.LogisticsData.map((item, index) => {
+              if (telReg.test(item.status)){
+                for(let key in item.status.match(telReg)){
+                  if(item.status.match(telReg)[key]){
+                  current = item.status.match(telReg)[key];
+                  }
+                }
+              }
+              item.status = item.status.replace(
+                current,
+                `<a href=" 'tel' :${current}" style="color :#0A7DE6 ">` +
+                  current +
                   `</a>`
-                );
-              });
-              console.log(this.LogisticsData, current)
+              );
+            });
             var deliver1 =
               `<li>
             <div class="status-time-before">` +
@@ -94,54 +106,56 @@ export default {
               var deliver =
                 `<li>
                 <div class="status-time-before">
-                  <div>` +this.LogisticsData[i].time +
+                  <div>` +
+                this.LogisticsData[i].time +
                 `</div> <span></span></div>
                   <div class="status-content-before">` +
                 this.LogisticsData[i].status +
                 `</div>
                   <div class="status-line"></div>
                 </li>`;
-               //添加之前的物流轨迹
-                $(".status-list").append(deliver);
+              //添加之前的物流轨迹
+              $(".status-list").append(deliver);
             }
             // 样式
-              $(".status-list li div").css({
-               display:'inline-block',
-              });
-              $(".status-list li").css({
-                display: "flex",
-              });
-              $(".status-list li .status-time-before").css({
-                borderRight: "2px solid var(--primary--light)",
-                textAlign: "center",
-                position: "relative",
-                width: '29%',
-                paddingRight:'8px',
-                paddingBottom: "10px",
-              });
-              $(".status-list li .status-content-before").css({
-                width: '70%',
-                paddingLeft:'10px',
-                paddingBottom: "10px",
-              });
-              $(".status-list li:first-child").css({
-                color: "var(--primary)"
-              });
-              $(".status-list li:not(:first-child)").css({
-                color: "var(--primary--content)"
-              });
-              $(".status-list li span").css({
-                border: "6px solid var(--primary)",
-                backgroundColor: "var(--primary)",
-                display: "inline-block",
-                borderRadius: "10px",
-                right: "-7px",
-                top:'0',
-                position: "absolute"
-              });
-              $(".status-list li span:not(:first-child)").css({
-                border: "6px solid var(--primary--light)",
-              });
+            $(".status-list li div").css({
+              display: "inline-block"
+            });
+            $(".status-list li").css({
+              display: "flex"
+            });
+            $(".status-list li .status-time-before").css({
+              borderRight: "2px solid var(--primary--light)",
+              textAlign: "center",
+              position: "relative",
+              width: "32%",
+              paddingRight: "4px",
+              paddingBottom: "10px"
+            });
+            $(".status-list li .status-content-before").css({
+              width: "70%",
+              paddingLeft: "10px",
+              paddingBottom: "10px",
+              wordBreak: 'break-all'
+            });
+            $(".status-list li:first-child").css({
+              color: "var(--primary)"
+            });
+            $(".status-list li:not(:first-child)").css({
+              color: "var(--primary--content)"
+            });
+            $(".status-list li span").css({
+              border: "6px solid var(--primary)",
+              backgroundColor: "var(--primary)",
+              display: "inline-block",
+              borderRadius: "10px",
+              right: "-7px",
+              top: "0",
+              position: "absolute"
+            });
+            $(".status-list li span:not(:first-child)").css({
+              border: "6px solid var(--primary--light)"
+            });
           }
         })
         .catch(function(err) {
@@ -157,10 +171,15 @@ ul li {
 }
 
 .package-status {
-  padding: 30px 12px;
+  padding: 30px 24px;
   margin: 24px;
   background: #ffffff;
   border-radius: 20px;
+  .title{
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 20px
+  }
 }
 
 .package-status .status-list {
@@ -294,5 +313,28 @@ li:before {
   margin-left: -11px;
   margin-right: 10px;
   top: -5px;
+}
+.noDataDiv {
+  text-align: center;
+  .notfound {
+    width: 50%;
+    margin-top: 150px;
+  }
+  .nomore {
+    margin-left: 0;
+  }
+  .refresh{
+    font-size: 26px;
+    display: inline-block;
+    height: 45px;
+    line-height: 45px;
+    padding: 0 20px;
+    border-radius:30px;
+    background-color: var(--primary);
+    color: #fff;
+    border: 2px solid var(--primary);
+    cursor: pointer;
+  }
+  
 }
 </style>

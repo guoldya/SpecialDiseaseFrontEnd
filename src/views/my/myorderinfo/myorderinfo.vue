@@ -1,5 +1,5 @@
 <template>
-  <div class="margin55   outpationinfo">
+  <div class="margin55 outpationinfo">
     <Header post-title="订单详情"></Header>
 
     <div v-show="!loadingtrue">
@@ -7,34 +7,37 @@
       <div class="infobottom">
         <div class="adress-box">
           <div class="iconImg">
-            <img class="addPic" src="@/assets/images/icon_express.png" alt="">
+            <img class="addPic" src="@/assets/images/icon_express.png" alt />
           </div>
           <div class="adress-content">
-            <p>
-              您的订单已经准备就绪
-            </p>
-            <p class="time"> {{reportInfoData.createTime|lasttime}}</p>
+            <span v-if="!newestLogistics.status">暂无物流信息</span>
+            <span v-html="newestLogistics.status" v-else></span>
+            
+            <p ></p>
+            <p class="time">{{newestLogistics.time}}</p>
           </div>
-          <div class="addImg nextImg" @click="acceptAdd()" v-if="reportInfoData.status!=1||reportInfoData.status!=2">
-            <img src="@/assets/images/icon_more2@2x.png" alt="">
+          <div
+            class="addImg nextImg"
+            @click="acceptAdd()"
+            v-if="reportInfoData.status!=1||reportInfoData.status!=2"
+          >
+            <img src="@/assets/images/icon_more2@2x.png" alt />
           </div>
         </div>
       </div>
       <div class="infobottom">
         <div class="adress-box">
           <div class="iconImg">
-            <img class="addPic" src="@/assets/images/icon_address1.png" alt="">
+            <img class="addPic" src="@/assets/images/icon_address1.png" alt />
           </div>
           <div class="adress-content">
             <p>
-              <span> {{reportInfoData.receiver}}</span>&nbsp;
-              <span> {{reportInfoData.telephone}}
-              </span>
+              <span>{{reportInfoData.receiver}}</span>&nbsp;
+              <span>{{reportInfoData.telephone}}</span>
             </p>
-            <p> {{reportInfoData.address}}</p>
+            <p>{{reportInfoData.address}}</p>
           </div>
-          <div class="addImg nextImg">
-          </div>
+          <div class="addImg nextImg"></div>
         </div>
       </div>
       <div class="infobottom">
@@ -47,23 +50,31 @@
         </div>
       </div>
       <div class="infobottom">
-        <div class="mycardlist" v-for="(item2, index2) in reportInfoData.orderDetailsList" :key="index2">
-          <div class="mycardlistleft">
-            <!-- <div class="img">
-              <img src="@/assets/images/1.jpg" alt="">
-            </div> -->
+        <div
+          class="mycardlist"
+          v-for="(item2, index2) in reportInfoData.orderDetailsList"
+          :key="index2"
+        >
+        <div class="mycardlistleft">
             <div>
               <p>{{item2.drugName}}</p>
-              <p class="price">{{item2.factory}} 单价：￥{{item2.price|keepTwoNum}} </p>
+              <p class="price">
+                <span>单价：￥{{item2.price|keepTwoNum}}</span> 
+                数量：{{item2.num}}
+              </p>
             </div>
           </div>
           <div class="mycardlistright">
-            <p>订单金额：￥{{item2.total|keepTwoNum}}</p>
-            <p class="num">数量：{{item2.num}}</p>
+            
+            <p class="num">{{item2.spec}}</p>
+            <p>合计：￥{{item2.total|keepTwoNum}}</p>
           </div>
         </div>
         <div class="top">
-          <p class="moneyorder">付款金额：<span>￥{{reportInfoData.totalMoney|keepTwoNum}}</span></p>
+          <p class="moneyorder">
+            付款金额：
+            <span>￥{{reportInfoData.totalMoney|keepTwoNum}}</span>
+          </p>
           <p class="moneyorder">配送费：￥{{reportInfoData.dispatchFee|keepTwoNum}}</p>
         </div>
       </div>
@@ -71,50 +82,45 @@
     <div style="padding:0.24rem" v-if="reportInfoData.status==3||reportInfoData.status==1">
       <md-button type="primary" @click="tijiao" round style="margin-top:16px">确认收货</md-button>
     </div>
-    <md-dialog title="提示" :closable="false" v-model="actDialog.open" :btns="actDialog.btns">
-      是否确认收货
-    </md-dialog>
+    <md-dialog title="提示" :closable="false" v-model="actDialog.open" :btns="actDialog.btns">是否确认收货</md-dialog>
 
     <Loading v-show="loadingtrue"></Loading>
   </div>
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 
-let bizLisReportreaddetail = 'bizOrder/read/detail'
-let update_list_url = 'bizOrder/read/update'
+let bizLisReportreaddetail = "bizOrder/read/detail";
+let update_list_url = "bizOrder/read/update";
+let readExpressDelivery = "bizOrder/read/expressDelivery";
+
 export default {
   data() {
     return {
-      reportInfoData: '',
+      reportInfoData: "",
       loadingtrue: true,
       isTijiao: true,
       actDialog: {
         open: false,
         btns: [
           {
-            text: '取消',
+            text: "取消"
           },
           {
-            text: '确定',
+            text: "确定",
             // warning: true,
-            handler: this.onActConfirm3,
-          },
-        ],
-      }
-
-
-
+            handler: this.onActConfirm3
+          }
+        ]
+      },
+      newestLogistics: {}
     };
   },
-  computed: {
-
-  },
-  created() {
-
-  },
+  computed: {},
+  created() {},
   mounted() {
     this.checkReportDetail();
+    this.getLogistics()
   },
   methods: {
     tijiao() {
@@ -129,43 +135,80 @@ export default {
       });
     },
     onActConfirm3() {
-
       this.actDialog.open = false;
       let data = {};
       data.id = parseInt(this.$route.query.id);
       data.status = 6;
-      this.$axios.post(update_list_url, data, {
-      }).then((res) => {
-        if (res.data.code == '200') {
-          this.$router.go(-1);
+      this.$axios
+        .post(update_list_url, data, {})
+        .then(res => {
+          if (res.data.code == "200") {
+            this.$router.go(-1);
 
-          this.$toast.info('确定收货成功');
-        } else {
-          this.$toast.info(res.data.msg);
-        }
-      }).catch(function (err) {
-        console.log(err);
-      });
+            this.$toast.info("确定收货成功");
+          } else {
+            this.$toast.info(res.data.msg);
+          }
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
     },
     checkReportDetail() {
       let checkParams = {};
       checkParams.id = parseInt(this.$route.query.id);
 
-      this.$axios.put(bizLisReportreaddetail, checkParams, {
-      }).then((res) => {
-        if (res.data.code == '200') {
-          this.loadingtrue = false;
-          this.reportInfoData = res.data.data;
-        }
-      }).catch(function (err) {
-        console.log(err);
-      });
-
+      this.$axios
+        .put(bizLisReportreaddetail, checkParams, {})
+        .then(res => {
+          if (res.data.code == "200") {
+            this.loadingtrue = false;
+            this.reportInfoData = res.data.data;
+          }
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
     },
-
-
+    getLogistics() {
+      let jogistics = {
+        mobile: this.reportInfoData.telephone,
+        number: this.reportInfoData.logisticsNo
+      };
+      this.$axios
+        .put(readExpressDelivery, jogistics, {})
+        .then(res => {
+          if (res.data.code == "200") {
+            this.loadingtrue = false;
+            let firstLogistics=[]
+            firstLogistics.push(res.data.data.list[0]);
+            const telReg = /((((13[0-9])|(15[^4])|(18[0,1,2,3,5-9])|(17[0-8])|(147))\d{8})|((\d3,4|\d{3,4}-|\s)?\d{7,14}))?/g; //固话加手机正则
+            let current = ""; //匹配项
+            firstLogistics.map((item, index) => {
+                if (telReg.test(item.status)){
+                for(let key in item.status.match(telReg)){
+                  if(item.status.match(telReg)[key]){
+                  current = item.status.match(telReg)[key];
+                  }
+                }
+              }
+              item.status = item.status.replace(
+                current,
+                `<a href=" tel :${current}" style="color :#0A7DE6 ">` +
+                  current +
+                  `</a>`
+              );
+            });
+            this.newestLogistics.status=firstLogistics[0].status
+            this.newestLogistics.time=firstLogistics[0].time
+          }
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+    }
   }
-}
+};
 </script>
 <style  lang="scss"  scoped>
 .outpationcard {
@@ -271,6 +314,9 @@ export default {
     .price {
       font-size: 24px;
       color: #979797;
+      span{
+        margin-right: 40px;
+      }
     }
   }
 }

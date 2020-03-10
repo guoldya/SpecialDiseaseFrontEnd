@@ -2,7 +2,7 @@
 
   <div  >
     <Header post-title="我的账单"></Header>
-    <div class="samll">
+    <div class="samll"  v-show="show && !loadingtrue">
       <span class="btn" @click="selectStyle">{{selectorValue}}
         <img src="@/assets/images/down.png" alt="down">
       </span>
@@ -155,7 +155,7 @@ export default {
   justify-content: space-between;
   color: #717477;
   font-size: 32px;
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100px;
   padding: 20px 24px 25px;

@@ -70,7 +70,7 @@
           <div class="cardMobileleft">
             <img src="@/assets/images/messge.png" alt="" />
             <div>
-              <p>图文咨询<span class="money"> ￥{{$route.query.money|keepTwoNum}}</span></p>
+              <p>图文咨询<span class="money"> ￥{{20|keepTwoNum}}</span></p>
             </div>
           </div>
           <div class="cardMobileright" @click="consult({type:1,status:1})">

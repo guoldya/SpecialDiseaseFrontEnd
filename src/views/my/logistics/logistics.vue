@@ -63,7 +63,7 @@ export default {
       this.$axios
         .put(readExpressDelivery, jogistics, {})
         .then(res => {
-          if (res.data.code == "800"||res.data.code == "200") {
+          if (res.data.code == "200") {
             this.loadingtrue = false;
             this.LogisticsData = res.data.data.list;
             const telReg = /((?:0[1-9][0-9]{1,2}- )?[2-8][0-9]{6,7}$)|(1[3-9][0-9]{9}$)/g; //固话加手机正则

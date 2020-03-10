@@ -38,14 +38,21 @@ export default {
   computed: {
     showSendBoxa() {
       if (this.imSdk && this.imSdk.messageList.length) {
-        // let len = this.imSdk.messageList.length;
-        // return !JSON.parse(this.imSdk.messageList[len - 1].content).close
-         return false
+        let len = this.imSdk.messageList.length;
+
+        // if (JSON.parse(this.imSdk.messageList[len - 1].content).close) {
+        //   this.$store.commit('statusFun', true)
+        // }else{
+        //    this.$store.commit('statusFun', false)
+        // }
+        return JSON.parse(this.imSdk.messageList[len - 1].content).close
+        //  return false
       }
     }
   },
   mounted() {
     let len = this.imSdk.messageList.length;
+    
     if (this.$route.query.status) {
       if (this.$route.query.status == 2) {
         this.showSendBox = false;

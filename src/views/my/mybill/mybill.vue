@@ -6,7 +6,7 @@
       <span class="btn" @click="selectStyle">{{selectorValue}}
         <img src="@/assets/images/down.png" alt="down">
       </span>
-      <span>余额：{{totalMoney|keepTwoNum}}</span>
+      <span>余额：￥{{totalMoney|keepTwoNum}}</span>
     </div>
     <div class="content " v-show="show && !loadingtrue">
       <div class="bance" v-if="drugsList.drugs.length!=0" v-for="(item,index) in drugsList.drugs" :key="index">
@@ -20,7 +20,7 @@
             <p class="time"> {{item.createTime|lasttime}}</p>
           </div>
           <div class="banceRightleft2">
-            <p :class="item.money<0?'':'orange'">{{item.money|keepTwoNum}} </p>
+            <p :class="item.money<0?'':'orange'">￥{{item.money|keepTwoNum}} </p>
           </div>
         </div>
       </div>

@@ -38,7 +38,7 @@
 
         </div>
 
-        <p class="totalmoney">合计：<span>{{reportInfoData.totalMoney|keepTwoNum}}元</span> </p>
+        <p class="totalmoney">合计：<span>￥{{reportInfoData.totalMoney|keepTwoNum}}元</span> </p>
         <div class="bottom">
 
           <p>

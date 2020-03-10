@@ -63,46 +63,14 @@
         </div>
 
       </div>
-      <div class="down" @click="down=!down" :class="down?'up':''"> <img src="@/assets/images/icon_up@2x.png" alt=""></div>
-      <!-- 沟通方式 -->
-      <!-- <div class="doctor-way">
-        <div class="doctor-way-item video" @click="consult({type:1,status:1})">
-          <div class="doctor-way-item-img">
-            <img src="@/assets/images/icon_teletext.png" alt="" />
-          </div>
-          <div class="doctor-way-item-money doctor-way-item-image">
-            图文
-          </div>
-          
-        </div>
-      </div> -->
-      <!-- <div class="doctor-way">
-        <div class="doctor-way-item">
-          <div class="doctor-way-item-img">
-            <img src="@/assets/images/icon_teletext.png" alt="" />
+      <div class="down" @click="down=!down" :class="down?'':'up'"> <img src="@/assets/images/icon_up@2x.png" alt=""></div>
 
-            <img src="@/assets/images/icon_telephone_gray.png" alt="" />
-
-            <img src="@/assets/images/icon_video_pre.png" alt="" />
-          </div>
-          <div class="doctor-way-item-money doctor-way-item-image">
-            图文
-          </div>
-
-          <div class="doctor-way-item-money doctor-way-item-phone doctor-way-item-disabled">
-            暂未开通
-          </div>
-          <div class="doctor-way-item-money doctor-way-item-video doctor-way-item-disabled">
-            暂未开通
-          </div>
-        </div>
-      </div> -->
       <div class="cardMobilea">
         <div class="cardMobile">
           <div class="cardMobileleft">
             <img src="@/assets/images/messge.png" alt="" />
             <div>
-              <p>图文咨询</p>
+              <p>图文咨询<span class="money"> ￥{{$route.query.money|keepTwoNum}}</span></p>
             </div>
           </div>
           <div class="cardMobileright" @click="consult({type:1,status:1})">
@@ -138,13 +106,7 @@
       <!-- 咨询弹窗 -->
 
       <md-dialog :title="basicDialog.title" :closable="true" v-model="basicDialog.open" :btns="basicDialog.btns">
-        <p class="money">${{basicDialog.price}}/次</p>
-        <p>咨询医师-{{ doctorInfo.drName}}</p>
-        <p class="ways">{{basicDialog.content}}</p>
-        <!-- <md-agree v-model="basicDialog.checked" :disabled="false" size="sm"> -->
-        同意
-        <a>从预交金扣除问诊费用<span class="money">20.00</span>元</a>
-        <!-- </md-agree> -->
+        <p>咨询医师-{{ doctorInfo.drName}} <span class="money">￥{{basicDialog.price|keepTwoNum}}</span></p>
       </md-dialog>
 
     </div>
@@ -167,27 +129,21 @@ export default {
       basicDialog: {
         open: false,
         checked: true,
-        title: "",
+        title: "记账金额",
         content: '',
         price: this.$route.query.money,
         type: null, // 咨询弹窗类型 type 1 图文 2 电话 3视频
         btns: [
           {
-            text: "取消申请",
+            text: "取消",
             handler: this.onBasicCancel
           },
           {
-            text: "申请咨询",
+            text: "确定",
             handler: this.onConfirm
           }
         ]
       },
-      pagingParams: {
-        // 科室分页信息
-        num: 1,
-        pages: null
-      },
-      commonList: [],
       busy: false,
       chooseId: ''
     };
@@ -229,7 +185,7 @@ export default {
       let data = {};
       data.doctorId = this.doctorInfo.id;
       data.patientId = this.chooseId;
-      
+
       this.$axios.post('bizPatientBill/payOnlineConsult', data).then((res) => {
         if (res.data.code == '200') {
           this.basicDialog.open = false;
@@ -251,8 +207,15 @@ export default {
     // 咨询
     consult(val) {
       // if (val.status == 0) return
-      this.basicDialog.open = true;
 
+      if (this.$route.query.money > 0) {
+        this.basicDialog.open = true;
+      } else {
+        this.$router.push({
+          path: "/pictureConsult",
+          query: { name: this.doctorInfo.drName, start: this.$route.query.start, end: this.$route.query.end, id: this.doctorInfo.id, money: this.money, title: this.doctorInfo.title, type: this.basicDialog.type }
+        });
+      }
 
 
     },
@@ -464,15 +427,13 @@ export default {
 }
 .md-dialog {
   /deep/ .md-dialog-body {
-    padding: 0.52rem 30px 0.2rem;
+    // padding: 0.52rem 30px 0.2rem;
     p {
       text-align: center;
       color: #000;
       line-height: 50px;
     }
-    .money {
-      color: #ff9b00;
-    }
+
     .ways {
       p {
         color: #999;
@@ -488,6 +449,10 @@ export default {
       }
     }
   }
+}
+.money {
+  color: #ff9b00;
+  font-size: 28px;
 }
 </style>
 <style lang="scss">

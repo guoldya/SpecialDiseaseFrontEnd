@@ -32,7 +32,7 @@
             <div class="dottextff">
               <router-link v-if="datas.status==2" :to="{ path: '/consultDetail', query: { id: datas.id ,status:datas.status,money:20,start:datas.start,end:datas.end}}">
                 <img src="@/assets/conversationImg/freeText.png" />
-                <span class="fontSize12" style="color:#F6BE51">{{20|keepTwoNum}}</span>
+                <span class="fontSize12" style="color:#F6BE51">￥{{20|keepTwoNum}}</span>
               </router-link>
               <router-link v-else :to="{ path: '/chatRoom', query: { id: datas.id ,name:datas.drName,start:datas.start,end:datas.end}}">
                 <img src="@/assets/conversationImg/freeText1.png" />

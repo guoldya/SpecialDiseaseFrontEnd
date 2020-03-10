@@ -18,13 +18,17 @@
     </div>
 
     <div class="package-status">
-      <div class="status-box" v-if="LogisticsData.length>0">
-        <ul class="status-list"></ul>
-      </div>
-      <div class="noDataDiv" v-else>
-        <img class="notfound" src="@/assets/images/notfound.png" alt />
+      <div class="title">物流信息</div>
+      <div class="noDataDiv" v-if="LogisticsData.length<1">
+        <img class="notfound" src="@/assets/images/logistics_img.png" alt />
         <div class="nomore">暂无物流信息</div>
+        <p class="refresh" @click="getLogistics">刷新试试</p>
       </div>
+      <div class="status-box" v-else>
+        <ul class="status-list">
+        </ul>
+      </div>
+      
     </div>
   </div>
 </template>
@@ -61,7 +65,7 @@ export default {
     },
     getLogistics() {
       let jogistics = {
-        mobile: this.reportInfoData.telephone, //15523759451,
+        mobile: this.reportInfoData.telephone,
         number: this.reportInfoData.logisticsNo //773025677672954 ,
       };
       this.$axios
@@ -70,14 +74,19 @@ export default {
           if (res.data.code == "200") {
             this.loadingtrue = false;
             this.LogisticsData = res.data.data.list;
-            const telReg = /((?:0[1-9][0-9]{1,2}- )?[2-8][0-9]{6,7}$)|(1[3-9][0-9]{9}$)/g; //固话加手机正则
+            const telReg = /((((13[0-9])|(15[^4])|(18[0,1,2,3,5-9])|(17[0-8])|(147))\d{8})|((\d3,4|\d{3,4}-|\s)?\d{7,14}))?/g; //固话加手机正则
             let current = ""; //匹配项
             this.LogisticsData.map((item, index) => {
-              if (telReg.test(item.status))
-                current = item.status.match(telReg)[0];
+              if (telReg.test(item.status)){
+                for(let key in item.status.match(telReg)){
+                  if(item.status.match(telReg)[key]){
+                  current = item.status.match(telReg)[key];
+                  }
+                }
+              }
               item.status = item.status.replace(
                 current,
-                `<a href=" tel :${current}" style="color :#0A7DE6 ">` +
+                `<a href=" 'tel' :${current}" style="color :#0A7DE6 ">` +
                   current +
                   `</a>`
               );
@@ -119,14 +128,15 @@ export default {
               borderRight: "2px solid var(--primary--light)",
               textAlign: "center",
               position: "relative",
-              width: "29%",
-              paddingRight: "8px",
+              width: "32%",
+              paddingRight: "4px",
               paddingBottom: "10px"
             });
             $(".status-list li .status-content-before").css({
               width: "70%",
               paddingLeft: "10px",
-              paddingBottom: "10px"
+              paddingBottom: "10px",
+              wordBreak: 'break-all'
             });
             $(".status-list li:first-child").css({
               color: "var(--primary)"
@@ -161,10 +171,15 @@ ul li {
 }
 
 .package-status {
-  padding: 30px 12px;
+  padding: 30px 24px;
   margin: 24px;
   background: #ffffff;
   border-radius: 20px;
+  .title{
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 20px
+  }
 }
 
 .package-status .status-list {
@@ -308,5 +323,18 @@ li:before {
   .nomore {
     margin-left: 0;
   }
+  .refresh{
+    font-size: 26px;
+    display: inline-block;
+    height: 45px;
+    line-height: 45px;
+    padding: 0 20px;
+    border-radius:30px;
+    background-color: var(--primary);
+    color: #fff;
+    border: 2px solid var(--primary);
+    cursor: pointer;
+  }
+  
 }
 </style>

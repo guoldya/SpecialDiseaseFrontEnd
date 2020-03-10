@@ -10,8 +10,9 @@
             <img class="addPic" src="@/assets/images/icon_express.png" alt />
           </div>
           <div class="adress-content">
-            <span v-html="newestLogistics.status" v-if="newestLogistics.status"></span>
-            <span v-else>暂无物流信息</span>
+            <span v-if="!newestLogistics.status">暂无物流信息</span>
+            <span v-html="newestLogistics.status" v-else></span>
+            
             <p ></p>
             <p class="time">{{newestLogistics.time}}</p>
           </div>
@@ -55,31 +56,7 @@
           v-for="(item2, index2) in reportInfoData.orderDetailsList"
           :key="index2"
         >
-          <!-- <div class="mycardlistleft"> -->
-            <!-- <div class="img">
-              <img src="@/assets/images/1.jpg" alt="">
-            </div>-->
-            <!-- <div>
-              <p>{{item2.drugName}}</p>
-              <p class="price">{{item2.factory}} 单价：￥{{item2.price|keepTwoNum}}</p>
-            </div>
-          </div>
-          <div class="mycardlistright">
-            <p>订单金额：￥{{item2.total|keepTwoNum}}</p>
-            <p class="num">数量：{{item2.num}}</p>
-          </div>
-        </div>
-        <div class="top">
-          <p class="moneyorder">
-            付款金额：
-            <span>￥{{reportInfoData.totalMoney|keepTwoNum}}</span>
-          </p>
-          <p class="moneyorder">配送费：￥{{reportInfoData.dispatchFee|keepTwoNum}}</p>
-        </div> -->
         <div class="mycardlistleft">
-            <!-- <div class="img">
-              <img src="@/assets/images/1.jpg" alt="">
-            </div>-->
             <div>
               <p>{{item2.drugName}}</p>
               <p class="price">
@@ -93,11 +70,6 @@
             <p class="num">{{item2.spec}}</p>
             <p>合计：￥{{item2.total|keepTwoNum}}</p>
           </div>
-          <!-- <div class="mycardlistright">
-            <p>{{item2.spec}}</p>
-            <p class="num">合计：￥{{reportInfoData.totalMoney|keepTwoNum}}</p>
-
-          </div> -->
         </div>
         <div class="top">
           <p class="moneyorder">
@@ -211,11 +183,16 @@ export default {
             this.loadingtrue = false;
             let firstLogistics=[]
             firstLogistics.push(res.data.data.list[0]);
-            const telReg = /((?:0[1-9][0-9]{1,2}- )?[2-8][0-9]{6,7}$)|(1[3-9][0-9]{9}$)/g; //固话加手机正则
+            const telReg = /((((13[0-9])|(15[^4])|(18[0,1,2,3,5-9])|(17[0-8])|(147))\d{8})|((\d3,4|\d{3,4}-|\s)?\d{7,14}))?/g; //固话加手机正则
             let current = ""; //匹配项
             firstLogistics.map((item, index) => {
-              if (telReg.test(item.status))
-                current = item.status.match(telReg)[0];
+                if (telReg.test(item.status)){
+                for(let key in item.status.match(telReg)){
+                  if(item.status.match(telReg)[key]){
+                  current = item.status.match(telReg)[key];
+                  }
+                }
+              }
               item.status = item.status.replace(
                 current,
                 `<a href=" tel :${current}" style="color :#0A7DE6 ">` +

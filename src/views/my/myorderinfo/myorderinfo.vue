@@ -19,7 +19,6 @@
             <img src="@/assets/images/icon_more2@2x.png" alt="">
           </div>
         </div>
-
       </div>
       <div class="infobottom">
         <div class="adress-box">
@@ -38,7 +37,6 @@
           </div>
         </div>
       </div>
-
       <div class="infobottom">
         <div class="orderinfo">
           <p>订单信息</p>

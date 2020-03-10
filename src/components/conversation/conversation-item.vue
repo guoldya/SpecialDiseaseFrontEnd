@@ -54,6 +54,8 @@ export default {
   },
   methods: {
     into() {
+
+
       this.$router.push({
         name: 'chatRoom',
         query: {
@@ -61,6 +63,8 @@ export default {
           name: this.conversation.doctorName,
           patientId: this.conversation.patientId,
           status: this.conversation.status,
+          start: this.conversation.start,
+          end: this.conversation.end
         }
       })
     }

@@ -1,13 +1,15 @@
 import request from '../utils/request'
 
-export const listMessage = (channelId, maxCreateAt, limit) =>
+export const listMessage = (channelId, maxCreateAt, limit, start, end) =>
     request({
         url: '/messages',
         method: 'GET',
         params: {
             channelId: channelId,
             maxCreateAt: maxCreateAt,
-            limit: limit
+            limit: limit,
+            start:start,
+            end:end
         }
     })
 

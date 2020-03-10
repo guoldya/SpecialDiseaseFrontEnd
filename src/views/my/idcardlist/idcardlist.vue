@@ -9,7 +9,6 @@
               <span class="name">{{item.name}}</span>
               <span>{{item.sex|examSex}}</span>
               <span>{{item.age}}</span>
-
             </p>
           </div>
           <div class="mentecardcontent">
@@ -76,8 +75,6 @@ export default {
       //   name: 'unblind',
       //   query: { id: data.id }
       // });
-
-
       this.$dialog.confirm({
         title: '提示',
         content: '确定解除绑定吗!',
@@ -100,7 +97,6 @@ export default {
                       this.$store.commit('accountInfoFun', this._cardlist[0])
                     }
                   }
-
 
                 });
 

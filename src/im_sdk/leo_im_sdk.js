@@ -7,6 +7,9 @@ import { ImSendSDK } from '@/im_sdk/imSendSDK'
 export class ImSdk {
     //构造函数
     constructor() {
+        this.start=0
+        this.end=0
+
         this.user = null //当前用户信息
         this.onlineStatus = null //当前用户状态
         this.token = null //令牌
@@ -83,7 +86,9 @@ export class ImSdk {
             })
         })
     }
-    openSession(fromUsername, toUserId, toUsername, { getMessageCallback } = {}) {
+    openSession(fromUsername, toUserId, toUsername,data, { getMessageCallback } = {}) {
+        this.end=data.end
+        this.start=data.start
         //打开会话
         let exists = this.userChannelList.findIndex(item => item.toUserId === toUserId)
         if (exists == -1) {

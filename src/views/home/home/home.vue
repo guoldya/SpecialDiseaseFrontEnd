@@ -3,9 +3,6 @@
 </style>
 <template>
   <div class="home">
-    <!-- <div class="homeheader">
-      <p>医院门特在线</p>
-    </div> -->
     <div class="hometop">
     </div>
     <div class="homePage bindCarda"  v-if=" _cardlist.length==0">
@@ -13,7 +10,6 @@
         <span class="bindCardBtn" @click="addpeple">添加门特患者</span>
       </div>
       <div class="cardPositon"> </div>
-      <!-- 测试的code：{{code}} -->
     </div>
     <!-- <div class="homePage" v-if=" _cardlist.length!=0"> -->
     <div class="homePage" v-if=" _cardlist.length!=0">
@@ -21,7 +17,6 @@
         <p class="name">{{item.name}}
           <span class="code">{{item.code}}</span>
         </p>
-
         <p class="dise">{{item.diseaseName}}</p>
         <p class="dise">{{item.idCard}}</p>
         <img class="qiehuan" v-if=" _cardlist.length!=1" @click="switchCard(index)" src="@/assets/images/qiehuan.png">
@@ -29,18 +24,16 @@
     </div>
     <p class="doctorlisttitle">
       <span>问卷调查</span>
-      <!-- <span @click="$router.push({name:'doctorlist'})">更多<img src="@/assets/images/more.png" alt=""></span> -->
     </p>
     <div class="bg3" @click="valuation">
       <img src="@/assets/images/bg3.png" alt="">
     </div>
-    <p class="doctorlisttitle">
+    <p class="doctorlisttitle"  >
       <span>医生列表</span>
-      <!-- <span @click="$router.push({name:'doctorlist'})">更多<img src="@/assets/images/more.png" alt=""></span> -->
     </p>
-    <doctorList v-for="(item, index) in listdata" :datas="item" :key="index"></doctorList>
+    <doctorList  v-for="(item, index) in listdata" :datas="item" :key="index"></doctorList>
     <!-- 底部 -->
-    <Footer></Footer>
+    <Footer ></Footer>
   </div>
 </template>
 <script>
@@ -51,8 +44,6 @@ let doctorlistURL = 'sysDoctor/selectDoctorByPatient'
 export default {
   data() {
     return {
-
-      code: 'ss',
       showPic: false,
       showindex: 0,
       cardLoading: false,
@@ -73,8 +64,7 @@ export default {
 
   async mounted() {
 
-    // await this.$store.dispatch('getCards', { update: true });
-
+     
     this.$store.dispatch('getCards', { update: true }).then(res => {
       // if (this.chooseId) {
       //   this._cardlist.map(x => {

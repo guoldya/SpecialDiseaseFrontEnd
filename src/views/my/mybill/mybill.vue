@@ -17,7 +17,7 @@
         </div>
         <div class="banceRight">
           <div class="banceRightleft">
-            <p class="kind">{{item.billTitle}} R0001</p>
+            <p class="kind">{{item.billTitle}}</p>
             <p><span>{{item.type|payStatusText}}</span> </p>
             <p class="time"> {{item.createTime|lasttime}}</p>
           </div>

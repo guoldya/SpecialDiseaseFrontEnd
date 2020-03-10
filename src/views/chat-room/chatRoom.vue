@@ -58,6 +58,7 @@ export default {
       this.$store.state.accountInfo.name,
       "d" + this.$route.query.id,
       this.$route.query.name,
+      {start:this.$route.query.start,end:this.$route.query.end},
       {
         getMessageCallback: () => {
           // 拿到消息列表之后的回调

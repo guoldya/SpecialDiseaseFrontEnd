@@ -19,7 +19,7 @@
     </div>
     <div class="emoji-list" v-if="toolType == 'emoji'">
       <ul>
-        <li v-for="(item,index) in emojiName" :key="index" @click="getPos(item)">
+        <li v-for="(item,index) in emojiName" :key="index" @click="getPos(item,index)">
           <img :src="require(`@/static/faces/${item}`)" />
           <!-- <img :src="emojiUrl + emojiMap[item]" style="width:30px;height:30px" /> -->
         </li>
@@ -73,7 +73,8 @@ export default {
           handler: this.sendSurvey,
         },
       ],
-      isPopupShow: false
+      isPopupShow: false,
+
     }
   },
   computed: {
@@ -87,7 +88,7 @@ export default {
     })
   },
 
-  
+
   mounted() {
     this.$refs.inputModel.focus()
 
@@ -108,7 +109,7 @@ export default {
             "Content-Type": "multipart/form-data"
           }
         };
-        let res = await this.$axios.post('upload/file', formData,config);
+        let res = await this.$axios.post('upload/file', formData, config);
         if (res.data.code != 200) {
           throw Error(res.data.msg);
         }
@@ -117,6 +118,7 @@ export default {
           headerurl: this.$store.state.userInfo.headPic,
           text: res.data.rows[0].fileName
         }
+        this.$bus.$emit("sendData", { data: false })
         return this.imSdk.send(msg)
       } catch (error) {
         console.log(error.message);
@@ -159,7 +161,7 @@ export default {
       }
     },
     sendTextMessage() {
-      console.log(this.$refs.inputModel.innerHTML, "ssssssssss")
+
       // if (
       //   this.messageContent === '' ||
       //   this.messageContent.trim().length === 0
@@ -183,14 +185,23 @@ export default {
         })
         return
       }
+      let reg = /<img(.*?)src="(.*?)"(.*?)id="(.*?)"(.*?)>/g;
+      this.messageContent = this.$refs.inputModel.innerHTML.replace(reg, '$4');
+
+      // let msg = {
+      //   type: 'text',
+      //   headerurl: this.$store.state.userInfo.headPic,
+      //   text: this.$refs.inputModel.innerHTML
+      // }
       let msg = {
         type: 'text',
         headerurl: this.$store.state.userInfo.headPic,
-        text: this.$refs.inputModel.innerHTML
+        text: this.messageContent
       }
       this.imSdk.send(msg)
       this.messageContent = ''
       this.$refs.inputModel.innerHTML = ''
+
       this.aaa = false;
       this.toolType = false;
       this.$refs.inputModel.focus()
@@ -205,12 +216,15 @@ export default {
       this.messageContent = this.messageContent + val;
     },
 
-    getPos(v) {
+    getPos(v, i) {
       let sel = window.getSelection()
       if (sel.rangeCount > 0) {
         let range = sel.getRangeAt(0);//找到焦点位置
         var img = new Image();
         img.src = require('@/static/faces/' + v);
+        img.id = i;
+        console.log(v, "图片地址")
+
         img.style = 'width:24px;height:24px;position: relative; top: 5px;'
         let frag = document.createDocumentFragment();//创建一个空白的文档片段，便于之后插入dom树
         let lastNode = frag.appendChild(img);
@@ -231,25 +245,7 @@ export default {
     },
 
     sendImage() {
-      // const message = this.tim.createImageMessage({
-      //   to: this.toAccount,
-      //   conversationType: this.currentConversationType,
-      //   payload: {
-      //     file: document.getElementById('imagePicker') // 或者用event.target
-      //   },
-      //   onProgress: percent => {
-      //     this.$set(message, 'progress', percent) // 手动给message 实例加个响应式属性: progress
-      //   }
-      // })
-      // this.$store.commit('pushCurrentMessageList', message)
-      // this.tim.sendMessage(message).then(() => {
-      //   this.$refs.imagePicker.value = null
-      // }).catch(imError => {
-      //   this.$store.commit('showMessage', {
-      //     message: imError.message,
-      //     type: 'error'
-      //   })
-      // })
+
 
     },
     // sendCustomMessage() {

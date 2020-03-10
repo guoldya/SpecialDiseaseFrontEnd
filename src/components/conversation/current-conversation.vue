@@ -17,7 +17,6 @@
 import { mapGetters, mapState } from 'vuex'
 import MessageItem from '../message/message-item'
 import MessageSendBox from '../message/message-send-box'
-
 export default {
   name: 'CurrentConversation',
   components: {
@@ -39,15 +38,14 @@ export default {
   computed: {
     showSendBoxa() {
       if (this.imSdk && this.imSdk.messageList.length) {
-
         // let len = this.imSdk.messageList.length;
         // return !JSON.parse(this.imSdk.messageList[len - 1].content).close
-          return false
+         return false
       }
     }
   },
   mounted() {
-    console.log(this.$route.query.status, "sssssss状态")
+    let len = this.imSdk.messageList.length;
     if (this.$route.query.status) {
       if (this.$route.query.status == 2) {
         this.showSendBox = false;

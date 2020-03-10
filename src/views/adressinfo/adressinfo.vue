@@ -108,7 +108,8 @@ export default {
   methods: {
 
     adressByValue: function (childValue) {
-      // console.log(childValue, "childValuechildValue")
+      console.log(childValue.length, "childValuechildValue")
+    
       this.areaId = childValue
     },
     tijiao() {

@@ -2,7 +2,7 @@
   <div class="online-content-warp">
     <div v-if="aa.type=='text'" class="online-content-list " :class="message.senderId===$imsdk.user.id?'right':''">
       <template v-if="!aa.close">
-        <img class="online-content-list-head" :src="message.senderId!=$imsdk.user.id?require('@/assets/images/head1.png'):this.$store.state.userInfo.headPic" alt>
+        <img class="online-content-list-head" :src="message.senderId!=$imsdk.user.id?require('@/assets/images/3.jpg'):this.$store.state.userInfo.headPic" alt>
         <div class="online-content-list-text">
           <em></em>
           <div>
@@ -25,7 +25,7 @@
     </div>
 
     <!-- <div v-if="aa.type=='questionDes'" class="online-content-list " :class="message.senderId===$imsdk.user.id?'right':''">
-      <img class="online-content-list-head" src="@/assets/images/head1.png" alt>
+      <img class="online-content-list-head" src="@/assets/images/3.jpg" alt>
       <div class="online-content-list-text">
         <em></em>
         <div>
@@ -124,7 +124,7 @@
     </div> -->
 
     <div v-if="aa.type=='geo'" class="online-content-list outpation">
-      <img class="online-content-list-head" src="@/assets/images/head1.png" alt />
+      <img class="online-content-list-head" src="@/assets/images/3.jpg" alt />
       <div class="online-content-list-text">
         <em></em>
         <div class="describe">
@@ -137,7 +137,7 @@
       </div>
     </div>
     <div v-if="aa.type=='image'" class="online-content-list" :class="message.senderId===$imsdk.user.id?'right':''">
-      <img class="online-content-list-head" :src="message.senderId!=$imsdk.user.id?require('@/assets/images/head1.png'):this.$store.state.userInfo.headPic" alt />
+      <img class="online-content-list-head" :src="message.senderId!=$imsdk.user.id?require('@/assets/images/3.jpg'):this.$store.state.userInfo.headPic" alt />
       <div class="online-content-list-text">
         <em></em>
         <div>
@@ -206,7 +206,7 @@ export default {
   justify-content: space-between;
   img {
     width: 180px;
-    height: 126px;
+    // height: 126px;
   }
 }
 .item {

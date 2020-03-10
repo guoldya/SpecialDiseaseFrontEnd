@@ -17,7 +17,6 @@ export default {
     return {};
   },
   created() {
-    
     // //在页面加载时读取sessionStorage里的状态信息
     // if (sessionStorage.getItem("store")) {
     //   //this.$store.replaceState()替换 store 的根状态
@@ -35,7 +34,7 @@ export default {
     // });
   },
   methods: {
-     
+
   }
 };
 </script>
@@ -49,7 +48,7 @@ export default {
 :root {
   /* 主题色 */
   --primary: #48b6ff;
-  --primary--secondary: #30C57E;
+  --primary--secondary: #30c57e;
   /* 内容字体颜色 5A5A5A*/
   --primary--content: #8b8b8b;
   --primary--right: #8b8b8b;
@@ -118,12 +117,12 @@ body {
   margin-left: 39%;
 }
 .conversationCard {
-    margin: 26px 24px 24px;
-    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.16);
-    background-color: white;
-    border-radius: 8px;
-    list-style-type: none;
-    padding: 20px 24px 4px;
+  margin: 26px 24px 24px;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.16);
+  background-color: white;
+  border-radius: 8px;
+  list-style-type: none;
+  padding: 20px 24px 4px;
 }
 .disFlex {
   display: flex;
@@ -158,18 +157,18 @@ body {
   background: #e8e8e8;
 }
 /* 分割线加文字 */
-.message-item{
+.message-item {
   /* margin: 0 12px; */
 }
 .system-normal-message .message-content span {
-    position: relative;
-    display: inline-block;
-    background-color: #ededed;
-    padding: 0 10px;
-    left: 50%;
-    -webkit-transform: translate(-50%);
-    transform: translate(-50%);
-    /* text-align: justify; */
+  position: relative;
+  display: inline-block;
+  background-color: #ededed;
+  padding: 0 10px;
+  left: 50%;
+  -webkit-transform: translate(-50%);
+  transform: translate(-50%);
+  /* text-align: justify; */
 }
 .system-message .message-content,
 .system-normal-message .message-content {
@@ -183,7 +182,6 @@ body {
   display: block;
 }
 
-
 .system-message .message-content:after,
 .system-message .message-content:before,
 .system-normal-message .message-content:after,
@@ -191,7 +189,7 @@ body {
   content: "";
   position: absolute;
   top: 14px;
-  width:20px;
+  width: 20px;
   border-top: 2px solid #adb5bd;
 }
 .system-normal-message .message-content:before {
@@ -201,21 +199,22 @@ body {
 .system-normal-message .message-content:before {
   left: 0;
 }
-.system-message, .system-normal-message{
+.system-message,
+.system-normal-message {
   position: relative;
 }
 .message-item {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 .message-datetime.show {
-    display: block;
+  display: block;
 }
 .message-datetime {
-    display: none;
-    padding: 10px 15px;
-    color: #999baa;
-    text-align: center;
-    font-size: 14px;
+  display: none;
+  padding: 10px 15px;
+  color: #999baa;
+  text-align: center;
+  font-size: 14px;
 }
 /* 分割线 */
 .card-divider-horizontal {
@@ -228,36 +227,44 @@ body {
 }
 /* 聊天文字提示 */
 .system-tips-message .system-message-inner {
-    text-align: center;
+  text-align: center;
 }
 .system-tips-message .message-content {
-    display: inline-block;
-    border-radius: 6px;
-    font-size: 24px;
-    padding: 16px 20px;
-    line-height: 16px;
-    background-color: #c4cdd8;
-    color: #fff;
-    text-align: left;
+  display: inline-block;
+  border-radius: 6px;
+  font-size: 24px;
+  padding: 16px 20px;
+  line-height: 16px;
+  background-color: #c4cdd8;
+  color: #fff;
+  text-align: left;
 }
-.system-tips-message{
-    padding: 0 .15rem;
-    margin-bottom: .08rem;
+.system-tips-message {
+  padding: 0 0.15rem;
+  margin-bottom: 0.08rem;
 }
 .system-tips-message .system-message-inner {
-    text-align: center;
+  text-align: center;
 }
 .system-tips-message .audit-message-content {
-    display: inline-block;
-    border-radius: 6px;
-    font-size: 24px;
-    padding: 10px 18px;
-    line-height: 32px;
-    background-color: #c4cdd8;
-    color: #fff;
-    text-align: left;
+  display: inline-block;
+  border-radius: 6px;
+  font-size: 24px;
+  padding: 10px 18px;
+  line-height: 32px;
+  background-color: #c4cdd8;
+  color: #fff;
+  text-align: left;
 }
-.md-input-item-fake, .md-input-item-input{
+.md-input-item-fake,
+.md-input-item-input {
   font-weight: 400 !important;
+  color: var(--primary--title) !important;
+}
+.md-field-item-right {
+  /* width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; */
 }
 </style>

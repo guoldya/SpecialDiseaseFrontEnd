@@ -105,23 +105,7 @@ const payStatusIMG = function (value) {
     if (value == undefined) {
         return ""
     }
-    if (value == 1) {
-        return require('@/assets/images/medica1 (10).png')
-    } else if (value == 2) {
-        return require('@/assets/images/medica1 (4).png')
-    } else if (value == 3) {
-        return require('@/assets/images/medica1 (9).png')
-    } else if (value == 4) {
-        return require('@/assets/images/medica1 (6).png')
-    } else if (value == 5) {
-        return require('@/assets/images/medica1 (5).png')
-    } else if (value == 6) {
-        return require('@/assets/images/medica1 (1).png')
-    } else if (value == 7) {
-        return require('@/assets/images/medica1 (2).png')
-    } else if (value == 8) {
-        return require('@/assets/images/medica1 (8).png')
-    }
+    
 };
 const payStatusText = function (value) {
     if (value == undefined) {
@@ -132,7 +116,7 @@ const payStatusText = function (value) {
     } else if (value == 2) {
         return "处方记账"
     } else if (value == 3) {
-        return "医保"
+        return "医保报销"
     } 
 };
 

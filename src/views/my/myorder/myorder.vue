@@ -86,9 +86,9 @@
         <div>
           <div class="mycardlist" v-for="(item2, index2) in item.orderDetailsList" :key="index2">
             <div class="mycardlistleft">
-              <div class="img">
+              <!-- <div class="img">
                 <img src="@/assets/images/1.jpg" alt="">
-              </div>
+              </div> -->
               <div>
                 <p>{{item2.drugName}}</p>
                 <p class="price">单价：￥{{item2.price|keepTwoNum}}</p>
@@ -337,10 +337,9 @@ export default {
   color: var(--primary);
   border: 1px solid var(--primary);
   border-radius: 40px;
-  line-height: 40px;
+ 
   text-align: center;
-
   display: block;
-  padding: 0 12px;
+  padding: 12px 12px 10px;
 }
 </style>

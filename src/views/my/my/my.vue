@@ -34,15 +34,7 @@
       </div>
 
       <div class="aui-list-cell">
-        <!-- <a href="javascript:;" class="aui-list-item" @click="consultation">
-          <div class="aui-list-item-fl">
-            <i class="icon icon-item01"></i>
-            我的咨询
-          </div>
-          <div class="aui-list-item-fr aui-list-item-arrow">
-            <i></i>
-          </div>
-        </a> -->
+       
         <a href="javascript:;" class="aui-list-item" @click="idcardlist">
           <div class="aui-list-item-fl">
             <i class="icon icon-item02"></i>
@@ -177,13 +169,7 @@ export default {
         query: argu
       });
     },
-    consultation() {
-      let argu = {};
-      this.$router.push({
-        name: "consultation",
-        query: argu
-      });
-    },
+    
     // 地址
     adress() {
 
@@ -195,14 +181,8 @@ export default {
     },
     //意见收集
     suggestion() {
-      if (!this.testRegist()) {
-        return
-      }
-      let argu = {};
-      this.$router.push({
-        name: "suggestion",
-        query: argu
-      });
+      
+       
     },
   }
 };
@@ -419,23 +399,11 @@ export default {
   background-image: url("~@/assets/images/7nn6.png");
 }
 
-.icon-item07 {
-  background-image: url("~@/assets/images/7nn7.png");
-}
-
-.icon-item08 {
-  background-image: url("~@/assets/images/7nn8.png");
-}
-
-.icon-item09 {
-  background-image: url("~@/assets/images/7nn9.png");
-}
+ 
 
 .icon-item10 {
   background-image: url("~@/assets/images/7nn10.png");
 }
 
-.icon-item11 {
-  background-image: url("~@/assets/images/7nn10.png");
-}
+ 
 </style>

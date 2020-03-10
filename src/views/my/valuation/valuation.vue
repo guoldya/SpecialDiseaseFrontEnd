@@ -12,7 +12,6 @@
     <div class="valuation-top">
       <div class="content">
       </div>
-
       <div class="content-card">
         <!-- <p class="title">{{doctorInfo[0].name}} </p> -->
         <div class="content-card-div" v-for="(item2,index2) in doctorInfo" :key="index2+'1'">

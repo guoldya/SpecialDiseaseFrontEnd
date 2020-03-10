@@ -51,9 +51,9 @@
       <div class="infobottom">
         <div class="mycardlist" v-for="(item2, index2) in reportInfoData.orderDetailsList" :key="index2">
           <div class="mycardlistleft">
-            <div class="img">
+            <!-- <div class="img">
               <img src="@/assets/images/1.jpg" alt="">
-            </div>
+            </div> -->
             <div>
               <p>{{item2.drugName}}</p>
               <p class="price">{{item2.factory}} 单价：￥{{item2.price|keepTwoNum}} </p>

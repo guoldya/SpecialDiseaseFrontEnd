@@ -190,7 +190,7 @@ export default {
             id: this.$route.query.id,
             name: this.$route.query.name,
             isOpen: true,
-          start:this.$router.query.start,end:this.$router.query.end, 
+          start:this.$route.query.start,end:this.$route.query.end, 
           }
         })
       }, 1000);

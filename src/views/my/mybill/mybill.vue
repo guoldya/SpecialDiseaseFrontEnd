@@ -63,8 +63,8 @@ export default {
       if (res.data.code == '200') {
         for (let i = 0; i < res.data.rows.length; i++) {
           this.selectorValue = res.data.rows[0].name;
-          // this.patientId = res.data.rows[0].id;
-          this.patientId = 13;
+          this.patientId = res.data.rows[0].id;
+          // this.patientId = 13;
           let neslist = {
             text: res.data.rows[i].name,
             value: res.data.rows[i].id,

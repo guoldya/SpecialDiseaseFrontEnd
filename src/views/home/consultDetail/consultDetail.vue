@@ -226,18 +226,14 @@ export default {
     },
     // 点击申请咨询按钮
     onConfirm() {
-
-
-
       let data = {};
       data.doctorId = this.doctorInfo.id;
-      data.question = this.questionDes;
       data.patientId = this.chooseId;
-      data.status = 0;
+      
       this.$axios.post('bizPatientBill/payOnlineConsult', data).then((res) => {
         if (res.data.code == '200') {
           this.basicDialog.open = false;
-          this.$toast.info("提交成功");
+          this.$toast.info("支付成功");
           this.$router.push({
             path: "/pictureConsult",
             query: { name: this.doctorInfo.drName, start: this.$route.query.start, end: this.$route.query.end, id: this.doctorInfo.id, money: this.money, title: this.doctorInfo.title, type: this.basicDialog.type }

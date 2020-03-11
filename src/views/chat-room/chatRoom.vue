@@ -20,10 +20,11 @@ export default {
     CurrentConversation
   },
   mounted() {
-    
+
     if (this.$route.query.isOpen) {
       this.isOpen = true;
     }
+    
     if (typeof (this.$store.state.accountInfo) == 'string') {
       this.chooseId = JSON.parse(this.$store.state.accountInfo).id;
       this.$store.state.accountInfo = JSON.parse(this.$store.state.accountInfo)
@@ -39,12 +40,13 @@ export default {
       "123456",
       {
         userConnectCallback: () => {
-           console.log("登录的回调")
+          console.log("登录的回调")
           // 拿到消息列表之后的回调
           this.imSdk.openSession(
             this.$store.state.accountInfo.name,
             "d" + this.$route.query.id,
             this.$route.query.name,
+            { start: this.$route.query.start, end: this.$route.query.end },
             {
               getMessageCallback: () => {
                 // 拿到消息列表之后的回调

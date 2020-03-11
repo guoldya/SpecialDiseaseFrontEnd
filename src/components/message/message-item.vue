@@ -8,7 +8,7 @@
           <div class="textIMG">
 
             <template v-for="(item, index) in contentlist">
-              <span :key="index" v-if="item.name === 'text'">{{ item.text }}</span>
+              <span :key="index" v-if="item.name === 'text'" v-html="item.text"> </span>
               <img v-else-if="item.name === 'img'" :src="require('@/static/faces/'+item.text)" width="24px" height="24px" :key="index" />
             </template>
           </div>

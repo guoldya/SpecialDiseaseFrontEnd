@@ -27,6 +27,8 @@ const filterTypeIMG = function (value) {
         return require('@/assets/images/tebing.png')
     } else if (value == 3) {
         return require('@/assets/images/yibao.png')
+    }else if (value == 4) {
+        return require('@/assets/images/tuwen.png')
     }
 };
 

@@ -109,7 +109,7 @@ export default {
 
     adressByValue: function (childValue) {
       console.log(childValue.length, "childValuechildValue")
-    
+
       this.areaId = childValue
     },
     tijiao() {
@@ -155,7 +155,17 @@ export default {
 
             } else {
 
-
+              this.$axios.put(appshippingAddressaddressList, {}).then((res) => {
+                if (res.data.code == '200') {
+                  console.log(res.data.rows[0],"s")
+                  this.$store.commit('selectAdressFun', res.data.rows[0]);
+                  
+                } else {
+                  this.$toast.info(res.msg);
+                }
+              }).catch(function (err) {
+                console.log(err);
+              });
               this.isTijiao = true;
               this.$router.go(-1);
             }

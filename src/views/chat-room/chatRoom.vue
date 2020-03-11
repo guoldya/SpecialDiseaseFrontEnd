@@ -51,7 +51,6 @@ export default {
 
 
     if (!this.$route.params.pictureConsult) {
-
       this.imSdk.createUserConnect(
         "p" + this.chooseId,
         "123456",

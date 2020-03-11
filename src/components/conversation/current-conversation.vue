@@ -69,8 +69,6 @@ export default {
 
   },
   updated() {
-
-    console.log("更换页面")
     // if (this.isShow) {
     //   if (this.imSdk.messageList[this.imSdk.messageList.length - 1]) {
     //     if (JSON.parse(this.imSdk.messageList[this.imSdk.messageList.length - 1].content).close) {
@@ -78,10 +76,7 @@ export default {
     //     }
     //   }
     // }
-
     this.onScroll()
-
-
 
   },
 

@@ -24,11 +24,11 @@
         <div class="doctor-info-bottom">
           <div>
             <p>问诊量</p>
-            <p>0{{ doctorInfo.diagnosisNum }}</p>
+            <p>{{ doctorInfo.consultNum }}</p>
           </div>
           <div>
             <p>好评率</p>
-            <p>0{{ doctorInfo.praiseRate }}%</p>
+            <p>{{ doctorInfo.praiseRate }}%</p>
           </div>
           <div>
             <p>关注</p>
@@ -37,9 +37,7 @@
         </div>
       </div>
       <!--擅长-->
-
       <!--简介  -->
-
       <div class="good">
         <div class="goodleft">
           <img src="@/assets/images/skill.png" alt="">
@@ -61,16 +59,14 @@
             {{ doctorInfo.profile }}
           </p>
         </div>
-
       </div>
       <div class="down" @click="down=!down" :class="down?'':'up'"> <img src="@/assets/images/icon_up@2x.png" alt=""></div>
-
       <div class="cardMobilea">
         <div class="cardMobile">
           <div class="cardMobileleft">
             <img src="@/assets/images/messge.png" alt="" />
             <div>
-              <p>图文咨询<span class="money"> ￥{{20|keepTwoNum}}</span></p>
+              <p>图文咨询<span class="money" v-if="doctorInfo.textChatPrice">￥{{doctorInfo.textChatPrice|keepTwoNum}}</span></p>
             </div>
           </div>
           <div class="cardMobileright" @click="consult({type:1,status:1})">
@@ -82,7 +78,6 @@
             <img src="@/assets/images/source.png" alt="" />
             <div>
               <p>语音问诊</p>
-
             </div>
           </div>
           <div class="cardMobileright">
@@ -94,7 +89,6 @@
             <img src="@/assets/images/video.png" alt="" />
             <div>
               <p>视频问诊</p>
-
             </div>
           </div>
           <div class="cardMobileright">
@@ -185,7 +179,6 @@ export default {
       let data = {};
       data.doctorId = this.doctorInfo.id;
       data.patientId = this.chooseId;
-
       this.$axios.post('bizPatientBill/payOnlineConsult', data).then((res) => {
         if (res.data.code == '200') {
           this.basicDialog.open = false;
@@ -207,15 +200,18 @@ export default {
     // 咨询
     consult(val) {
       // if (val.status == 0) return
-
-      if (this.$route.query.money > 0) {
-        this.basicDialog.open = true;
-      } else {
-        this.$router.push({
-          path: "/pictureConsult",
-          query: { name: this.doctorInfo.drName, start: this.$route.query.start, end: this.$route.query.end, id: this.doctorInfo.id, money: this.money, title: this.doctorInfo.title, type: this.basicDialog.type }
-        });
-      }
+      this.$router.push({
+        path: "/pictureConsult",
+        query: { name: this.doctorInfo.drName, start: this.$route.query.start, end: this.$route.query.end, id: this.doctorInfo.id, money: this.$route.query.money, title: this.doctorInfo.title, type: this.basicDialog.type }
+      });
+      // if (this.$route.query.money > 0) {
+      //   this.basicDialog.open = true;
+      // } else {
+      //   this.$router.push({
+      //     path: "/pictureConsult",
+      //     query: { name: this.doctorInfo.drName, start: this.$route.query.start, end: this.$route.query.end, id: this.doctorInfo.id, money: this.money, title: this.doctorInfo.title, type: this.basicDialog.type }
+      //   });
+      // }
 
 
     },

@@ -34,9 +34,9 @@
           <div class="mycardlistright">
             <p>规格：{{item.spec}}</p>
             <p class="num">数量：{{item.total}}{{item.unit}}</p>
-            <p  >
+            <!-- <p  >
               <span>医嘱：{{item.notice}}</span>
-            </p>
+            </p> -->
           </div>
 
         </div>
@@ -54,7 +54,7 @@
     </div>
     <div class="infobottom" v-show="reportInfoData.status==0&&!loadingtrue">
       <!-- <p>请完善收件人信息</p> -->
-      <div class="submitUser" v-if="_selectAdress.receiver">
+      <div class="submitUser" v-if="_selectAdress&&_selectAdress.receiver">
         <div class="adress-box">
           <div class="iconImg">
             <img class="addPic" src="@/assets/images/icon_address1.png" alt="">
@@ -136,7 +136,8 @@ export default {
     }),
   },
   created() {
-    if (!this._selectAdress.receiver) {
+    console.log(this.$store.state.selectAdress,"厨房性情")
+    if (!this._selectAdress||!this._selectAdress.receiver) {
       this.$axios.put(appshippingAddressaddressList, {}).then((res) => {
         this.loadingtrue = false;
         if (res.data.code == '200') {

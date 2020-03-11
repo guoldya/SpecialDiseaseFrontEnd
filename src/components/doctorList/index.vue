@@ -1,7 +1,7 @@
 <!--医生信息列表组件 -->
 <template>
   <div class="doctor-list">
-    <router-link :to="{ path: datas.status==2?'/consultDetail':'/chatRoom', query: { id: datas.id ,name:datas.drName}}" class="consult">
+    <router-link :to="{ path: datas.status==2?'/consultDetail':'/chatRoom', query: { id: datas.id ,status:datas.status,money:datas.textChatPrice,start:datas.start,end:datas.end ,name:datas.drName}}" class="consult">
       <div class="header">
         <img src="@/assets/images/3.jpg" />
       </div>
@@ -20,24 +20,32 @@
         <p class="colo3">
           <span style=" margin-right: 20px;">
             问诊量：
-            <span class="num">{{datas.diagnosisNum||'12'}}</span>
+            <span class="num">{{datas.consultNum }}</span>
           </span>&nbsp;
           <span>
             平均回复时长：
-            <span class="num">{{datas.replyTime||'0'}}</span> 分
+            <span class="num">{{datas.avgReplyTime  }}</span> 分
           </span>&nbsp;
         </p>
         <div class="price">
           <div class="dotType">
             <div class="dottextff">
-              <router-link v-if="datas.status==2" :to="{ path: '/consultDetail', query: { id: datas.id ,status:datas.status,money:20,start:datas.start,end:datas.end}}">
+              <!-- <router-link v-if="datas.status==2" :to="{ path: '/consultDetail', query: { id: datas.id ,status:datas.status,money:20,start:datas.start,end:datas.end}}"> -->
+
+              <div v-if="datas.status==2" class="dotdhff">
                 <img src="@/assets/conversationImg/freeText.png" />
-                <span class="fontSize12" style="color:#F6BE51">￥{{20|keepTwoNum}}</span>
-              </router-link>
-              <router-link v-else :to="{ path: '/chatRoom', query: { id: datas.id ,name:datas.drName,start:datas.start,end:datas.end}}">
+                <span v-if="datas.textChatPrice>0" class="fontSize12 finish">￥{{datas.textChatPrice|keepTwoNum}}</span>
+                <span v-else class="fontSize12 finish">免费咨询</span>
+              </div>
+
+              <!-- </router-link> -->
+              <!-- <router-link v-else :to="{ path: '/chatRoom', query: { id: datas.id ,name:datas.drName,start:datas.start,end:datas.end}}"> -->
+              <div class="dotdhff" v-else>
                 <img src="@/assets/conversationImg/freeText1.png" />
-                <span class="fontSize12">咨询中</span>
-              </router-link>
+                <span class="fontSize12 ing">咨询中</span>
+              </div>
+
+              <!-- </router-link> -->
             </div>
             <div class="dotdhff">
               <img src="@/assets/conversationImg/offlineVoice1.png" />
@@ -234,6 +242,12 @@ export default {
 }
 .lineHeight17 {
   line-height: 34px !important;
+}
+.price .finish {
+  color: #f6be51;
+}
+.price .ing {
+  color: var(--primary--secondary);
 }
 </style>
 

@@ -53,17 +53,8 @@ export default {
       "123456",
       {
         userConnectCallback: () => {
-          // 这里没有医生ID 也不用建立
-          // this.imSdk.openSession(
-          //   this.$store.state.accountInfo.name,
-          //   "d" + this.$route.query.id,
-          //   this.$route.query.name,
-          //   {
-          //     getMessageCallback: () => {
-          //       // 拿到消息列表之后的回调
-          //     }
-          //   }
-          // );
+          // 这里没有医生ID 也不用建立 回调
+          
         }
       }
     );

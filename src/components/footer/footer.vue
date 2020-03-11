@@ -25,6 +25,7 @@
   </div>
 </template>
 <script>
+ 
 export default {
   data() {
     return {
@@ -42,6 +43,8 @@ export default {
   },
   methods: {
     switchTo(path) {
+      if(!this.$store.state.accountInfo  ) return
+     
       this.$router.replace(path)
     },
 

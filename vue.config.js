@@ -10,10 +10,10 @@ const resolve = dir => {
 // 如果您的应用程序部署在子路径中，则需要在这指定子路径
 // 例如：https://www.foobar.com/my-app/
 // 需要将它改为'/my-app/'
-const BASE_URL = process.env.NODE_ENV === 'production'
-  ? '/'
-  : '/'
- 
+const BASE_URL = process.env.NODE_ENV === 'production' ?
+  '/' :
+  '/'
+
 module.exports = {
   // Project deployment base
   // By default we assume your app will be deployed at the root of a domain,
@@ -39,22 +39,24 @@ module.exports = {
   devServer: {
     proxy: {
       '/api/sds': {
-      target: 'http://192.168.0.150:80',//张 hos
-        //   target: 'http://192.168.0.61:8066',//然有钱 新接口
-        // target: 'http://192.168.0.122:8066',//周 新接口
+        target: 'http://192.168.0.150:80', //张 hos
+        //target: 'http://192.168.0.61:8066', //然有钱 新接口
+        //target: 'http://192.168.0.78:8066',//张 新接口
+        //target: 'http://192.168.0.122:8066',//周 新接口
         changeOrigin: true, // 允许跨域
         pathRewrite: {
-          // '^/api/sds': '/'
+          '^/api/sds': '/'
         }
       },
       '/im': {
-          // target: 'http://192.168.0.22:2006',//唐 hos
-         target: 'http://m.cq2win.com/im/',//张 hos
+        // target: 'http://192.168.0.22:2006',//唐 hos
+        target: 'http://m.cq2win.com/im/', //张 hos
+        //target: 'http://192.168.0.31:2006', // 
         // target: 'http://192.168.0.61:8066',//然有钱 新接口
         // target: 'http://192.168.0.122:8066',//周 新接口
         changeOrigin: true, // 允许跨域
         pathRewrite: {
-           '^/im': '/'
+          '^/im': '/'
         }
       },
     },

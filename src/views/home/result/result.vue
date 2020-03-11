@@ -17,10 +17,6 @@
         </div>
         <Loading v-show="loadingtrue"></Loading>
     </div>
-    <!-- <div class="aui-footer" @click="lookagain">
-      <span>复诊</span>
-    </div> -->
-
 </template>
 <script type="text/babel">
 let bdHospitalOrg = 'bdHospitalOrg/read/searchClinicListByClinicOrDoctor';
@@ -86,10 +82,7 @@ export default {
             });
         },
         orgFun() {
-            // let deptparams = {};
-            // deptparams.pageNumber = this.page;
-            // deptparams.pageSize = this.pageSize;
-            // deptparams.keyword = this.$route.query.val;
+            
             this.$axios.put(bdHospitalOrg,
                 {
                     name: this.$route.query.val,

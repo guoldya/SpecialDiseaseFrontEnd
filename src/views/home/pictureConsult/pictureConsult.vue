@@ -19,11 +19,11 @@
       <div class="doctor-info-bottom">
         <div>
           <p>问诊量</p>
-          <p>0{{ doctorInfo.diagnosisNum }}</p>
+          <p>{{ doctorInfo.consultNum }}</p>
         </div>
         <div>
           <p>好评率</p>
-          <p>0{{ doctorInfo.praiseRate }}%</p>
+          <p>{{ doctorInfo.praiseRate }}%</p>
         </div>
         <div>
           <p>关注</p>
@@ -52,9 +52,13 @@
     </div>
 
     <div style="padding:0.24rem">
-      <md-button type="primary" @click="onConfirm( )" :inactive="!isShow" round style="margin-top:16px">提交描述</md-button>
+      <md-button type="primary" @click="tijiao( )" :inactive="!isShow" round style="margin-top:16px">提交描述</md-button>
     </div>
     <!-- 咨询弹窗 -->
+
+    <md-dialog :title="basicDialog.title" :closable="true" v-model="basicDialog.open" :btns="basicDialog.btns">
+      <p>咨询医师-{{ doctorInfo.drName}} <span class="money">￥{{basicDialog.price|keepTwoNum}}</span></p>
+    </md-dialog>
 
   </div>
 </template>
@@ -72,6 +76,25 @@ export default {
       questionDes: '',
       isShow: true,
       // 咨询弹窗
+      basicDialog: {
+        open: false,
+        checked: true,
+        title: "记账金额",
+        content: '',
+        price: this.$route.query.money,
+        type: null, // 咨询弹窗类型 type 1 图文 2 电话 3视频
+        btns: [
+          {
+            text: "取消",
+            handler: this.onBasicCancel
+          },
+          {
+            text: "确定",
+            handler: this.onConfirm
+          }
+        ]
+      },
+      // 咨询弹窗
       agreeConf: {
         checked: true,
         name: 'agree0',
@@ -83,13 +106,13 @@ export default {
   },
   computed: {
 
-
     ...mapGetters(['toAccount', 'currentConversationType']),
     ...mapState({
       // memberList: state => state.group.currentMemberList,
       currentMessageList: state => state.conversation.currentMessageList,
       userID: state => state.user.userID
     })
+
   },
   mounted() {
     this.init();
@@ -104,7 +127,7 @@ export default {
       this.imSdk.createUserConnect('p' + this.chooseId, '123456',
         {
           userConnectCallback: () => {
-            // 拿到消息列表之后的回调
+            // 创建会话连接
             this.imSdk.openSession(
               this.$store.state.accountInfo.name,
               'd' + this.$route.query.id,
@@ -119,7 +142,7 @@ export default {
           }
         })
     })
-     
+
   },
 
   methods: {
@@ -130,19 +153,32 @@ export default {
     onCancel() {
       this.basicDialog.open = false;
     },
-    // 点击申请咨询按钮
     onConfirm() {
-      this.isShow = false;
+      this.finish()
+    },
+    // 点击申请咨询按钮
+    tijiao() {
+      
       if (this.questionDes.replace(/\s*/g, '').length == 0) {
         this.$toast.info("请输入问题")
-        this.isShow = true;
+        
         return
       }
       if (!this.agreeConf.checked) {
         this.$toast.info("请勾选协议")
-        this.isShow = true;
+        
         return
       }
+      if (this.$route.query.money > 0) {
+        this.basicDialog.open = true;
+      } else {
+        this.finish()
+      }
+    },
+
+    finish() {
+
+
 
       let data = {};
       data.doctorId = Number(this.$route.query.id);
@@ -152,14 +188,22 @@ export default {
       this.$axios.post(insertOrUpdate, data).then((res) => {
         if (res.data.code == '200') {
           this.$toast.info("提交成功");
-          this.isShow = false;
+          
+          this.sendMessg()
         } else {
-          this.isShow = true;
+         
+          this.basicDialog.open = false;
           this.$toast.info(res.data.msg)
+
+          return
         }
       }).catch(function (err) {
         console.log(err);
       });
+
+    },
+
+    sendMessg() {
       var myDate = new Date;
       var year = myDate.getFullYear(); //获取当前年
       var mon = myDate.getMonth() + 1; //获取当前月
@@ -183,18 +227,20 @@ export default {
       setTimeout(() => {
         this.$router.push({
           name: 'chatRoom',
+          params: {
+            pictureConsult: 1,
+          },
           query: {
             id: this.$route.query.id,
             name: this.$route.query.name,
             isOpen: true,
+            pictureConsult: 1,
             start: this.$route.query.start, end: this.$route.query.end,
           }
         })
       }, 1000);
 
       this.isShow = true;
-
-
     },
     // 初始化
     async init() {

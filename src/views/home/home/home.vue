@@ -5,7 +5,7 @@
   <div class="home">
     <div class="hometop">
     </div>
-    <div class="homePage bindCarda"  v-if=" _cardlist.length==0">
+    <div class="homePage bindCarda" v-if=" _cardlist.length==0">
       <div class="homeCard bindCard  ">
         <span class="bindCardBtn" @click="addpeple">添加门特患者</span>
       </div>
@@ -28,12 +28,12 @@
     <div class="bg3" @click="valuation">
       <img src="@/assets/images/bg3.png" alt="">
     </div>
-    <p class="doctorlisttitle"  >
+    <p class="doctorlisttitle">
       <span>医生列表</span>
     </p>
-    <doctorList  v-for="(item, index) in listdata" :datas="item" :key="index"></doctorList>
+    <doctorList v-for="(item, index) in listdata" :datas="item" :key="index"></doctorList>
     <!-- 底部 -->
-    <Footer ></Footer>
+    <Footer v-if="this._cardlist&&this._cardlist!=0"></Footer>
   </div>
 </template>
 <script>
@@ -63,8 +63,8 @@ export default {
   },
 
   async mounted() {
+ console.log(this.$store.state.accountInfo)
 
-     
     this.$store.dispatch('getCards', { update: true }).then(res => {
       // if (this.chooseId) {
       //   this._cardlist.map(x => {
@@ -243,10 +243,9 @@ export default {
   line-height: 240px;
   border-radius: 10px;
   box-shadow: 0 0 17px rgba(20, 19, 51, 0.1);
-  
 }
-.bindCarda{
-   margin-bottom: 70px;
+.bindCarda {
+  margin-bottom: 70px;
 }
 .bindCard .bindCardBtn {
   padding: 17px 35px;

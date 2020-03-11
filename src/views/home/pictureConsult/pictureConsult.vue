@@ -104,7 +104,7 @@ export default {
       this.imSdk.createUserConnect('p' + this.chooseId, '123456',
         {
           userConnectCallback: () => {
-            // 拿到消息列表之后的回调
+            // 创建会话连接
             this.imSdk.openSession(
               this.$store.state.accountInfo.name,
               'd' + this.$route.query.id,
@@ -119,7 +119,7 @@ export default {
           }
         })
     })
-     
+
   },
 
   methods: {
@@ -183,10 +183,14 @@ export default {
       setTimeout(() => {
         this.$router.push({
           name: 'chatRoom',
+          params: {
+            pictureConsult: 1,
+          },
           query: {
             id: this.$route.query.id,
             name: this.$route.query.name,
             isOpen: true,
+            pictureConsult: 1,
             start: this.$route.query.start, end: this.$route.query.end,
           }
         })

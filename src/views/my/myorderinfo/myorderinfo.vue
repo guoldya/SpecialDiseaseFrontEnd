@@ -12,15 +12,11 @@
           <div class="adress-content">
             <span v-if="!newestLogistics.status">暂无物流信息</span>
             <span v-html="newestLogistics.status" v-else></span>
-            
-            <p ></p>
+
+            <p></p>
             <p class="time">{{newestLogistics.time}}</p>
           </div>
-          <div
-            class="addImg nextImg"
-            @click="acceptAdd()"
-            v-if="reportInfoData.status!=1||reportInfoData.status!=2"
-          >
+          <div class="addImg nextImg" @click="acceptAdd()" v-if="reportInfoData.status!=1||reportInfoData.status!=2">
             <img src="@/assets/images/icon_more2@2x.png" alt />
           </div>
         </div>
@@ -50,22 +46,18 @@
         </div>
       </div>
       <div class="infobottom">
-        <div
-          class="mycardlist"
-          v-for="(item2, index2) in reportInfoData.orderDetailsList"
-          :key="index2"
-        >
-        <div class="mycardlistleft">
+        <div class="mycardlist" v-for="(item2, index2) in reportInfoData.orderDetailsList" :key="index2">
+          <div class="mycardlistleft">
             <div>
               <p>{{item2.drugName}}</p>
               <p class="price">
-                <span>单价：￥{{item2.price|keepTwoNum}}</span> 
+                <span>单价：￥{{item2.price|keepTwoNum}}</span>
                 数量：{{item2.num}}
               </p>
             </div>
           </div>
           <div class="mycardlistright">
-            
+
             <p class="num">{{item2.spec}}</p>
             <p>合计：￥{{item2.total|keepTwoNum}}</p>
           </div>
@@ -117,7 +109,7 @@ export default {
     };
   },
   computed: {},
-  created() {},
+  created() { },
   mounted() {
     this.checkReportDetail();
     this.getLogistics()
@@ -139,8 +131,7 @@ export default {
       let data = {};
       data.id = parseInt(this.$route.query.id);
       data.status = 6;
-      this.$axios
-        .post(update_list_url, data, {})
+      this.$axios.post(update_list_url, data, {})
         .then(res => {
           if (res.data.code == "200") {
             this.$router.go(-1);
@@ -150,7 +141,7 @@ export default {
             this.$toast.info(res.data.msg);
           }
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log(err);
         });
     },
@@ -166,7 +157,7 @@ export default {
             this.reportInfoData = res.data.data;
           }
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log(err);
         });
     },
@@ -180,30 +171,30 @@ export default {
         .then(res => {
           if (res.data.code == "200") {
             this.loadingtrue = false;
-            let firstLogistics=[]
+            let firstLogistics = []
             firstLogistics.push(res.data.data.list[0]);
             const telReg = /((((13[0-9])|(15[^4])|(18[0,1,2,3,5-9])|(17[0-8])|(147))\d{8})|((\d3,4|\d{3,4}-|\s)?\d{7,14}))?/g; //固话加手机正则
             let current = ""; //匹配项
             firstLogistics.map((item, index) => {
-                if (telReg.test(item.status)){
-                for(let key in item.status.match(telReg)){
-                  if(item.status.match(telReg)[key]){
-                  current = item.status.match(telReg)[key];
+              if (telReg.test(item.status)) {
+                for (let key in item.status.match(telReg)) {
+                  if (item.status.match(telReg)[key]) {
+                    current = item.status.match(telReg)[key];
                   }
                 }
               }
               item.status = item.status.replace(
                 current,
                 `<a href=" tel :${current}" style="color :#0A7DE6 ">` +
-                  current +
-                  `</a>`
+                current +
+                `</a>`
               );
             });
-            this.newestLogistics.status=firstLogistics[0].status
-            this.newestLogistics.time=firstLogistics[0].time
+            this.newestLogistics.status = firstLogistics[0].status
+            this.newestLogistics.time = firstLogistics[0].time
           }
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log(err);
         });
     }
@@ -314,7 +305,7 @@ export default {
     .price {
       font-size: 24px;
       color: #979797;
-      span{
+      span {
         margin-right: 40px;
       }
     }

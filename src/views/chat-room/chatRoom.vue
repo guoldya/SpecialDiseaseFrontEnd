@@ -19,12 +19,26 @@ export default {
   components: {
     CurrentConversation
   },
+
   mounted() {
+
+
+
+    window.onbeforeunload = function (e) {
+      e = e || window.event;
+
+      if (e) {
+        e.returnValue = '关闭提示';
+      }
+      // Chrome, Safari, Firefox 4+, Opera 12+ , IE 9+
+      return '关闭提示';
+
+    }
 
     if (this.$route.query.isOpen) {
       this.isOpen = true;
     }
-    
+
     if (typeof (this.$store.state.accountInfo) == 'string') {
       this.chooseId = JSON.parse(this.$store.state.accountInfo).id;
       this.$store.state.accountInfo = JSON.parse(this.$store.state.accountInfo)
@@ -35,49 +49,44 @@ export default {
       this.chooseId = this.$route.query.patientId;
     }
 
-    this.imSdk.createUserConnect(
-      "p" + this.chooseId,
-      "123456",
-      {
-        userConnectCallback: () => {
-          console.log("登录的回调")
-          // 拿到消息列表之后的回调
-          this.imSdk.openSession(
-            this.$store.state.accountInfo.name,
-            "d" + this.$route.query.id,
-            this.$route.query.name,
-            { start: this.$route.query.start, end: this.$route.query.end },
-            {
-              getMessageCallback: () => {
-                // 拿到消息列表之后的回调
-                console.log("拿到消息列表之后的回调777777")
+
+    if (!this.$route.params.pictureConsult) {
+
+      this.imSdk.createUserConnect(
+        "p" + this.chooseId,
+        "123456",
+        {
+          userConnectCallback: () => {
+            console.log("登录的回调")
+            // 拿到消息列表之后的回调
+            this.imSdk.openSession(
+              this.$store.state.accountInfo.name,
+              "d" + this.$route.query.id,
+              this.$route.query.name,
+              { start: this.$route.query.start, end: this.$route.query.end },
+              {
+                getMessageCallback: () => {
+                  // 拿到消息列表之后的回调
+                  console.log("拿到消息列表之后的回调777777")
+                }
               }
-            }
-          );
+            );
+          }
         }
-      }
-    );
+      );
 
-    // this.imSdk.openSession(
-    //   this.$store.state.accountInfo.name,
-    //   "d" + this.$route.query.id,
-    //   this.$route.query.name,
-    //   {start:this.$route.query.start,end:this.$route.query.end},
-    //   {
-    //     getMessageCallback: () => {
-    //       // 拿到消息列表之后的回调
-    //       console.log("拿到消息列表之后的回调777777")
-    //     }
-    //   }
-    // );
+    }
 
-    // this.imSdk.openSession(
-    //   this.$store.state.userInfo.nickname,
-    //   "d" + this.$route.query.id,
-    //   this.$route.query.name,
 
-    // );
+
+
+
   },
-  computed: {}
+  methods: {
+    beforeunloadFn(e) {
+      console.log('刷新或关少时诵诗书所所所所所所闭')
+      // ...
+    }
+  }
 };
 </script>

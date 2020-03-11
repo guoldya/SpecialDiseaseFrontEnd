@@ -202,7 +202,7 @@ export default {
   font-weight: 500;
   letter-spacing: 1px;
   overflow: hidden;
-  margin-top: 10px;
+  margin-top: 14px;
   img {
     width: 29px;
     height: 29px;

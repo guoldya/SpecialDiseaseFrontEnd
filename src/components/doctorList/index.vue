@@ -20,11 +20,11 @@
         <p class="colo3">
           <span style=" margin-right: 20px;">
             问诊量：
-            <span class="num">{{datas.diagnosisNum||'12'}}</span>
+            <span class="num">{{datas.consultNum }}</span>
           </span>&nbsp;
           <span>
             平均回复时长：
-            <span class="num">{{datas.replyTime||'0'}}</span> 分
+            <span class="num">{{datas.avgReplyTime  }}</span> 分
           </span>&nbsp;
         </p>
         <div class="price">

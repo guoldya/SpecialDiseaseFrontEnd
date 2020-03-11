@@ -23,18 +23,6 @@ export default {
   mounted() {
 
 
-
-    window.onbeforeunload = function (e) {
-      e = e || window.event;
-
-      if (e) {
-        e.returnValue = '关闭提示';
-      }
-      // Chrome, Safari, Firefox 4+, Opera 12+ , IE 9+
-      return '关闭提示';
-
-    }
-
     if (this.$route.query.isOpen) {
       this.isOpen = true;
     }

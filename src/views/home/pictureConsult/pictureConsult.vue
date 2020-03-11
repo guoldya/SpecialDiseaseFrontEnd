@@ -109,6 +109,7 @@ export default {
               this.$store.state.accountInfo.name,
               'd' + this.$route.query.id,
               this.$route.query.name,
+              { start: this.$route.query.start, end: this.$route.query.end },
               {
                 getMessageCallback: () => {
                   // 拿到消息列表之后的回调
@@ -118,11 +119,7 @@ export default {
           }
         })
     })
-    // this.imSdk.openSession(
-    //   this.$store.state.accountInfo.name,
-    //   'd' + this.$route.query.id,
-    //   this.$route.query.name,
-    // )
+     
   },
 
   methods: {
@@ -190,7 +187,7 @@ export default {
             id: this.$route.query.id,
             name: this.$route.query.name,
             isOpen: true,
-          start:this.$route.query.start,end:this.$route.query.end, 
+            start: this.$route.query.start, end: this.$route.query.end,
           }
         })
       }, 1000);

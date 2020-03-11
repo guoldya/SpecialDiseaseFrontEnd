@@ -1,7 +1,7 @@
 <!--医生信息列表组件 -->
 <template>
   <div class="doctor-list">
-    <router-link :to="{ path: datas.status==2?'/consultDetail':'/chatRoom', query: { id: datas.id ,status:datas.status,money:20,start:datas.start,end:datas.end ,name:datas.drName}}" class="consult">
+    <router-link :to="{ path: datas.status==2?'/consultDetail':'/chatRoom', query: { id: datas.id ,status:datas.status,money:datas.textChatPrice,start:datas.start,end:datas.end ,name:datas.drName}}" class="consult">
       <div class="header">
         <img src="@/assets/images/3.jpg" />
       </div>
@@ -32,15 +32,15 @@
             <div class="dottextff">
               <!-- <router-link v-if="datas.status==2" :to="{ path: '/consultDetail', query: { id: datas.id ,status:datas.status,money:20,start:datas.start,end:datas.end}}"> -->
 
-             
-                <div   v-if="datas.status==2" class="dotdhff">
+              <div v-if="datas.status==2" class="dotdhff">
                 <img src="@/assets/conversationImg/freeText.png" />
-                <span class="fontSize12 finish"  >￥{{20|keepTwoNum}}</span>
-                 </div>
-             
+                <span v-if="datas.textChatPrice>0" class="fontSize12 finish">￥{{datas.textChatPrice|keepTwoNum}}</span>
+                <span v-else class="fontSize12 finish">免费咨询</span>
+              </div>
+
               <!-- </router-link> -->
               <!-- <router-link v-else :to="{ path: '/chatRoom', query: { id: datas.id ,name:datas.drName,start:datas.start,end:datas.end}}"> -->
-              <div class="dotdhff" v-else >
+              <div class="dotdhff" v-else>
                 <img src="@/assets/conversationImg/freeText1.png" />
                 <span class="fontSize12 ing">咨询中</span>
               </div>
@@ -243,10 +243,10 @@ export default {
 .lineHeight17 {
   line-height: 34px !important;
 }
-.price .finish{
-  color: #F6BE51;
+.price .finish {
+  color: #f6be51;
 }
-.price .ing{
+.price .ing {
   color: var(--primary--secondary);
 }
 </style>

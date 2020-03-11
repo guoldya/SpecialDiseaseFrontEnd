@@ -79,7 +79,6 @@ export class ImSdk {
         this.restFulApi.userLogi(username, password, (userId) => {
             this.restFulApi.userUpdateOnlineStatus(userId, () => {
                 this.restFulApi.userlistUserChannels(() => {
-                    console.log(this, "数据状态查询")
                         //初始化会话连接
                     this.imkSocketSDK.initIMClient();
                     //  this.isOpenWS = true;

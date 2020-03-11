@@ -34,24 +34,25 @@
           <div class="mycardlistright">
             <p>规格：{{item.spec}}</p>
             <p class="num">数量：{{item.total}}{{item.unit}}</p>
+            <p  >
+              <span>医嘱：{{item.notice}}</span>
+            </p>
           </div>
 
         </div>
 
-        <p class="totalmoney">合计：<span>{{reportInfoData.totalMoney|keepTwoNum}}元</span> </p>
+        <p class="totalmoney">合计：<span>￥{{reportInfoData.totalMoney|keepTwoNum}}元</span> </p>
         <div class="bottom">
 
           <p>
             <span>医师：{{reportInfoData.doctorName}}</span>
             <span>药师：{{reportInfoData.druggistName}}</span>
           </p>
-          <p class="notice">
-            <span>医嘱：{{reportInfoData.notice}}</span>
-          </p>
+
         </div>
       </div>
     </div>
-    <div   class="infobottom" v-show="reportInfoData.status==0&&!loadingtrue">
+    <div class="infobottom" v-show="reportInfoData.status==0&&!loadingtrue">
       <!-- <p>请完善收件人信息</p> -->
       <div class="submitUser" v-if="_selectAdress.receiver">
         <div class="adress-box">

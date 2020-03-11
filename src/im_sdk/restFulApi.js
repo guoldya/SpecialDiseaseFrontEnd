@@ -101,7 +101,8 @@ class RestFulApi {
     getMessageList = (callback) => {
         const limit = 20
         let IMData = this.IMData;
-        listMessage(IMData.selectedChannelId, IMData.maxCreateAt, limit)
+    //    获取更多消息
+        listMessage(IMData.selectedChannelId, IMData.maxCreateAt, limit,IMData.start,IMData.end)
             .then(response => {
                 IMData.hasMoreMessage = response.data.length === 20
                 if (response.data.length > 0) {

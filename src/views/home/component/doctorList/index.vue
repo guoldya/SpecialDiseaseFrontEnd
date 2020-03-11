@@ -16,7 +16,7 @@
       </p>
       <p class="content">擅长：{{datas.skill}}</p>
       <p class="colo13">
-        <span>咨询数：{{datas.diagnosisNum||'0'}}</span>&nbsp;
+        <span>问诊量：{{datas.diagnosisNum||'0'}}</span>&nbsp;
         <span>平均回复时长：{{datas.replyTime||'0'}}分</span>&nbsp;
       </p>
       <p class="price">￥{{datas.minPrice|keepTwoNum}} 起

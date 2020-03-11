@@ -1,31 +1,30 @@
 <template>
 
-  <div class="  margin55">
+  <div  >
     <Header post-title="我的账单"></Header>
-    <div class="samll  ">
+    <div class="samll"  v-show="show && !loadingtrue">
       <span class="btn" @click="selectStyle">{{selectorValue}}
         <img src="@/assets/images/down.png" alt="down">
       </span>
-      <span>余额：{{totalMoney|keepTwoNum}}</span>
+      <span>余额：￥{{totalMoney|keepTwoNum}}</span>
     </div>
-    <div class="content" v-show="show && !loadingtrue">
-      <!-- <div class="content"> -->
-      <!-- <conversation-item v-if="drugsList.drugs.length!=0" :conversation="item" :index="index" v-for="(item,index) in drugsList.drugs" :key="item.conversationID" /> -->
+    <div class="content " v-show="show && !loadingtrue">
       <div class="bance" v-if="drugsList.drugs.length!=0" v-for="(item,index) in drugsList.drugs" :key="index">
         <div class="header">
           <img :src="3|filterTypeIMG" alt="">
         </div>
         <div class="banceRight">
           <div class="banceRightleft">
-            <p class="kind">{{item.billTitle}} R0001</p>
+            <p class="kind">{{item.billTitle}}</p>
             <p><span>{{item.type|payStatusText}}</span> </p>
             <p class="time"> {{item.createTime|lasttime}}</p>
           </div>
           <div class="banceRightleft2">
-            <p :class="item.money<0?'':'orange'">{{item.money|keepTwoNum}} </p>
+            <p :class="item.money<0?'':'orange'">￥{{item.money|keepTwoNum}} </p>
           </div>
         </div>
       </div>
+
       <Null :loading-true="drugsList.drugs.length==0"></Null>
       <md-icon v-if="!loadingtrue && busy" name="spinner" size="lg" style="-webkit-filter:invert(1)"></md-icon>
       <div class="nomore" v-if="!loadingtrue && (drugsList.nowPage == pages || pages == 0)">没有更多数据了</div>
@@ -65,6 +64,7 @@ export default {
         for (let i = 0; i < res.data.rows.length; i++) {
           this.selectorValue = res.data.rows[0].name;
           this.patientId = res.data.rows[0].id;
+          // this.patientId = 13;
           let neslist = {
             text: res.data.rows[i].name,
             value: res.data.rows[i].id,
@@ -155,8 +155,12 @@ export default {
   justify-content: space-between;
   color: #717477;
   font-size: 32px;
-
+  position: fixed;
+  width: 100%;
+  height: 100px;
   padding: 20px 24px 25px;
+  background: #ededed;
+  margin-top: 100px;
   .btn {
     width: 152px;
     line-height: 60px;
@@ -173,7 +177,9 @@ export default {
     }
   }
 }
-
+.content{
+  padding-top: 200px;
+}
 .bance {
   background: #fff;
   display: flex;
@@ -219,4 +225,5 @@ export default {
     }
   }
 }
+ 
 </style>

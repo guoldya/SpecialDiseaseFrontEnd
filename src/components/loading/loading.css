@@ -4,7 +4,10 @@
    height: 80px;
    position: relative;
 }
-
+.aa{
+   width: 30px;
+   height: 30px;
+}
 .sk-circle .sk-child {
    width: 100%;
    height: 100%;

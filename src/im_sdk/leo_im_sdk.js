@@ -7,6 +7,9 @@ import { ImSendSDK } from '@/im_sdk/imSendSDK'
 export class ImSdk {
     //构造函数
     constructor() {
+        this.start=0
+        this.end=0
+
         this.user = null //当前用户信息
         this.onlineStatus = null //当前用户状态
         this.token = null //令牌
@@ -53,6 +56,7 @@ export class ImSdk {
         this.messageList = [] //与会话用户的消息列表
         this.hasMoreMessage = false //
         this.isOpenWS = false //是否建立与服务器连接
+        this.oldname=null
             //初始化所有SDK
         this.restFulApi = new RestFulApi(this)
         this.imkSocketSDK = new ImkSocketSDK(this)
@@ -62,11 +66,13 @@ export class ImSdk {
     }
     createUserConnect(username, password, { userConnectCallback } = {}) {
         // if (this.isOpenWS == true) {
+        //     userConnectCallback()
         //     return;
         // }
-        if(username==this.isOpenWS) {
+        if(username==this.oldname) {
+            userConnectCallback()
             return
-        }else if(this.isOpenWS){
+        }else if(this.oldname){
             this.userLogout()
         }
         //创建于服务端的会话
@@ -76,14 +82,16 @@ export class ImSdk {
                     console.log(this, "数据状态查询")
                         //初始化会话连接
                     this.imkSocketSDK.initIMClient();
-                    // this.isOpenWS = false;
+                    //  this.isOpenWS = true;
                     userConnectCallback()
-                    this.isOpenWS=username;
+                    this.oldname=username;
                 })
             })
         })
     }
-    openSession(fromUsername, toUserId, toUsername, { getMessageCallback } = {}) {
+    openSession(fromUsername, toUserId, toUsername,data, { getMessageCallback } = {}) {
+        this.end=data.end
+        this.start=data.start
         //打开会话
         let exists = this.userChannelList.findIndex(item => item.toUserId === toUserId)
         if (exists == -1) {

@@ -40,7 +40,6 @@
           <div class="addImg nextImg"></div>
         </div>
       </div>
-
       <div class="infobottom">
         <div class="orderinfo">
           <p>订单信息</p>

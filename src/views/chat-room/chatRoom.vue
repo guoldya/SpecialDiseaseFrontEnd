@@ -20,6 +20,7 @@ export default {
     CurrentConversation
   },
   mounted() {
+
     if (this.$route.query.isOpen) {
       this.isOpen = true;
     }
@@ -38,11 +39,13 @@ export default {
       "123456",
       {
         userConnectCallback: () => {
+          console.log("登录的回调")
           // 拿到消息列表之后的回调
           this.imSdk.openSession(
             this.$store.state.accountInfo.name,
             "d" + this.$route.query.id,
             this.$route.query.name,
+            { start: this.$route.query.start, end: this.$route.query.end },
             {
               getMessageCallback: () => {
                 // 拿到消息列表之后的回调
@@ -54,17 +57,18 @@ export default {
       }
     );
 
-    this.imSdk.openSession(
-      this.$store.state.accountInfo.name,
-      "d" + this.$route.query.id,
-      this.$route.query.name,
-      {
-        getMessageCallback: () => {
-          // 拿到消息列表之后的回调
-          console.log("拿到消息列表之后的回调777777")
-        }
-      }
-    );
+    // this.imSdk.openSession(
+    //   this.$store.state.accountInfo.name,
+    //   "d" + this.$route.query.id,
+    //   this.$route.query.name,
+    //   {start:this.$route.query.start,end:this.$route.query.end},
+    //   {
+    //     getMessageCallback: () => {
+    //       // 拿到消息列表之后的回调
+    //       console.log("拿到消息列表之后的回调777777")
+    //     }
+    //   }
+    // );
 
     // this.imSdk.openSession(
     //   this.$store.state.userInfo.nickname,

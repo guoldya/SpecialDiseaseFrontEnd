@@ -76,7 +76,7 @@
 
 
 let updateByList = "/api/hos/bizPatientEvaluate/updateByList";
-let detailurl = "bizSurvey/read/queryById";
+let detailurl = "bizSurvey/selectSurveyResultLately";
 let saveResult = 'bizSurvey/read/saveResult'
 export default {
   data() {
@@ -170,6 +170,12 @@ export default {
         res.data.data.list.map(x => {
           if (x.childNode) {
             x.childNode.forEach(item => item.checked = false);
+             
+            x.childNode.forEach(item => {
+              if(item.result){
+                 item.checked = true
+              }
+            });
             x.childNode[0].checked = true;
           }
 

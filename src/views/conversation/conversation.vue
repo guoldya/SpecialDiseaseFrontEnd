@@ -38,10 +38,13 @@ export default {
   },
   mounted() {
 
-
-    if (typeof (this.$store.state.accountInfo) == 'string') {
+    if (this.$store.state.accountInfo == '') {
+      this.loadingtrue = false
+      return
+    }
+    if (typeof (this.$store.state.accountInfo) == 'string' && this.$store.state.accountInfo != '') {
       this.chooseId = JSON.parse(this.$store.state.accountInfo).id;
-       this.$store.state.accountInfo=JSON.parse(this.$store.state.accountInfo)
+      this.$store.state.accountInfo = JSON.parse(this.$store.state.accountInfo)
     } else {
       this.chooseId = this.$store.state.accountInfo.id;
     }
@@ -49,22 +52,22 @@ export default {
       "p" + this.chooseId,
       "123456",
       {
-        // userConnectCallback: () => {
-        //   // 这里没有医生ID 也不用建立
-        //   this.imSdk.openSession(
-        //     this.$store.state.accountInfo.name,
-        //     "d" + this.$route.query.id,
-        //     this.$route.query.name,
-        //     {
-        //       getMessageCallback: () => {
-        //         // 拿到消息列表之后的回调
-        //       }
-        //     }
-        //   );
-        // }
+        userConnectCallback: () => {
+          // 这里没有医生ID 也不用建立
+          // this.imSdk.openSession(
+          //   this.$store.state.accountInfo.name,
+          //   "d" + this.$route.query.id,
+          //   this.$route.query.name,
+          //   {
+          //     getMessageCallback: () => {
+          //       // 拿到消息列表之后的回调
+          //     }
+          //   }
+          // );
+        }
       }
     );
-    console.log(this.chooseId, "imSdkimSdk")
+     
     this.selectDrugsList();
   },
 
@@ -105,7 +108,9 @@ export default {
         name: 'chatRoom',
         query: {
           id: data.id,
-          name: data.drName
+          name: data.drName,
+          start: data.start,
+          end: data.end
         }
       })
 

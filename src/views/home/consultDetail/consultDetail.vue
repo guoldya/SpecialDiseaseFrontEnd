@@ -13,7 +13,6 @@
           <div class="doctor-info-content">
             <p>{{ doctorInfo.drName }} <span class="education">{{ doctorInfo.education }}</span></p>
             <p class="gray">
-
               <span>{{ doctorInfo.deptName }}</span>
             </p>
           </div>
@@ -28,7 +27,7 @@
             <p>0{{ doctorInfo.diagnosisNum }}</p>
           </div>
           <div>
-            <p>评论率</p>
+            <p>好评率</p>
             <p>0{{ doctorInfo.praiseRate }}%</p>
           </div>
           <div>
@@ -46,7 +45,7 @@
           <img src="@/assets/images/skill.png" alt="">
           <p>擅长：</p>
         </div>
-        <div class="goodRIGHT">
+        <div class="goodRIGHT" :class="down&&doctorInfo.expertField.length>17?'zhankai':''">
           <p>
             {{ doctorInfo.expertField }}
           </p>
@@ -57,51 +56,21 @@
           <img src="@/assets/images/jianjie.png" alt="">
           <p>简介：</p>
         </div>
-        <div class="goodRIGHT">
+        <div class="goodRIGHT" :class="down?'zhankai':''">
           <p>
             {{ doctorInfo.profile }}
           </p>
         </div>
+
       </div>
-      <!-- 沟通方式 -->
-      <!-- <div class="doctor-way">
-        <div class="doctor-way-item video" @click="consult({type:1,status:1})">
-          <div class="doctor-way-item-img">
-            <img src="@/assets/images/icon_teletext.png" alt="" />
-          </div>
-          <div class="doctor-way-item-money doctor-way-item-image">
-            图文
-          </div>
-          
-        </div>
-      </div> -->
-      <!-- <div class="doctor-way">
-        <div class="doctor-way-item">
-          <div class="doctor-way-item-img">
-            <img src="@/assets/images/icon_teletext.png" alt="" />
+      <div class="down" @click="down=!down" :class="down?'':'up'"> <img src="@/assets/images/icon_up@2x.png" alt=""></div>
 
-            <img src="@/assets/images/icon_telephone_gray.png" alt="" />
-
-            <img src="@/assets/images/icon_video_pre.png" alt="" />
-          </div>
-          <div class="doctor-way-item-money doctor-way-item-image">
-            图文
-          </div>
-
-          <div class="doctor-way-item-money doctor-way-item-phone doctor-way-item-disabled">
-            暂未开通
-          </div>
-          <div class="doctor-way-item-money doctor-way-item-video doctor-way-item-disabled">
-            暂未开通
-          </div>
-        </div>
-      </div> -->
       <div class="cardMobilea">
         <div class="cardMobile">
           <div class="cardMobileleft">
             <img src="@/assets/images/messge.png" alt="" />
             <div>
-              <p>图文咨询</p>
+              <p>图文咨询<span class="money"> ￥{{20|keepTwoNum}}</span></p>
             </div>
           </div>
           <div class="cardMobileright" @click="consult({type:1,status:1})">
@@ -117,7 +86,7 @@
             </div>
           </div>
           <div class="cardMobileright">
-            <span class="consult consult1">待开放</span>
+            <span class="consult consult1">待上线</span>
           </div>
         </div>
         <div class="cardMobile">
@@ -129,25 +98,15 @@
             </div>
           </div>
           <div class="cardMobileright">
-            <span class="consult consult1">待开放</span>
+            <span class="consult consult1">待上线</span>
           </div>
         </div>
       </div>
 
       <!-- 咨询弹窗 -->
+
       <md-dialog :title="basicDialog.title" :closable="true" v-model="basicDialog.open" :btns="basicDialog.btns">
-
-        <p>咨询师-{{ doctorInfo.drName}}</p>
-        <div class="ways">
-          <p class="info">1、咨询服务可提供相关建议。</p>
-          <p class="info">2、仅为复诊患者提供诊疗服务。</p>
-          <p class="info">3、为保疫情期间一线减轻，生效不退换。</p>
-        </div>
-
-        <md-agree v-model="basicDialog.checked" :disabled="false" size="sm">
-          同意
-          <a>《重庆市门特在线问诊用户协议》</a>
-        </md-agree>
+        <p>咨询医师-{{ doctorInfo.drName}} <span class="money">￥{{basicDialog.price|keepTwoNum}}</span></p>
       </md-dialog>
 
     </div>
@@ -162,6 +121,7 @@ const followDoctorUrl = "bizDoctorFollow/followDoctor"
 export default {
   data() {
     return {
+      down: true,
       money: '',
       isloading: true,
       doctorInfo: {}, // 医生信息
@@ -169,33 +129,33 @@ export default {
       basicDialog: {
         open: false,
         checked: true,
-        title: "",
+        title: "记账金额",
         content: '',
-        price: '',
+        price: this.$route.query.money,
         type: null, // 咨询弹窗类型 type 1 图文 2 电话 3视频
         btns: [
           {
-            text: "取消申请",
+            text: "取消",
             handler: this.onBasicCancel
           },
           {
-            text: "申请咨询",
+            text: "确定",
             handler: this.onConfirm
           }
         ]
       },
-      pagingParams: {
-        // 科室分页信息
-        num: 1,
-        pages: null
-      },
-      commonList: [],
-      busy: false
+      busy: false,
+      chooseId: ''
     };
   },
   mounted() {
     this.init();
-
+    if (typeof (this.$store.state.accountInfo) == 'string') {
+      this.chooseId = JSON.parse(this.$store.state.accountInfo).id;
+      this.$store.state.accountInfo = JSON.parse(this.$store.state.accountInfo)
+    } else {
+      this.chooseId = this.$store.state.accountInfo.id;
+    }
   },
   methods: {
     // 初始化
@@ -222,29 +182,42 @@ export default {
     },
     // 点击申请咨询按钮
     onConfirm() {
-      if (!this.basicDialog.checked) {
-        Toast.info("请同意用户协议");
-        return false;
-      }
-      this.basicDialog.open = false;
-      // this.$router.push({
-      //   path: "/pictureConsult",
-      //   query: { name: this.doctorInfo.drName, id: this.doctorInfo.id, money: this.money, title: this.doctorInfo.title, type: this.basicDialog.type }
-      // });
-      this.$router.push({
-        path: "/aa",
-        query: { name: this.doctorInfo.drName, id: this.doctorInfo.id, money: this.money, title: this.doctorInfo.title, type: this.basicDialog.type }
+      let data = {};
+      data.doctorId = this.doctorInfo.id;
+      data.patientId = this.chooseId;
+
+      this.$axios.post('bizPatientBill/payOnlineConsult', data).then((res) => {
+        if (res.data.code == '200') {
+          this.basicDialog.open = false;
+          this.$toast.info("支付成功");
+          this.$router.push({
+            path: "/pictureConsult",
+            query: { name: this.doctorInfo.drName, start: this.$route.query.start, end: this.$route.query.end, id: this.doctorInfo.id, money: this.money, title: this.doctorInfo.title, type: this.basicDialog.type }
+          });
+
+        } else {
+          this.basicDialog.open = false;
+          this.$toast.info(res.data.msg)
+        }
+      }).catch(function (err) {
+        console.log(err);
       });
 
     },
     // 咨询
     consult(val) {
       // if (val.status == 0) return
-      // this.basicDialog.open = true;
-      this.$router.push({
-        path: "/pictureConsult",
-        query: { name: this.doctorInfo.drName, id: this.doctorInfo.id, money: this.money, title: this.doctorInfo.title, type: this.basicDialog.type }
-      });
+
+      if (this.$route.query.money > 0) {
+        this.basicDialog.open = true;
+      } else {
+        this.$router.push({
+          path: "/pictureConsult",
+          query: { name: this.doctorInfo.drName, start: this.$route.query.start, end: this.$route.query.end, id: this.doctorInfo.id, money: this.money, title: this.doctorInfo.title, type: this.basicDialog.type }
+        });
+      }
+
+
     },
     async followDoctor() {
       try {
@@ -454,15 +427,13 @@ export default {
 }
 .md-dialog {
   /deep/ .md-dialog-body {
-    padding: 0.52rem 30px 0.2rem;
+    // padding: 0.52rem 30px 0.2rem;
     p {
       text-align: center;
       color: #000;
       line-height: 50px;
     }
-    .money {
-      color: #ff9b00;
-    }
+
     .ways {
       p {
         color: #999;
@@ -478,6 +449,10 @@ export default {
       }
     }
   }
+}
+.money {
+  color: #ff9b00;
+  font-size: 28px;
 }
 </style>
 <style lang="scss">
@@ -542,7 +517,7 @@ export default {
     display: flex;
     color: #232323;
     font-size: 32px;
-    flex: 0 0 200px;
+    flex: 0 0 190px;
     line-height: 60px;
     text-align: left;
     img {
@@ -553,7 +528,24 @@ export default {
   }
   .goodRIGHT {
     margin-top: 10px;
+    height: auto;
   }
+
+  .zhankai {
+    height: 88px;
+    overflow: hidden;
+  }
+}
+.down {
+  width: 100%;
+  text-align: center;
+  transform: rotate(180deg);
+  img {
+    width: 27px;
+  }
+}
+.up {
+  transform: rotate(0);
 }
 </style>
 

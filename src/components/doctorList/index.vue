@@ -19,7 +19,7 @@
         <p class="content lineHeight17">擅长：{{datas.expertField}}</p>
         <p class="colo3">
           <span style=" margin-right: 20px;">
-            咨询数：
+            问诊量：
             <span class="num">{{datas.diagnosisNum||'12'}}</span>
           </span>&nbsp;
           <span>
@@ -27,26 +27,25 @@
             <span class="num">{{datas.replyTime||'0'}}</span> 分
           </span>&nbsp;
         </p>
-
         <div class="price">
           <div class="dotType">
             <div class="dottextff">
-              <router-link v-if="datas.status==2" :to="{ path: '/consultDetail', query: { id: datas.id ,status:datas.status}}">
-                <img src="@/assets/conversationImg/freeText1.png" />
-                <span class="fontSize12">免费</span>
+              <router-link v-if="datas.status==2" :to="{ path: '/consultDetail', query: { id: datas.id ,status:datas.status,money:20,start:datas.start,end:datas.end}}">
+                <img src="@/assets/conversationImg/freeText.png" />
+                <span class="fontSize12" style="color:#F6BE51">￥{{20|keepTwoNum}}</span>
               </router-link>
-              <router-link v-else :to="{ path: '/chatRoom', query: { id: datas.id ,name:datas.drName}}">
+              <router-link v-else :to="{ path: '/chatRoom', query: { id: datas.id ,name:datas.drName,start:datas.start,end:datas.end}}">
                 <img src="@/assets/conversationImg/freeText1.png" />
                 <span class="fontSize12">咨询中</span>
               </router-link>
             </div>
             <div class="dotdhff">
               <img src="@/assets/conversationImg/offlineVoice1.png" />
-              <span class="fontSize12">暂无</span>
+              <span class="fontSize12">待上线</span>
             </div>
             <div class="dotvideoff">
               <img src="@/assets/conversationImg/offlineVideo1.png" />
-              <span class="fontSize12">暂无</span>
+              <span class="fontSize12">待上线</span>
             </div>
           </div>
           <!-- ￥{{datas.minPrice|keepTwoNum}} -->
@@ -196,6 +195,11 @@ export default {
   letter-spacing: 1px;
   overflow: hidden;
   margin-top: 14px;
+  img {
+    width: 29px;
+    height: 29px;
+    margin-right: 15px;
+  }
 }
 
 .doctor-list:last-child {

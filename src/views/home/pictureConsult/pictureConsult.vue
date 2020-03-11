@@ -22,7 +22,7 @@
           <p>0{{ doctorInfo.diagnosisNum }}</p>
         </div>
         <div>
-          <p>评论率</p>
+          <p>好评率</p>
           <p>0{{ doctorInfo.praiseRate }}%</p>
         </div>
         <div>
@@ -109,6 +109,7 @@ export default {
               this.$store.state.accountInfo.name,
               'd' + this.$route.query.id,
               this.$route.query.name,
+              { start: this.$route.query.start, end: this.$route.query.end },
               {
                 getMessageCallback: () => {
                   // 拿到消息列表之后的回调
@@ -118,11 +119,7 @@ export default {
           }
         })
     })
-    // this.imSdk.openSession(
-    //   this.$store.state.accountInfo.name,
-    //   'd' + this.$route.query.id,
-    //   this.$route.query.name,
-    // )
+     
   },
 
   methods: {
@@ -189,7 +186,8 @@ export default {
           query: {
             id: this.$route.query.id,
             name: this.$route.query.name,
-            isOpen: true
+            isOpen: true,
+            start: this.$route.query.start, end: this.$route.query.end,
           }
         })
       }, 1000);

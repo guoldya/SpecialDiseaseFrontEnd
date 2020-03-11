@@ -41,7 +41,8 @@ export class ImSessionSDK {
     }
     getMessageList = () => {
         const limit = 20
-        listMessage(this.IMData.selectedChannelId, this.IMData.maxCreateAt, limit)
+        console.log("执行这里")
+        listMessage(this.IMData.selectedChannelId, this.IMData.maxCreateAt, limit, this.IMData.start, this.IMData.end)
             .then(response => {
                 this.IMData.hasMoreMessage = response.data.length === 20
                 if (response.data.length > 0) {

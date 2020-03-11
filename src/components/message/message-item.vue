@@ -5,12 +5,18 @@
         <img class="online-content-list-head" :src="message.senderId!=$imsdk.user.id?require('@/assets/images/3.jpg'):this.$store.state.userInfo.headPic" alt>
         <div class="online-content-list-text">
           <em></em>
-          <div>
-            <span v-html="aa.text"></span>
+          <div class="textIMG">
+
+            <template v-for="(item, index) in contentlist">
+              <span :key="index" v-if="item.name === 'text'">{{ item.text }}</span>
+              <img v-else-if="item.name === 'img'" :src="require('@/static/faces/'+item.text)" width="24px" height="24px" :key="index" />
+            </template>
           </div>
+
         </div>
+
       </template>
-      <template v-if="aa.close ">
+      <template v-if="aa.close">
         <div class="message-item system-tips-message message-state--8 normal-style">
           <div class="message-datetime show">{{aa.date}}</div>
           <div class="message-inner">
@@ -143,7 +149,9 @@
         <div>
           <img style="width:100px;" :src="$conf.constant.img_base_url+aa.text" @click="showViewer($conf.constant.img_base_url+aa.text)" alt />
         </div>
+
       </div>
+      <!-- <Loading type="online" v-show="loadingtrue"></Loading> -->
     </div>
     <!-- 图片显示器 -->
     <md-image-viewer v-model="isViewerShow" :list="currentImg" :has-dots="false" :initial-index="0"></md-image-viewer>
@@ -160,6 +168,7 @@ export default {
   data() {
     return {
       accountInfo: '',
+      loadingtrue: true,
       emojiName: emoji.obj,
       imSdk: this.$imsdk,
       renderDom: [],
@@ -170,6 +179,9 @@ export default {
     };
   },
   mounted() {
+    this.$bus.$on("sendData", d => {
+      this.loadingtrue = d.data
+    })
     this.aa = JSON.parse(this.message.content);
     if (typeof (this.$store.state.accountInfo) == 'string') {
       this.accountInfo = JSON.parse(this.$store.state.accountInfo);
@@ -177,8 +189,53 @@ export default {
       this.accountInfo = this.$store.state.accountInfo;
     }
   },
-  computed: {},
+  computed: {
+    contentlist() {
+      return this.renderTxt(this.aa.text)
+    }
+  },
   methods: {
+
+    renderTxt(txt = "") {
+      let rnTxt = [];
+      let match = null;
+      const regex = /(\[.*?\])/g;
+      let start = 0;
+      let index = 0;
+      while ((match = regex.exec(txt))) {
+        index = match.index;
+        if (index > start) {
+          rnTxt.push(txt.substring(start, index));
+          rnTxt.push({
+            name: 'text',
+            text: txt.substring(start, index)
+          });
+        }
+        if (match[1] in emoji.obj) {
+          const v = emoji.obj[match[1]];
+          // rnTxt.push(this.customEmoji(v));
+          rnTxt.push({
+            name: 'img',
+            text: v
+          });
+        } else {
+          // rnTxt.push(match[1]);
+          rnTxt.push({
+            name: 'text',
+            text: match[1]
+          });
+        }
+        start = index + match[1].length;
+      }
+      // rnTxt.push(txt.substring(start, txt.length));
+      rnTxt.push({
+        name: 'text',
+        text: txt.substring(start, txt.length)
+      });
+      // return rnTxt.toString().replace(/,/g, "");
+      // console.log(rnTxt)
+      return rnTxt
+    },
     showViewer(index) {
       this.isViewerShow = true;
       this.clickViewer = true;
@@ -434,5 +491,12 @@ export default {
 }
 .padding-left-2 {
   padding-left: 4px;
+}
+.textIMG img{
+
+  width:48px ;
+  height:48px ;
+  top:10px;
+  position: relative;
 }
 </style>

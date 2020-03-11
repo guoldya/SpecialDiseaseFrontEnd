@@ -117,6 +117,8 @@ const payStatusText = function (value) {
         return "处方记账"
     } else if (value == 3) {
         return "医保报销"
+    } else if (value == 4) {
+        return "挂号费"
     } 
 };
 

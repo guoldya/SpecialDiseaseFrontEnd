@@ -476,6 +476,7 @@ export default {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #ededed;
+    align-items: center;
     &:last-child {
       border: none;
     }
@@ -499,7 +500,6 @@ export default {
         padding: 10px 25px;
         border-radius: 50px;
         display: block;
-        margin-top: 20px;
       }
       .consult1 {
         background: #c1c9d1;
@@ -517,7 +517,7 @@ export default {
     display: flex;
     color: #232323;
     font-size: 32px;
-    flex: 0 0 190px;
+    flex: 0 0 200px;
     line-height: 60px;
     text-align: left;
     img {

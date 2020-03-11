@@ -11,7 +11,7 @@
     <div class="content " v-show="show && !loadingtrue">
       <div class="bance" v-if="drugsList.drugs.length!=0" v-for="(item,index) in drugsList.drugs" :key="index">
         <div class="header">
-          <img :src="3|filterTypeIMG" alt="">
+          <img :src="item.type|filterTypeIMG" alt="">
         </div>
         <div class="banceRight">
           <div class="banceRightleft">
@@ -20,7 +20,7 @@
             <p class="time"> {{item.createTime|lasttime}}</p>
           </div>
           <div class="banceRightleft2">
-            <p :class="item.money<0?'':'orange'">￥{{item.money|keepTwoNum}} </p>
+            <p :class="item.money<0?'':'orange'">{{item.money|keepTwoNum}} </p>
           </div>
         </div>
       </div>

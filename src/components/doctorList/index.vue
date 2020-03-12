@@ -1,7 +1,10 @@
 <!--医生信息列表组件 -->
 <template>
   <div class="doctor-list">
-    <router-link :to="{ path: datas.status==2?'/consultDetail':'/chatRoom', query: { id: datas.id ,status:datas.status,money:datas.textChatPrice,start:datas.start,end:datas.end ,name:datas.drName}}" class="consult">
+    <router-link
+      :to="{ path: datas.status==2?'/consultDetail':'/chatRoom', query: { id: datas.id ,status:datas.status,money:datas.textChatPrice,start:datas.start,end:datas.end ,name:datas.drName}}"
+      class="consult"
+    >
       <div class="header">
         <img src="@/assets/images/3.jpg" />
       </div>
@@ -13,8 +16,14 @@
         </p>
         <p class="colo3">
           <span class="picture" :class="datas.allowType<1||!datas.allowType ?'noOpen' :''">图文</span>&nbsp;
-          <span class="picture picture1" :class="datas.allowType<2||!datas.allowType ?'noOpen' :''">门特在线</span>&nbsp;
-          <span class="picture picture2" :class="datas.allowType<3||!datas.allowType ?'noOpen' :''">视频</span>&nbsp;
+          <span
+            class="picture picture1"
+            :class="datas.allowType<2||!datas.allowType ?'noOpen' :''"
+          >门特在线</span>&nbsp;
+          <span
+            class="picture picture2"
+            :class="datas.allowType<3||!datas.allowType ?'noOpen' :''"
+          >视频</span>&nbsp;
         </p>
         <p class="content lineHeight17">擅长：{{datas.expertField}}</p>
         <p class="colo3">
@@ -24,7 +33,7 @@
           </span>&nbsp;
           <span>
             平均回复时长：
-            <span class="num">{{datas.avgReplyTime  }}</span> 分
+            <span class="num">{{avgReplyTime }}</span>
           </span>&nbsp;
         </p>
         <div class="price">
@@ -34,7 +43,10 @@
 
               <div v-if="datas.status==2" class="dotdhff">
                 <img src="@/assets/conversationImg/freeText.png" />
-                <span v-if="datas.textChatPrice>0" class="fontSize12 finish">￥{{datas.textChatPrice|keepTwoNum}}</span>
+                <span
+                  v-if="datas.textChatPrice>0"
+                  class="fontSize12 finish"
+                >￥{{datas.textChatPrice|keepTwoNum}}</span>
                 <span v-else class="fontSize12 finish">免费咨询</span>
               </div>
 
@@ -68,7 +80,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      avgReplyTime: ""
+    };
   },
   // filters:{
   //   level(val) {
@@ -105,7 +119,39 @@ export default {
   //     return msg;
   //   }
   // },
-  props: ["datas"]
+  props: ["datas"],
+  mounted() {
+    this.simpleDuration(this.datas.avgReplyTime,'s')
+  },
+  methods: {
+    simpleDuration(duration, type) {
+      if (type === "s") {
+        duration = duration * 1000;
+      }
+      let str = "";
+      let days = "",
+        hours = "",
+        minutes = "",
+        seconds = "";
+      let day = 24 * 60 * 60 * 1000,
+        hour = 60 * 60 * 1000,
+        minute = 60 * 1000,
+        second = 1000;
+      if (duration >= day) {
+        days = Math.floor(duration / day) + "天";
+        hours = Math.floor((duration % day) / hour) + "小时";
+      } else if (duration >= hour && duration < day) {
+        hours = Math.floor(duration / hour) + "小时";
+        minutes = Math.floor((duration % hour) / minute) + "分钟";
+      } else if (duration > minute && duration < hour) {
+        minutes = Math.floor(duration / minute) + "分钟";
+        seconds = Math.floor((duration % minute) / second) + "秒";
+      } else if (duration < minute) {
+        seconds = Math.floor(duration / second) + "秒";
+      }
+      this.avgReplyTime = days + hours + minutes + seconds;
+    }
+  }
 };
 </script>
 <style scoped lang="scss">

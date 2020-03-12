@@ -63,6 +63,7 @@
   </div>
 </template>
  <script>
+
 const onlineDoctorDetailUrl = "sysDoctor/selectDetail";
 const insertOrUpdate = 'bizConsultRecord/addRecord'
 import { mapGetters, mapState } from 'vuex'
@@ -90,10 +91,13 @@ export default {
           },
           {
             text: "确定",
+            icon: 'search',
             handler: this.onConfirm
           }
         ]
       },
+
+
       // 咨询弹窗
       agreeConf: {
         checked: true,
@@ -122,30 +126,12 @@ export default {
     } else {
       this.chooseId = this.$store.state.accountInfo.id;
     }
-    // 注册用户
-    this.imSdk.registerUser('p' + this.chooseId, this.$store.state.accountInfo.name, () => {
-      this.imSdk.createUserConnect('p' + this.chooseId, '123456',
-        {
-          userConnectCallback: () => {
-            // 创建会话连接
-            this.imSdk.openSession(
-              this.$store.state.accountInfo.name,
-              'd' + this.$route.query.id,
-              this.$route.query.name,
-              { start: this.$route.query.start, end: this.$route.query.end },
-              {
-                getMessageCallback: () => {
-                  // 拿到消息列表之后的回调
-                }
-              }
-            );
-          }
-        })
-    })
+
 
   },
 
   methods: {
+
     onChange(name, checked) {
       console.log(`agree name = ${name} is ${checked ? 'checked' : 'unchecked'}`)
     },
@@ -154,31 +140,33 @@ export default {
       this.basicDialog.open = false;
     },
     onConfirm() {
+      this.basicDialog.open = false;
+      this.$toast.loading('提交中...')
       this.finish()
     },
     // 点击申请咨询按钮
     tijiao() {
-      
+      this.isShow = false;
       if (this.questionDes.replace(/\s*/g, '').length == 0) {
         this.$toast.info("请输入问题")
-        
+        this.isShow = true;
         return
       }
       if (!this.agreeConf.checked) {
         this.$toast.info("请勾选协议")
-        
+        this.isShow = true;
         return
       }
       if (this.$route.query.money > 0) {
         this.basicDialog.open = true;
+        console.log("执行付钱")
       } else {
+        console.log("执行免费")
         this.finish()
       }
     },
 
     finish() {
-
-
 
       let data = {};
       data.doctorId = Number(this.$route.query.id);
@@ -187,14 +175,13 @@ export default {
       data.status = 0;
       this.$axios.post(insertOrUpdate, data).then((res) => {
         if (res.data.code == '200') {
+          this.$toast.hide()
           this.$toast.info("提交成功");
-          
           this.sendMessg()
         } else {
-         
-          this.basicDialog.open = false;
+          this.$toast.hide()
+          this.isShow = true;
           this.$toast.info(res.data.msg)
-
           return
         }
       }).catch(function (err) {
@@ -203,7 +190,42 @@ export default {
 
     },
 
-    sendMessg() {
+    sendMessg(btn) {
+      console.log(this.chooseId, "用户的id")
+
+      // 注册用户
+      this.imSdk.registerUser('p' + this.chooseId, this.$store.state.accountInfo.name, () => {
+        this.imSdk.createUserConnect('p' + this.chooseId, '123456',
+          {
+            userConnectCallback: () => {
+              // 创建会话连接
+              this.imSdk.openSession(
+                this.$store.state.accountInfo.name,
+                'd' + this.$route.query.id,
+                this.$route.query.name,
+                { start: this.$route.query.start, end: this.$route.query.end },
+                {
+                  getMessageCallback: () => {
+                    // 拿到消息列表之后的回调
+                    
+                  }
+                },
+                {
+                  sedMessageCallback: () => {
+                    // 拿到消息列表之后的回调
+                    
+                    this.test()
+                  }
+                }
+              );
+            }
+          })
+      })
+
+
+    },
+    test() {
+      console.log("执行真正的发送消息")
       var myDate = new Date;
       var year = myDate.getFullYear(); //获取当前年
       var mon = myDate.getMonth() + 1; //获取当前月
@@ -224,21 +246,21 @@ export default {
 
       // this.$store.commit('selectTestFun',  );
 
-      setTimeout(() => {
-        this.$router.push({
-          name: 'chatRoom',
-          params: {
-            pictureConsult: 1,
-          },
-          query: {
-            id: this.$route.query.id,
-            name: this.$route.query.name,
-            isOpen: true,
-            pictureConsult: 1,
-            start: this.$route.query.start, end: this.$route.query.end,
-          }
-        })
-      }, 1000);
+
+      this.$router.push({
+        name: 'chatRoom',
+        params: {
+          pictureConsult: 1,
+        },
+        query: {
+          id: this.$route.query.id,
+          name: this.$route.query.name,
+          isOpen: true,
+          pictureConsult: 1,
+          start: this.$route.query.start, end: this.$route.query.end,
+        }
+      })
+
 
       this.isShow = true;
     },

@@ -88,7 +88,7 @@ export class ImSdk {
             })
         })
     }
-    openSession(fromUsername, toUserId, toUsername,data, { getMessageCallback } = {}) {
+    openSession(fromUsername, toUserId, toUsername,data, { getMessageCallback } = {},{ sedMessageCallback } = {}) {
         this.end=data.end
         this.start=data.start
         //打开会话
@@ -110,6 +110,7 @@ export class ImSdk {
             // this.penSession(this.userChannelList[exists].channelId)
             this.penSession(this.userChannelList[exists].channelId, { getMessageCallback })
         }
+        sedMessageCallback()
     }
     penSession = (channelId) => {
         //打开会话

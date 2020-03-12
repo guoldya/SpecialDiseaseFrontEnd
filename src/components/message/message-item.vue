@@ -136,7 +136,7 @@
         <div class="describe">
           <p>初步诊断：{{aa.description}}</p>
         </div>
-        <router-link tag="p" :to="{ path: '/outpationinfo', query: { id: aa.recipeId}}" class="item">
+        <router-link tag="p" :to="{ path: '/outpationinfo', query: { id: aa.recipeId,online:1}}" class="item">
           <span>查看详情</span>
           <i class="iconfont icon-iconfontjiantou5"></i>
         </router-link>
@@ -492,11 +492,10 @@ export default {
 .padding-left-2 {
   padding-left: 4px;
 }
-.textIMG img{
-
-  width:48px ;
-  height:48px ;
-  top:10px;
+.textIMG img {
+  width: 48px;
+  height: 48px;
+  top: 10px;
   position: relative;
 }
 </style>

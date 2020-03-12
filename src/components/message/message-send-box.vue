@@ -220,10 +220,17 @@ export default {
       let sel = window.getSelection()
       if (sel.rangeCount > 0) {
         let range = sel.getRangeAt(0);//找到焦点位置
+        console.log(range.commonAncestorContainer.className, "eeeeeeeee")
+        if (range.commonAncestorContainer.className != "input") {
+        
+          this.$refs.inputModel.focus()
+          //  this.toolType = ''
+          return
+        }
         var img = new Image();
         img.src = require('@/static/faces/' + v);
         img.id = i;
-        console.log(v, "图片地址")
+     
 
         img.style = 'width:24px;height:24px;position: relative; top: 5px;'
         let frag = document.createDocumentFragment();//创建一个空白的文档片段，便于之后插入dom树

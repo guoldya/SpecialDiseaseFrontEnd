@@ -63,8 +63,6 @@ export default {
   },
 
   async mounted() {
- console.log(this.$store.state.accountInfo)
-
     this.$store.dispatch('getCards', { update: true }).then(res => {
       // if (this.chooseId) {
       //   this._cardlist.map(x => {

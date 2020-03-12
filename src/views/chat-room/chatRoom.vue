@@ -56,6 +56,11 @@ export default {
                   // 拿到消息列表之后的回调
                   console.log("拿到消息列表之后的回调777777")
                 }
+              },
+              {
+                sedMessageCallback: () => {
+                 
+                }
               }
             );
           }

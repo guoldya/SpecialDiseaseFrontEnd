@@ -136,8 +136,8 @@ export default {
     }),
   },
   created() {
-    console.log(this.$store.state.selectAdress,"厨房性情")
-    if (!this._selectAdress||!this._selectAdress.receiver) {
+    console.log(this.$store.state.selectAdress, "厨房性情")
+    if (!this._selectAdress || !this._selectAdress.receiver) {
       this.$axios.put(appshippingAddressaddressList, {}).then((res) => {
         this.loadingtrue = false;
         if (res.data.code == '200') {
@@ -207,9 +207,20 @@ export default {
         params.id = parseInt(this._selectAdress.id);
         this.$axios.post(recipeAccounting, params).then(res => {
           if (res.data.code == '200') {
-            this.$router.go(-1);
-            this.isTijiao = true;
-            this.$toast.info('记账成功');
+            if (!this.$route.query.online) {
+              this.$router.go(-1);
+              this.isTijiao = true;
+              this.$toast.info('记账成功');
+            } else {
+              this.$router.replace({
+                name: 'chatRoom',
+                params: {
+                  pictureConsult: 1,
+                },
+                 
+              })
+            }
+
           } else {
             this.$toast.info(res.data.msg);
           }

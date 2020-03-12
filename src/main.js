@@ -34,6 +34,7 @@ import Search from './components/search/search.vue';
 import doctorList from './components/doctorList';
 import Apptab from './components/apptab/apptab.vue';
 import Recordcard from './components/recordcard';
+ 
 
 Vue.component('Null', Null);
 Vue.component('Loading', Loading);
@@ -44,7 +45,8 @@ Vue.component('Search', Search);
 Vue.component('doctorList', doctorList);
 Vue.component('Apptab', Apptab);
 Vue.component('Recordcard', Recordcard);
-
+ 
+ 
 Vue.prototype.$conf = Config;
 Vue.use(mandMobile)
 Object.keys(filters).forEach(key => {
